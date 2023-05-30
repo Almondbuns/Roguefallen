@@ -1,0 +1,268 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Chest : ActorPrototype
+{
+    public Chest(int level) : base(level)
+    {
+        name = "Chest";
+        icon = "images/objects/chest";
+
+        stats.health_max = 100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Chest", percentage = 100, armor = (2, 3, 1), durability_max = 50 });
+
+        inventory = new InventoryPrototype(){size = 8};
+    }
+
+    public override void OnCreation(ActorData actor_data)
+    {
+        int number_of_items = UnityEngine.Random.Range(3,7);
+
+        for (int i = 0; i < number_of_items; ++i)
+        {
+            float random_float = UnityEngine.Random.value;
+            int item_level = stats.level;
+
+            if (random_float > .095f)
+                item_level = stats.level + 3;
+            else if (random_float > 0.80f)
+                item_level = stats.level + 2;
+            else if (random_float > 0.50f)
+                item_level = stats.level + 1;
+                
+            ItemData item = ItemData.GetRandomItem(-1,-1, stats.level);
+
+            int r = UnityEngine.Random.Range(1, 101);
+            if (r <= 20)
+                item.SetQuality(ItemQuality.Unique);
+            else if (r <= 60)
+                item.SetQuality(ItemQuality.Magical2);
+            else if (r <= 90)
+                item.SetQuality(ItemQuality.Magical1);
+
+            actor_data.inventory.AddItem(item);
+        }
+    }
+
+    public override bool OnPlayerMovementHit(ActorData actor_data)
+    {
+        if (GameObject.Find("UI").GetComponent<UI>().current_ui_states.Count > 0) return false;
+        GameObject.Find("UI").GetComponent<UI>().AddUIState(new UIStateInventoryChest(actor_data));
+
+        return false;
+    }
+}
+
+public class Crate : ActorPrototype
+{
+    public Crate(int level) : base(level)
+    {
+        name = "Crate";
+        icon = "images/objects/box";
+
+        stats.health_max = 10;
+        stats.dodge = -100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Crate", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+    }
+
+    public override void OnKill(ActorData actor_data)
+    {
+        //Spawn a broken Crate
+        MapData map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
+        //map.Add(new DynamicObjectData(actor_data.x, actor_data.y, new BrokenCrate(1)));
+        
+        //May spawn nothing, an item oder a monster
+        int random = Random.Range(0, 100);
+        if (random < 20)
+        {
+            //Spawn monster
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.x, actor_data.y);
+            if (tile == null) return;
+
+            ActorData monster;
+            float rand = UnityEngine.Random.value;
+            if (rand <= 0.25f )
+                monster = new MonsterData(tile.Value.x, tile.Value.y, new Rat(stats.level));
+            else if (rand <= 0.5f )
+                monster = new MonsterData(tile.Value.x, tile.Value.y, new Spider(stats.level));
+            else if (rand <= 0.75f )
+                monster = new MonsterData(tile.Value.x, tile.Value.y, new Lemming(stats.level));
+            else 
+                monster = new MonsterData(tile.Value.x, tile.Value.y, new Ooz(stats.level));      
+            
+            map.Add(monster);
+            GameLogger.Log("The Crate breaks. A " + monster.prototype.name + " jumps out.");
+        }
+        else if (random < 60)
+        {
+            //Spawn item
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.x, actor_data.y);
+            if (tile == null) return;
+            ItemData item = ItemData.GetRandomItem(tile.Value.x, tile.Value.y, stats.level);
+            map.Add(item);
+            GameLogger.Log("The Crate breaks. You see a " + item.GetName() + ".");
+        }
+        else
+        {
+            GameLogger.Log("The Crate breaks. It is empty.");
+        }
+    }
+}
+
+public class Jar : ActorPrototype
+{
+    public Jar(int level) : base(level)
+    {
+        name = "Jar";
+        icon = "images/objects/jar";
+
+        stats.health_max = 5;
+        stats.dodge = -100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Jar", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+    }
+
+    public override void OnKill(ActorData actor_data)
+    {
+        MapData map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
+  
+        //May spawn gold, give XP or deal special damage
+        int random = Random.Range(0, 100);
+        if (random < 33)
+        {
+            //Spawn gold
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.x, actor_data.y);
+            if (tile == null) return;
+
+            ItemData gold;
+            gold = new ItemData(new ItemGold(stats.level), tile.Value.x, tile.Value.y);      
+            
+            map.Add(gold);
+            GameLogger.Log("The jar breaks and drops some gold.");
+            return;
+        }
+        else if (random < 66)
+        {
+            // Gain XP
+            GameObject.Find("GameData").GetComponent<GameData>().player_data.GainExperience(10);
+            GameLogger.Log("The jar breaks. The player gains some experience.");
+            return;
+        }
+        else
+        {
+            //Deal Damage
+            int random_damage = UnityEngine.Random.Range(0,100);
+            DamageType damage_type = DamageType.DURABILITY;
+
+            if (random_damage < 33)
+            {
+                damage_type = DamageType.DURABILITY;
+                GameLogger.Log("The jar breaks and spills acid.");
+            }
+            else if (random_damage < 66)
+            {
+                damage_type = DamageType.POISON;
+                GameLogger.Log("The jar breaks and spills poison.");
+            }
+            else
+            {
+                damage_type = DamageType.DISEASE;
+                GameLogger.Log("The jar breaks and spills a stinky liquid.");
+            }
+
+            for (int i = -1; i <= 1; ++ i)
+            {
+                for (int j = -1; j <= 1; ++ j)
+                {
+                    if (i == 0 && j == 0)
+                    continue;
+                    
+                    map.DistributeDamage(actor_data, new AttackedTileData(){x = actor_data.x + i, y = actor_data.y + j, damage_on_hit = {(damage_type,Random.Range(5,11),0)}});
+                }
+            }
+            return;
+        }
+    }
+}
+
+public class BrokenCrate : ActorPrototype
+{
+    public BrokenCrate(int level) : base(level)
+    {
+        name = "Broken Crate";
+        icon = "images/objects/box_broken";
+
+        stats.health_max = 10;
+        stats.dodge = -100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Broken Crate", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+    }
+
+}
+
+public class BearTrap : ActorPrototype
+{
+    public BearTrap(int level) : base(level)
+    {
+        name = "Bear Trap";
+        icon = "images/objects/bear_trap";
+
+        blocks_tiles = false;
+        is_hidden = true;
+
+        stats.health_max = 10;
+        stats.to_hit = 10;
+        stats.dodge = -100;
+        stats.stealth = 5;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+    }
+
+    public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
+    {
+        if (this_actor.is_currently_hidden == true)
+            this_actor.SetHidden(false);
+        
+        GameLogger.Log("The " + name.ToLower() + " snaps.");
+        target_actor.TryToHit(stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 5, 5)}, null);
+    }
+}
+
+public class SpiderWebTrap : ActorPrototype
+{
+    public SpiderWebTrap(int level) : base(level)
+    {
+        name = "Spider Web";
+        icon = "images/objects/spider_web";
+
+        blocks_tiles = false;
+        is_hidden = true;
+
+        stats.health_max = 5;
+        stats.to_hit = 10;
+        stats.dodge = -100;
+        stats.stealth = 1;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+    }
+
+    public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
+    {
+        if (target_actor.prototype is Spider) // Spiders are immune
+            return;
+
+        if (this_actor.is_currently_hidden == true)
+            this_actor.SetHidden(false);
+
+        if (target_actor is PlayerData)
+            GameLogger.Log("The player step into a web.");
+        else
+            GameLogger.Log("The " + target_actor.prototype.name.ToLower() + " steps into a web.");
+
+        target_actor.TryToHit(this_actor.prototype.stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 0, 0) },
+            new List<EffectData> { new EffectAddMovementTime { damage_type = DamageType.SLASH, amount = 50, duration = 1000 }});
+    }
+}
