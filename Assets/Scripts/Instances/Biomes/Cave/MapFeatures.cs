@@ -340,3 +340,39 @@ public class MFCaveOilRoom : MapFeatureData
         }
     }
 }
+
+public class MFCavePoisonFlowerRoom : MapFeatureData
+{
+    public MFCavePoisonFlowerRoom(MapData map) : base(map)
+    {
+        dimensions = (8, 8);
+    }
+
+    public override void Generate()
+    {
+        for (int i = 0; i < UnityEngine.Random.Range(3,6); ++i)
+        {
+            int tries = 0;
+            bool found = false;
+            int x = 0;
+            int y = 0;
+            MonsterData flower = new MonsterData(0,0, new Flower(difficulty_level));
+            while (found == false && tries < 1000)
+            {
+                x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
+                y = UnityEngine.Random.Range(position.y, position.y + dimensions.y);
+                
+                if (map.CanBeMovedInByActor(x,y, flower) == true)
+                    found = true;
+                    
+                ++tries;
+            }
+
+            if (found == true)
+            {
+                flower.MoveTo(x,y);
+                map.Add(flower);
+            }
+        }
+    }
+}

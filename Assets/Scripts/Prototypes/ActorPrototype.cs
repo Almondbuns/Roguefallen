@@ -50,6 +50,11 @@ public class ActorPrototype
         stats = new ActorStats();
         stats.level = level;
         talents = new();
+
+        //Standard resistances scale with level - specific monsters may overwrite values
+        stats.meter_resistances.SetResistance(DamageType.DISEASE, 10 + 5 * level);
+        stats.meter_resistances.SetResistance(DamageType.POISON, 10 + 5 * level);
+        stats.meter_resistances.SetResistance(DamageType.INSANITY, 10 + 5 * level);
     }
 
     public virtual bool OnPlayerMovementHit(ActorData actor_data)

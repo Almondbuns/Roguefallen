@@ -187,7 +187,8 @@ public class GameData : MonoBehaviour
                 {                    
                     
                     (typeof(MFCaveTreasureRoom), 0, 1), 
-                    (typeof(MFCaveOilRoom), 1, 2),                                        
+                    (typeof(MFCaveOilRoom), 0, 2),
+                    (typeof(MFCavePoisonFlowerRoom), 0, 1),                                             
                 },                
 
                 encounters =
