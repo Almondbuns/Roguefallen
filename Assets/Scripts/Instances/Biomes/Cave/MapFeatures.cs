@@ -344,3 +344,31 @@ public class MFCaveStoreUsables : MFStore
         item_types.Add(typeof(ItemRepairPowder));
     }
 }
+
+public class MFCaveOilRoom : MapFeatureData
+{
+    public MFCaveOilRoom(MapData map) : base(map)
+    {
+        dimensions = (8, 8);
+    }
+
+    public override void Generate()
+    {
+        for (int x = position.x; x < position.x + dimensions.x; ++x)
+        {
+            for (int y = position.y; y < position.y + dimensions.y; ++y)
+            {
+                map.tiles[x, y].objects.Clear();
+            }
+        }
+
+        for (int i = 0; i < UnityEngine.Random.Range(10,31); ++i)
+        {
+            int x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
+            int y = UnityEngine.Random.Range(position.y, position.y + dimensions.y);
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(x, y);
+            if (tile == null) continue;
+            map.Add(new DynamicObjectData(tile.Value.x, tile.Value.y, new OilPuddle(difficulty_level)));
+        }
+    }
+}

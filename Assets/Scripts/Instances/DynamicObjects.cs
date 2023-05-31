@@ -266,3 +266,33 @@ public class SpiderWebTrap : ActorPrototype
             new List<EffectData> { new EffectAddMovementTime { damage_type = DamageType.SLASH, amount = 50, duration = 1000 }});
     }
 }
+
+public class OilPuddle : ActorPrototype
+{
+    public OilPuddle(int level) : base(level)
+    {
+        name = "Oil Puddle";
+        icon = "images/objects/oil_puddle";
+
+        blocks_tiles = false;
+
+        stats.health_max = 20;
+        stats.dodge = -100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Oil Puddle", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+    }
+
+    public override void OnDamage(ActorData this_actor, DamageType damage_type, int damage_amount)
+    {
+        if ((damage_type == DamageType.FIRE && damage_amount > 0)
+            || (damage_amount > 0 && UnityEngine.Random.value < 0.2f))
+        {
+            this_actor.current_action = new ExplodeAction(this_actor, 1, new List<(DamageType type, int amount, int penetration)>{(DamageType.FIRE,10,0)}, true)
+            {
+                prepare_time = 300, 
+                prepare_message = "The oil puddle catches fire.", 
+                action_message = "The oil puddle explodes."
+            };
+        }
+    }
+}

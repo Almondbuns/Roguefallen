@@ -10,7 +10,7 @@ public class GameData : MonoBehaviour
     public static bool GODMODE = false;
     public int starting_level = 1;
 
-    public string game_version = "0.1 Alpha 1";
+    public string game_version = "0.1 Alpha 3";
     public int world_map_index;
     public long global_ticks = 0;
     
@@ -186,7 +186,8 @@ public class GameData : MonoBehaviour
                 map_features =
                 {                    
                     
-                    (typeof(MFCaveTreasureRoom), 0, 1),                                        
+                    (typeof(MFCaveTreasureRoom), 0, 1), 
+                    (typeof(MFCaveOilRoom), 1, 2),                                        
                 },                
 
                 encounters =

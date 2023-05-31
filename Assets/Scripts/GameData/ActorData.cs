@@ -729,6 +729,7 @@ public class ActorData
             absorb_sum += damage_absorbed;
 
             message += damage_taken + " (" + damage_absorbed + " absorbed)" + " " + damage_type;
+            prototype.OnDamage(this, damage_per_type.type, damage_taken);
 
             ++counter;
         }

@@ -68,6 +68,10 @@ public class ActorPrototype
     public virtual void OnCreation(ActorData this_actor)
     {
     }
+
+    public virtual void OnDamage(ActorData this_actor, DamageType damage_type, int damage_amount)
+    {
+    }
 }
 
 public class PlayerPrototype : ActorPrototype
