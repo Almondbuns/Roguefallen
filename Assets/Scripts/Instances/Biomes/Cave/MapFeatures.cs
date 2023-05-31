@@ -104,14 +104,6 @@ public class MFCaveStorageRoom : MapFeatureData
 
     public override void Generate()
     {
-        for (int x = position.x; x < position.x + dimensions.x; ++x)
-        {
-            for (int y = position.y; y < position.y + dimensions.y; ++y)
-            {
-                map.tiles[x, y].objects.Clear();
-            }
-        }
-
         for (int i = 0; i < UnityEngine.Random.Range(5,12); ++i)
         {
             int x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
@@ -135,14 +127,6 @@ public class MFCaveTreasureRoom : MapFeatureData
 
     public override void Generate()
     {
-        for (int x = position.x; x < position.x + dimensions.x; ++x)
-        {
-            for (int y = position.y; y < position.y + dimensions.y; ++y)
-            {
-                map.tiles[x, y].objects.Clear();
-            }
-        }
-
         for (int i = 0; i < UnityEngine.Random.Range(5,11); ++i)
         {
             int x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
@@ -166,14 +150,6 @@ public class MFCaveSpiderRoom : MapFeatureData
 
     public override void Generate()
     {
-        for (int x = position.x; x < position.x + dimensions.x; ++x)
-        {
-            for (int y = position.y; y < position.y + dimensions.y; ++y)
-            {
-                map.tiles[x, y].objects.Clear();
-            }
-        }
-
         for (int i = 0; i < UnityEngine.Random.Range(10, 21); ++i)
         {
             int x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
@@ -354,14 +330,6 @@ public class MFCaveOilRoom : MapFeatureData
 
     public override void Generate()
     {
-        for (int x = position.x; x < position.x + dimensions.x; ++x)
-        {
-            for (int y = position.y; y < position.y + dimensions.y; ++y)
-            {
-                map.tiles[x, y].objects.Clear();
-            }
-        }
-
         for (int i = 0; i < UnityEngine.Random.Range(10,31); ++i)
         {
             int x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
