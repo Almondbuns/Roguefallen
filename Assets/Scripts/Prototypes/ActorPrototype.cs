@@ -27,6 +27,10 @@ public class ActorPrototype
     public bool blocks_tiles = true;
     public bool is_hidden = false;
 
+    public bool can_catch_disease = true;
+    public bool can_catch_poison = true;
+    public bool can_catch_insanity = true;
+
     public int prefab_index = -1;
 
     public ActorStats stats;

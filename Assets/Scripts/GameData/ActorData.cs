@@ -700,17 +700,31 @@ public class ActorData
             }
             else if (damage_per_type.type == DamageType.DISEASE)
             {
-                meter_resistances.resistances[damage_per_type.type] += damage_per_type.damage;
-                damage_absorbed = damage_per_type.damage;
-                damage_taken = 0;
-                output = 0;
+                if (prototype.can_catch_disease == true)
+                {
+                    meter_resistances.resistances[damage_per_type.type] += damage_per_type.damage;
+                    damage_absorbed = damage_per_type.damage;
+                    damage_taken = 0;
+                    output = 0;
+                }
+                else
+                {
+                    continue;
+                }
             }
             else if (damage_per_type.type == DamageType.POISON)
             {
-                meter_resistances.resistances[damage_per_type.type] += damage_per_type.damage;
-                damage_absorbed = damage_per_type.damage;
-                damage_taken = 0;
-                output = 0;
+                if (prototype.can_catch_poison == true)
+                {
+                    meter_resistances.resistances[damage_per_type.type] += damage_per_type.damage;
+                    damage_absorbed = damage_per_type.damage;
+                    damage_taken = 0;
+                    output = 0;
+                }
+                else
+                {
+                    continue;
+                }
             }
             else
             {

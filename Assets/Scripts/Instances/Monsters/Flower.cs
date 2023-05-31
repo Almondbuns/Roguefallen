@@ -52,7 +52,7 @@ public class Flower : ActorPrototype
             stats.dodge = 0;
             stats.kill_experience = 20;
 
-            stats.meter_resistances.SetResistance(DamageType.POISON, 10000);
+            can_catch_poison = false;
 
             talents.Add(
                 new TalentRadiusAllAttack

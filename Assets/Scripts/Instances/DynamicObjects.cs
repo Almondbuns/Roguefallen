@@ -9,6 +9,10 @@ public class Chest : ActorPrototype
         name = "Chest";
         icon = "images/objects/chest";
 
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
         stats.health_max = 100;
 
         stats.body_armor.Add(new ArmorStats { body_part = "Chest", percentage = 100, armor = (2, 3, 1), durability_max = 50 });
@@ -61,6 +65,10 @@ public class Crate : ActorPrototype
     {
         name = "Crate";
         icon = "images/objects/box";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
 
         stats.health_max = 10;
         stats.dodge = -100;
@@ -118,6 +126,10 @@ public class Jar : ActorPrototype
     {
         name = "Jar";
         icon = "images/objects/jar";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
 
         stats.health_max = 5;
         stats.dodge = -100;
@@ -195,6 +207,10 @@ public class BrokenCrate : ActorPrototype
         name = "Broken Crate";
         icon = "images/objects/box_broken";
 
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
         stats.health_max = 10;
         stats.dodge = -100;
 
@@ -209,6 +225,10 @@ public class BearTrap : ActorPrototype
     {
         name = "Bear Trap";
         icon = "images/objects/bear_trap";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
 
         blocks_tiles = false;
         is_hidden = true;
@@ -237,6 +257,10 @@ public class SpiderWebTrap : ActorPrototype
     {
         name = "Spider Web";
         icon = "images/objects/spider_web";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
 
         blocks_tiles = false;
         is_hidden = true;
@@ -273,6 +297,10 @@ public class OilPuddle : ActorPrototype
     {
         name = "Oil Puddle";
         icon = "images/objects/oil_puddle";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
 
         blocks_tiles = false;
 
