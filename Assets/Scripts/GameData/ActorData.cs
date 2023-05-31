@@ -810,7 +810,7 @@ public class ActorData
                         DiseasePrototype proto = (DiseasePrototype)Activator.CreateInstance(diseases[random_index]);
                         DiseaseData illness = new DiseaseData(proto);
                         current_diseases.Add(illness);
-                        GameLogger.Log("The " + prototype.name + " contracts " + illness.prototype.name + ".");
+                        GameLogger.Log("<color=#F17500>The " + prototype.name + " contracts " + illness.prototype.name + ".</color>");
                         meter_resistances.resistances[DamageType.DISEASE] = 0;
                     }
                 }
@@ -837,7 +837,7 @@ public class ActorData
                         PoisonPrototype proto = (PoisonPrototype)Activator.CreateInstance(poisons[random_index]);
                         PoisonData poison = new PoisonData(proto);
                         current_poisons.Add(poison);
-                        GameLogger.Log("The " + prototype.name + " contracts " + poison.prototype.name + ".");
+                        GameLogger.Log("<color=#F17500>The " + prototype.name + " contracts " + poison.prototype.name + ".</color>");
                         meter_resistances.resistances[DamageType.POISON] = 0;
                     }
                 }

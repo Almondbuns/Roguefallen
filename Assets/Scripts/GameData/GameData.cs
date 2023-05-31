@@ -187,8 +187,7 @@ public class GameData : MonoBehaviour
                 {                    
                     
                     (typeof(MFCaveTreasureRoom), 0, 1), 
-                    (typeof(MFCaveOilRoom), 0, 2),
-                    (typeof(MFCavePoisonFlowerRoom), 0, 1),                                             
+                    (typeof(MFCaveOilRoom), 0, 2),                                           
                 },                
 
                 encounters =
@@ -212,6 +211,9 @@ public class GameData : MonoBehaviour
                     new EncounterData() { type_amounts = {(typeof(OstrillWarrior),2,3),(typeof(OstrillThief),1,3)}, level_min = 10, level_max = 10,},                                
                 }
             };
+
+            if (level >= 2)
+                level_data.map_features.Add((typeof(MFCavePoisonFlowerRoom), 0, 1));
 
             if (UnityEngine.Random.value < 0.1f)
                 level_data.map_features.Add((typeof(MFCaveStoreConsumables), 1,1));
