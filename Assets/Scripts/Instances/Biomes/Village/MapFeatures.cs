@@ -702,3 +702,31 @@ public class MFCaveEntrance : MFChangeDungeon
         exit_tile = (position.x + dimensions.x / 2, position.y);
     }
 }
+
+public class MFVillageSunflowers : MapFeatureData
+{
+    public MFVillageSunflowers(MapData map) : base(map)
+    {
+        dimensions = (6, 3);
+
+        MapObjectCollectionData collection = new();
+        collection.Add(new MapObjectData("field_empty"));
+        floors["floor"] = collection;
+    }
+
+    public override void Generate()
+    {
+        for (int i = 0; i < 6; ++ i)
+        {
+            map.tiles[position.x + i, position.y].objects.Clear();
+            map.tiles[position.x + i, position.y+1].objects.Clear();
+            map.tiles[position.x + i, position.y+2].objects.Clear();
+            map.tiles[position.x + i, position.y].floor = floors["floor"].Random();
+            map.tiles[position.x + i, position.y+1].floor = floors["floor"].Random();
+
+            MonsterData flower = new MonsterData(0,0, new Flower(0));
+            flower.MoveTo(position.x + i,position.y+1);
+            map.Add(flower);        
+        }
+    }
+}

@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: -874458553697352378}
   - component: {fileID: 3795815374896446024}
   m_Layer: 0
-  m_Name: Flower
+  m_Name: Sunflower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -158,6 +158,7 @@ public class GameData : MonoBehaviour
                             (typeof(MFStoreUsables), 1,1),
                             (typeof(MFStoreJewelry), 1,1),
                             (typeof(MFTavern), 1,1),
+                            (typeof(MFVillageSunflowers), 4,4),
                             (typeof(MFVillageField), 4,4),
                         },
                     }

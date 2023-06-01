@@ -8,7 +8,7 @@ public class Flower : ActorPrototype
     {
         if (level <= 0)
         {
-            name = "Sun Flower";
+            name = "Sunflower";
             icon = "images/npc/flower";
             prefab_index = 35;
             tile_width = 1;
@@ -33,7 +33,7 @@ public class Flower : ActorPrototype
         {
             name = "Poison Flower";
             icon = "images/npc/flower";
-            prefab_index = 35;
+            prefab_index = 36;
             tile_width = 1;
             tile_height = 2;
 
