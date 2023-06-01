@@ -298,6 +298,8 @@ public class BiomeCave : BiomeData
         for (int z = 0; z < UnityEngine.Random.Range(2, accepted_start_positions.Count / 25); ++z)
         {
             (int x, int y) r_pos = accepted_start_positions[UnityEngine.Random.Range(0, accepted_start_positions.Count)];
+            map.tiles[r_pos.x, r_pos.y].objects.Clear();
+            
             if (is_blue_room == true)
                 map.tiles[r_pos.x, r_pos.y].objects.Add(objects["light_blue"].Random());
             else
