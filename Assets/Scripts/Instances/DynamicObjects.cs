@@ -9,6 +9,10 @@ public class Chest : ActorPrototype
         name = "Chest";
         icon = "images/objects/chest";
 
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
         stats.health_max = 100;
 
         stats.body_armor.Add(new ArmorStats { body_part = "Chest", percentage = 100, armor = (2, 3, 1), durability_max = 50 });
@@ -61,6 +65,10 @@ public class Crate : ActorPrototype
     {
         name = "Crate";
         icon = "images/objects/box";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
 
         stats.health_max = 10;
         stats.dodge = -100;
@@ -118,6 +126,10 @@ public class Jar : ActorPrototype
     {
         name = "Jar";
         icon = "images/objects/jar";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
 
         stats.health_max = 5;
         stats.dodge = -100;
@@ -195,6 +207,10 @@ public class BrokenCrate : ActorPrototype
         name = "Broken Crate";
         icon = "images/objects/box_broken";
 
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
         stats.health_max = 10;
         stats.dodge = -100;
 
@@ -209,6 +225,10 @@ public class BearTrap : ActorPrototype
     {
         name = "Bear Trap";
         icon = "images/objects/bear_trap";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
 
         blocks_tiles = false;
         is_hidden = true;
@@ -238,6 +258,10 @@ public class SpiderWebTrap : ActorPrototype
         name = "Spider Web";
         icon = "images/objects/spider_web";
 
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
         blocks_tiles = false;
         is_hidden = true;
 
@@ -264,5 +288,52 @@ public class SpiderWebTrap : ActorPrototype
 
         target_actor.TryToHit(this_actor.prototype.stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 0, 0) },
             new List<EffectData> { new EffectAddMovementTime { damage_type = DamageType.SLASH, amount = 50, duration = 1000 }});
+    }
+}
+
+public class OilPuddle : ActorPrototype
+{
+    public OilPuddle(int level) : base(level)
+    {
+        name = "Oil Puddle";
+        icon = "images/objects/oil_puddle";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
+        blocks_tiles = false;
+
+        stats.health_max = 20;
+        stats.dodge = -100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Oil Puddle", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+    }
+
+    public override void OnDamage(ActorData this_actor, DamageType damage_type, int damage_amount)
+    {
+        if ((damage_type == DamageType.FIRE && damage_amount > 0)
+            || (damage_amount > 0 && UnityEngine.Random.value < 0.2f))
+        {
+            this_actor.current_action = new ExplodeAction(this_actor, 1, new List<(DamageType type, int amount, int penetration)>{(DamageType.FIRE,10,0)}, true)
+            {
+                prepare_time = 300, 
+                prepare_message = "The oil puddle catches fire.", 
+                action_message = "The oil puddle explodes."
+            };
+        }
+    }
+
+    public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
+    {
+        if (UnityEngine.Random.value < 0.1f)
+        {
+            this_actor.current_action = new ExplodeAction(this_actor, 1, new List<(DamageType type, int amount, int penetration)>{(DamageType.FIRE,10,0)}, true)
+            {
+                prepare_time = 300, 
+                prepare_message = "The oil puddle catches fire.", 
+                action_message = "The oil puddle explodes."
+            };
+        }
     }
 }

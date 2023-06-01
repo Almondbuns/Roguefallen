@@ -192,7 +192,7 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         string text = "<color=#ff0000>-" + damage.ToString();
         if (armor_absorb > 0)
-            text += "</color><color=#000000>" + " (" + armor_absorb.ToString() + ")</color>";
+            text += "</color><color=#CCCCCC>" + " (" + armor_absorb.ToString() + ")</color>";
         VisualAction v = new VisualAction {type = VisualActionType.FLOATINGINFO, text = text};
         visual_action_queue.Add(v);
     }

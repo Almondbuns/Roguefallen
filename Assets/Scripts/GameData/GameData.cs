@@ -10,7 +10,7 @@ public class GameData : MonoBehaviour
     public static bool GODMODE = false;
     public int starting_level = 1;
 
-    public string game_version = "0.1 Alpha 1";
+    public string game_version = "0.1 Alpha 3";
     public int world_map_index;
     public long global_ticks = 0;
     
@@ -158,6 +158,7 @@ public class GameData : MonoBehaviour
                             (typeof(MFStoreUsables), 1,1),
                             (typeof(MFStoreJewelry), 1,1),
                             (typeof(MFTavern), 1,1),
+                            (typeof(MFVillageSunflowers), 4,4),
                             (typeof(MFVillageField), 4,4),
                         },
                     }
@@ -186,7 +187,8 @@ public class GameData : MonoBehaviour
                 map_features =
                 {                    
                     
-                    (typeof(MFCaveTreasureRoom), 0, 1),                                        
+                    (typeof(MFCaveTreasureRoom), 0, 1), 
+                    (typeof(MFCaveOilRoom), 0, 2),                                           
                 },                
 
                 encounters =
@@ -210,6 +212,9 @@ public class GameData : MonoBehaviour
                     new EncounterData() { type_amounts = {(typeof(OstrillWarrior),2,3),(typeof(OstrillThief),1,3)}, level_min = 10, level_max = 10,},                                
                 }
             };
+
+            if (level >= 2)
+                level_data.map_features.Add((typeof(MFCavePoisonFlowerRoom), 0, 1));
 
             if (UnityEngine.Random.value < 0.1f)
                 level_data.map_features.Add((typeof(MFCaveStoreConsumables), 1,1));

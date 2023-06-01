@@ -232,11 +232,13 @@ public class ExplodeAction : ActionData
     public ExplodeAction(ActorData actor, int explosion_radius, List<(DamageType type, int amount, int penetration)> damage, bool explosion_on_impact)
     {
         name = "Explode";
-        icon = "images/actions/movement";
-        type = ActionType.MOVEMENT;
-        log = false;
+        icon = "images/talents/fire";
+        type = ActionType.UNKNOWN;
+        log = true;
         prepare_time = 0;
+        prepare_message = "";
         recover_time = 0;
+        action_message = "";
         commands.Add(new ExplodeCommand(actor,explosion_radius, damage, explosion_on_impact));
         regain_stamina = true;
         show_on_map = false;

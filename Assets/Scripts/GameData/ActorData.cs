@@ -700,17 +700,31 @@ public class ActorData
             }
             else if (damage_per_type.type == DamageType.DISEASE)
             {
-                meter_resistances.resistances[damage_per_type.type] += damage_per_type.damage;
-                damage_absorbed = damage_per_type.damage;
-                damage_taken = 0;
-                output = 0;
+                if (prototype.can_catch_disease == true)
+                {
+                    meter_resistances.resistances[damage_per_type.type] += damage_per_type.damage;
+                    damage_absorbed = damage_per_type.damage;
+                    damage_taken = 0;
+                    output = 0;
+                }
+                else
+                {
+                    continue;
+                }
             }
             else if (damage_per_type.type == DamageType.POISON)
             {
-                meter_resistances.resistances[damage_per_type.type] += damage_per_type.damage;
-                damage_absorbed = damage_per_type.damage;
-                damage_taken = 0;
-                output = 0;
+                if (prototype.can_catch_poison == true)
+                {
+                    meter_resistances.resistances[damage_per_type.type] += damage_per_type.damage;
+                    damage_absorbed = damage_per_type.damage;
+                    damage_taken = 0;
+                    output = 0;
+                }
+                else
+                {
+                    continue;
+                }
             }
             else
             {
@@ -729,6 +743,7 @@ public class ActorData
             absorb_sum += damage_absorbed;
 
             message += damage_taken + " (" + damage_absorbed + " absorbed)" + " " + damage_type;
+            prototype.OnDamage(this, damage_per_type.type, damage_taken);
 
             ++counter;
         }
@@ -795,7 +810,7 @@ public class ActorData
                         DiseasePrototype proto = (DiseasePrototype)Activator.CreateInstance(diseases[random_index]);
                         DiseaseData illness = new DiseaseData(proto);
                         current_diseases.Add(illness);
-                        GameLogger.Log("The " + prototype.name + " contracts " + illness.prototype.name + ".");
+                        GameLogger.Log("<color=#F17500>The " + prototype.name + " contracts " + illness.prototype.name + ".</color>");
                         meter_resistances.resistances[DamageType.DISEASE] = 0;
                     }
                 }
@@ -822,7 +837,7 @@ public class ActorData
                         PoisonPrototype proto = (PoisonPrototype)Activator.CreateInstance(poisons[random_index]);
                         PoisonData poison = new PoisonData(proto);
                         current_poisons.Add(poison);
-                        GameLogger.Log("The " + prototype.name + " contracts " + poison.prototype.name + ".");
+                        GameLogger.Log("<color=#F17500>The " + prototype.name + " contracts " + poison.prototype.name + ".</color>");
                         meter_resistances.resistances[DamageType.POISON] = 0;
                     }
                 }

@@ -26,7 +26,7 @@ public class Spider : ActorPrototype
             stats.kill_experience = 10;
 
             stats.probability_resistances.SetResistance(DamageType.FIRE, DamageTypeResistances.VERY_WEAK);
-            stats.meter_resistances.SetResistance(DamageType.POISON, 20);
+            stats.meter_resistances.SetResistance(DamageType.POISON, 10000);
 
             talents.Add(
                 new TalentStandardMeleeAttack
@@ -71,7 +71,7 @@ public class Spider : ActorPrototype
             stats.kill_experience = 20;
 
             stats.probability_resistances.SetResistance(DamageType.FIRE, DamageTypeResistances.VERY_WEAK);
-            stats.meter_resistances.SetResistance(DamageType.POISON, 20);
+            stats.meter_resistances.SetResistance(DamageType.POISON, 10000);
 
             talents.Add(
                 new TalentStandardMeleeAttack
@@ -117,7 +117,7 @@ public class Spider : ActorPrototype
             stats.kill_experience = 30;
 
             stats.probability_resistances.SetResistance(DamageType.FIRE, DamageTypeResistances.VERY_WEAK);
-            stats.meter_resistances.SetResistance(DamageType.POISON, 20);
+            stats.meter_resistances.SetResistance(DamageType.POISON, 10000);
 
             talents.Add(
                 new TalentStandardMeleeAttack

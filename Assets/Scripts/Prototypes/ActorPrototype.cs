@@ -27,6 +27,10 @@ public class ActorPrototype
     public bool blocks_tiles = true;
     public bool is_hidden = false;
 
+    public bool can_catch_disease = true;
+    public bool can_catch_poison = true;
+    public bool can_catch_insanity = true;
+
     public int prefab_index = -1;
 
     public ActorStats stats;
@@ -50,6 +54,11 @@ public class ActorPrototype
         stats = new ActorStats();
         stats.level = level;
         talents = new();
+
+        //Standard resistances scale with level - specific monsters may overwrite values
+        stats.meter_resistances.SetResistance(DamageType.DISEASE, 10 + 5 * level);
+        stats.meter_resistances.SetResistance(DamageType.POISON, 10 + 5 * level);
+        stats.meter_resistances.SetResistance(DamageType.INSANITY, 10 + 5 * level);
     }
 
     public virtual bool OnPlayerMovementHit(ActorData actor_data)
@@ -66,6 +75,10 @@ public class ActorPrototype
     }
 
     public virtual void OnCreation(ActorData this_actor)
+    {
+    }
+
+    public virtual void OnDamage(ActorData this_actor, DamageType damage_type, int damage_amount)
     {
     }
 }

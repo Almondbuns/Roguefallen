@@ -90,8 +90,8 @@ public class ProjectileData : ActorData
 
     public override void OnKill()
     {
-        if (prototype.projectile.explosion_on_impact == true)
-            GameLogger.Log("The " + prototype.name + " explodes.");
+        //if (prototype.projectile.explosion_on_impact == true)
+            //GameLogger.Log("The " + prototype.name + " explodes.");
         base.OnKill();
     }
 }

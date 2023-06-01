@@ -104,14 +104,6 @@ public class MFCaveStorageRoom : MapFeatureData
 
     public override void Generate()
     {
-        for (int x = position.x; x < position.x + dimensions.x; ++x)
-        {
-            for (int y = position.y; y < position.y + dimensions.y; ++y)
-            {
-                map.tiles[x, y].objects.Clear();
-            }
-        }
-
         for (int i = 0; i < UnityEngine.Random.Range(5,12); ++i)
         {
             int x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
@@ -135,14 +127,6 @@ public class MFCaveTreasureRoom : MapFeatureData
 
     public override void Generate()
     {
-        for (int x = position.x; x < position.x + dimensions.x; ++x)
-        {
-            for (int y = position.y; y < position.y + dimensions.y; ++y)
-            {
-                map.tiles[x, y].objects.Clear();
-            }
-        }
-
         for (int i = 0; i < UnityEngine.Random.Range(5,11); ++i)
         {
             int x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
@@ -166,14 +150,6 @@ public class MFCaveSpiderRoom : MapFeatureData
 
     public override void Generate()
     {
-        for (int x = position.x; x < position.x + dimensions.x; ++x)
-        {
-            for (int y = position.y; y < position.y + dimensions.y; ++y)
-            {
-                map.tiles[x, y].objects.Clear();
-            }
-        }
-
         for (int i = 0; i < UnityEngine.Random.Range(10, 21); ++i)
         {
             int x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
@@ -342,5 +318,61 @@ public class MFCaveStoreUsables : MFStore
         item_types.Add(typeof(ItemFluteOfBraveness));
         item_types.Add(typeof(ItemFluteOfEndurance));
         item_types.Add(typeof(ItemRepairPowder));
+    }
+}
+
+public class MFCaveOilRoom : MapFeatureData
+{
+    public MFCaveOilRoom(MapData map) : base(map)
+    {
+        dimensions = (8, 8);
+    }
+
+    public override void Generate()
+    {
+        for (int i = 0; i < UnityEngine.Random.Range(10,31); ++i)
+        {
+            int x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
+            int y = UnityEngine.Random.Range(position.y, position.y + dimensions.y);
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(x, y);
+            if (tile == null) continue;
+            map.Add(new DynamicObjectData(tile.Value.x, tile.Value.y, new OilPuddle(difficulty_level)));
+        }
+    }
+}
+
+public class MFCavePoisonFlowerRoom : MapFeatureData
+{
+    public MFCavePoisonFlowerRoom(MapData map) : base(map)
+    {
+        dimensions = (8, 8);
+    }
+
+    public override void Generate()
+    {
+        for (int i = 0; i < UnityEngine.Random.Range(3,6); ++i)
+        {
+            int tries = 0;
+            bool found = false;
+            int x = 0;
+            int y = 0;
+            MonsterData flower = new MonsterData(0,0, new Flower(difficulty_level));
+            while (found == false && tries < 1000)
+            {
+                x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
+                y = UnityEngine.Random.Range(position.y, position.y + dimensions.y);
+                
+                if (map.CanBeMovedInByActor(x,y, flower) == true)
+                    found = true;
+                    
+                ++tries;
+            }
+
+            if (found == true)
+            {
+                flower.MoveTo(x,y);
+                map.Add(flower);
+            }
+        }
     }
 }

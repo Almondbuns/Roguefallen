@@ -281,6 +281,8 @@ public class MapData
 
             if (IsAccessableTile(x + r_x, y + r_y))
                 return (x + r_x, y + r_y);
+
+            ++tries;
         }
 
         return null;
