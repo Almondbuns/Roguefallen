@@ -323,4 +323,17 @@ public class OilPuddle : ActorPrototype
             };
         }
     }
+
+    public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
+    {
+        if (UnityEngine.Random.value < 0.1f)
+        {
+            this_actor.current_action = new ExplodeAction(this_actor, 1, new List<(DamageType type, int amount, int penetration)>{(DamageType.FIRE,10,0)}, true)
+            {
+                prepare_time = 300, 
+                prepare_message = "The oil puddle catches fire.", 
+                action_message = "The oil puddle explodes."
+            };
+        }
+    }
 }
