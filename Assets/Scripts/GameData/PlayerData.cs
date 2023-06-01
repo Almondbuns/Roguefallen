@@ -130,8 +130,8 @@ public class PlayerData : ActorData
         equipment.Add(new EquipmentSlotData { name = "Neck", item_type = new List<ItemType> { ItemType.AMULET } });
         equipment.Add(new EquipmentSlotData { name = "Finger 1", item_type = new List<ItemType> { ItemType.RING } });
         equipment.Add(new EquipmentSlotData { name = "Finger 2", item_type = new List<ItemType> { ItemType.RING } });
-        //equipment.Add(new EquipmentSlotData { name = "Weapon 1L", item_type = new List<ItemType> { ItemType.WEAPON, ItemType.SHIELD } });
-        equipment.Add(new EquipmentSlotData { name = "Weapon", item_type = new List<ItemType> { ItemType.WEAPON, ItemType.SHIELD } });
+        equipment.Add(new EquipmentSlotData { name = "Weapon", item_type = new List<ItemType> { ItemType.WEAPON} });
+         equipment.Add(new EquipmentSlotData { name = "Shield", item_type = new List<ItemType> { ItemType.SHIELD } });
         //equipment.Add(new EquipmentSlotData { name = "Weapon 2L", item_type = new List<ItemType> { ItemType.WEAPON, ItemType.SHIELD } });
         //equipment.Add(new EquipmentSlotData { name = "Weapon 2R", item_type = new List<ItemType> { ItemType.WEAPON, ItemType.SHIELD } });
 
@@ -608,6 +608,19 @@ public class PlayerData : ActorData
                     usable_talents.Add((pts, talent));
                 }
             }
+
+            if (equipment_slot.item.shield_data != null)
+            {
+                foreach(TalentData talent in equipment_slot.item.shield_data.talents)
+                {
+                    PlayerTalentSource pts = new()
+                    {
+                        type = PlayerTalentSourceType.Item,
+                        item = equipment_slot.item,
+                    };
+                    usable_talents.Add((pts, talent));
+                }
+            }
         }
 
         List<SkillTalentData> skill_talents = player_stats.skill_tree.GetUnlockedSkillTalents();
@@ -830,6 +843,19 @@ public class PlayerData : ActorData
         float wait_time = base.Tick();
 
         player_stats.Tick();
+
+        foreach(var slot in equipment)
+        {
+            if (slot.item != null)
+                slot.item.Tick();
+        }
+
+        foreach(var slot in inventory.slots)
+        {
+            if (slot.item != null)
+                slot.item.Tick();
+        }
+        
 
         if (current_substained_talents_id.Count > 0)
         {

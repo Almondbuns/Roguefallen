@@ -2,30 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*public class ItemShieldHeavy : ItemData
+public class ItemShieldHeavy : ItemPrototype
 {
-    public ItemShieldHeavy(int x, int y) : base(x, y)
+    public ItemShieldHeavy(int level) : base(level)
     {
         name = "Heavy Shield";
         icon = "images/objects/shield_heavy";
-        weight = 10;
-        shield_data = new ShieldData
+        type = ItemType.SHIELD;
+        weight = 5;
+        
+        effects_when_equipped.Add(new EffectAddMovementTime { amount = 50 });
+
+        if (level <= 20)
         {
-            sub_type = ShieldSubType.HEAVY,
-            armor_physical = 10,
-            armor_elemental = 5,
-            armor_magical = 0,
-            stamina_absorption = 75,
-            bash_damage = 50,
-            parry_chance = 35,
-            reduction_physical = 90,
-            reduction_elemental = 75,
-            reduction_magical = 25,
-            block = new TalentBlock(),
-            parry = new TalentParry(),
-            bash = new TalentBash()
+            tier = 0;
+            armor = new ArmorPrototype
+            {                
+                sub_type = ArmorSubType.HEAVY,
+                armor_physical = 2,
+                armor_elemental = 1,
+                armor_magical = 0,
+                durability_max = 400,
+            };
+            
+            gold_value = 100;
+            required_attributes.strength = 5;
+        }
+
+        shield = new()
+        {
+            sub_type = ShieldSubType.HEAVY, 
+            talents =
+            {
+                new TalentShieldBash()
+                {
+                    
+                },
+            },
         };
-        required_attributes.strength = 20;
     }
-}*/
+}
 

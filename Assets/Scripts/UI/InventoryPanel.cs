@@ -213,10 +213,10 @@ public class PanelSidePlayerEquipment : InventoryPanelSide
                 x = -450;
                 y = 180;
             }
-            else if (slot.name == "Weapon 1L")
+            else if (slot.name == "Shield")
             {
                 x = 45 - 800;
-                y = 830 - 450;
+                y = 430 - 450;
             }
             else if (slot.name == "Weapon")
             {
@@ -256,11 +256,11 @@ public class PanelSidePlayerEquipment : InventoryPanelSide
             else if (slot.name == "Finger 1")
             {
                 x = 45 - 800;
-                y = 430 - 450;
+                y = 260 - 450;
             }
             else if (slot.name == "Finger 2")
             {
-                x = 45 - 800;
+                x = 570 - 800;
                 y = 260 - 450;
             }
 

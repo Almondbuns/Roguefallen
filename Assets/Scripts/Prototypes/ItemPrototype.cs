@@ -47,20 +47,12 @@ public enum ShieldSubType
 public class ShieldPrototype
 {
     public ShieldSubType sub_type;
-    public int armor_physical;
-    public int armor_elemental;
-    public int armor_magical;
+    public List<TalentPrototype> talents;
 
-
-    public TalentData block;
-    public int stamina_absorption;
-    public int reduction_physical;
-    public int reduction_elemental;
-    public int reduction_magical;
-    public TalentData parry;
-    public int parry_chance;
-    public TalentData bash;
-    public int bash_damage;
+    public ShieldPrototype()
+    {
+        talents = new();
+    }
 }
 
 public enum ArmorSubType
