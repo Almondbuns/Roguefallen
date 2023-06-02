@@ -247,7 +247,7 @@ public class BearTrap : ActorPrototype
             this_actor.SetHidden(false);
         
         GameLogger.Log("The " + name.ToLower() + " snaps.");
-        target_actor.TryToHit(stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 5, 5)}, null);
+        target_actor.TryToHit(this_actor, stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 5, 5)}, null);
     }
 }
 
@@ -286,7 +286,7 @@ public class SpiderWebTrap : ActorPrototype
         else
             GameLogger.Log("The " + target_actor.prototype.name.ToLower() + " steps into a web.");
 
-        target_actor.TryToHit(this_actor.prototype.stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 0, 0) },
+        target_actor.TryToHit(this_actor, this_actor.prototype.stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 0, 0) },
             new List<EffectData> { new EffectAddMovementTime { damage_type = DamageType.SLASH, amount = 50, duration = 1000 }});
     }
 }

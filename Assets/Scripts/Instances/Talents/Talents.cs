@@ -154,6 +154,32 @@ public class TalentShieldBash : TalentPrototype
 
 }
 
+public class TalentShieldParry : TalentPrototype
+{
+    public TalentShieldParry()
+    {
+        name = "Shield Parry";
+        target = TalentTarget.Self;
+        target_range = 0;
+        icon = "images/talents/sword_attack_heavy";
+        cost_stamina = 2;
+        recover_time = 150;
+        cooldown = 300;
+        description = "Concentrate on parrying the next physical attacks within 100 ticks against you negating the damage and leaving the source open for a counterattack.";
+        action_message ="The <name> parries with a shield.";
+    }
+
+    public override ActionData CreateAction(TalentInputData input)
+    {
+        ActionData action = new ActionData(input.talent);
+
+        action.commands.Add(new GetEffectCommand(input.source_actor, 
+        new EffectParry(){damage_type = DamageType.SLASH, duration = 100, amount = 50,}));
+
+        return action;
+    }
+
+}
 
 //TODO: Combine all Throwing Talents into one
 public class TalentThrowFirebomb : TalentPrototype

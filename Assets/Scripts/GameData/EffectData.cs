@@ -117,6 +117,24 @@ public class EffectConfusion : EffectData
     }
 }
 
+public class EffectParry : EffectData
+{
+    public EffectParry()
+    {
+        name = "Parry Stance";
+        icon = "images/effects/effect_confusion";
+    }
+}
+
+public class EffectCounterStrikeVulnerable : EffectData
+{
+    public EffectCounterStrikeVulnerable()
+    {
+        name = "Counter Vulnerable";
+        icon = "images/effects/effect_confusion";
+    }
+}
+
 public class EffectRemoveMovementTimeRelative : EffectData
 {
     public EffectRemoveMovementTimeRelative()

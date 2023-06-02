@@ -535,7 +535,7 @@ public class MapData
             if (tile.x >= actor.x && tile.y >= actor.y
                 && tile.x <= actor.x + actor.prototype.tile_width - 1&& tile.y <= actor.y + actor.prototype.tile_height - 1)
             {
-                actor.TryToHit(src_actor.GetToHit(), tile.damage_on_hit, tile.effects_on_hit, tile.diseases_on_hit, tile.poisons_on_hit);
+                actor.TryToHit(src_actor, src_actor.GetToHit(), tile.damage_on_hit, tile.effects_on_hit, tile.diseases_on_hit, tile.poisons_on_hit);
             }
         }
     }

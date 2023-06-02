@@ -45,7 +45,7 @@ public class ProjectileData : ActorData
         path = new();
     }
 
-    public override void TryToHit(int to_hit, List<(DamageType type, int damage, int armor_penetration)> damage, List<EffectData> effects, List<Type> diseases, List<Type> poisons)
+    public override void TryToHit(ActorData src_actor, int to_hit, List<(DamageType type, int damage, int armor_penetration)> damage, List<EffectData> effects, List<Type> diseases, List<Type> poisons)
     {
 
     }

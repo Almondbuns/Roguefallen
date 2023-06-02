@@ -188,7 +188,7 @@ public class KnockbackCommand : CommandData
                 GameLogger.Log("The " + target_actor.prototype.name + " is pushed into the " + push_tile_actor.prototype.name + ".");
                 var damage = new List<(DamageType, int, int)> { push_damage };
                 var effects = new List<EffectData> { };
-                push_tile_actor.TryToHit(100, damage, effects);
+                push_tile_actor.TryToHit(target_actor,100, damage, effects);
                 break;
             }
 
@@ -293,7 +293,7 @@ public class PullCommand : CommandData
                 GameLogger.Log("The " + target_actor.prototype.name + " is pulled into the " + pull_tile_actor.prototype.name + ".");
                 var damage = new List<(DamageType, int, int)> { pull_damage };
                 var effects = new List<EffectData> { };
-                pull_tile_actor.TryToHit(100, damage, effects);
+                pull_tile_actor.TryToHit(target_actor, 100, damage, effects);
                 break;
             }
 

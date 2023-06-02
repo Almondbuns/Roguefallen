@@ -161,6 +161,7 @@ public class ActorData
     public event VoidHandler HandleDodge;
     public event VoidHandler HandleResist;
     public event VoidHandler HandleLevelUp;
+    public event VoidHandler HandleParry;
     public event VoidHandler HandleMovement;
      public event VoidHandler HandleTeleport;
     public event ActorDataHandler HandleUnhide;
@@ -593,8 +594,22 @@ public class ActorData
         return body_armor.Find(x => x.body_part == body_part).SubstractDamage(value);
     }
 
-    public virtual void TryToHit(int to_hit, List<(DamageType type , int damage, int armor_penetration)> damage, List<EffectData> effects, List<Type> diseases = null, List<Type> poisons = null)
+    public virtual void TryToHit(ActorData src_actor, int to_hit, List<(DamageType type , int damage, int armor_penetration)> damage, List<EffectData> effects, List<Type> diseases = null, List<Type> poisons = null)
     {
+        //Parry
+        int parry_chance = GetCurrentAdditiveEffectAmount<EffectParry>();
+        if (parry_chance > 0)
+        {
+            int r = UnityEngine.Random.Range(0,100);
+            if (r < parry_chance)
+            {
+                GameLogger.Log("The " + prototype.name + " parries the attack.");
+                src_actor.AddEffect(new EffectCounterStrikeVulnerable(){amount = 1, duration = 300});
+                HandleParry?.Invoke();
+                return;
+            }
+        }
+
         //Only hit if not dodged
         int rand = UnityEngine.Random.Range(0, 100);
         if (rand < 20 + GetDodge() - to_hit) //dodged!
@@ -609,7 +624,7 @@ public class ActorData
 
         string message = "The " + prototype.name + " takes ";
         int counter = 0;
-
+       
         //Hit random body_part (percentage based)
         int random = UnityEngine.Random.Range(1, 101);
         int body_part_sum = 0;
@@ -630,6 +645,12 @@ public class ActorData
 
             // First multiply damage with resistance
             int damage_multiplied = (int) (damage_per_type.damage * prototype.stats.probability_resistances.GetDamageMultiplyer(damage_per_type.type));
+             //Increase damage if counter vulnerable
+            if (GetCurrentAdditiveEffectAmount<EffectCounterStrikeVulnerable>() > 0)
+            {
+                damage_multiplied *= 2;        
+            }
+
             ArmorType armor_type;
             string damage_type;
             switch(damage_per_type.type)
