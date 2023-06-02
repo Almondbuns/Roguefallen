@@ -159,6 +159,7 @@ public class PlayerData : ActorData
             equipment.Find(x => x.name == "Finger 1").item.SetQuality(ItemQuality.Magical1); 
             equipment.Find(x => x.name == "Finger 2").item.SetQuality(ItemQuality.Magical1); 
             equipment.Find(x => x.name == "Neck").item.SetQuality(ItemQuality.Magical1); 
+            equipment.Find(x => x.name == "Shield").item.SetQuality(ItemQuality.Magical1); 
 
             equipment.Find(x => x.name == "Chest").item.SetQuality(ItemQuality.Magical2);
             equipment.Find(x => x.name == "Hands").item.SetQuality(ItemQuality.Magical2); 
@@ -168,6 +169,7 @@ public class PlayerData : ActorData
             equipment.Find(x => x.name == "Finger 1").item.SetQuality(ItemQuality.Magical2); 
             equipment.Find(x => x.name == "Finger 2").item.SetQuality(ItemQuality.Magical2); 
             equipment.Find(x => x.name == "Neck").item.SetQuality(ItemQuality.Magical2); 
+            equipment.Find(x => x.name == "Shield").item.SetQuality(ItemQuality.Magical2); 
             
             equipment.Find(x => x.name == "Chest").item.SetQuality(ItemQuality.Unique);
             equipment.Find(x => x.name == "Hands").item.SetQuality(ItemQuality.Unique); 
@@ -177,6 +179,7 @@ public class PlayerData : ActorData
             equipment.Find(x => x.name == "Finger 1").item.SetQuality(ItemQuality.Unique); 
             equipment.Find(x => x.name == "Finger 2").item.SetQuality(ItemQuality.Unique); 
             equipment.Find(x => x.name == "Neck").item.SetQuality(ItemQuality.Unique);   
+            equipment.Find(x => x.name == "Shield").item.SetQuality(ItemQuality.Unique); 
         }
 
         experience_levels = new List<int>

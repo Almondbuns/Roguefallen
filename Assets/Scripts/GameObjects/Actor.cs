@@ -230,9 +230,18 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         string text;
         if (gain == true)
-            text = "<color=#00aaaa>+ " + effect.name + "</color>";
+        {
+            text = "<color=#00aaaa>+ " + effect.name;
+        }
         else
-            text = "<color=#00aaaa>- " + effect.name + "</color>";
+        {
+            text = "<color=#00aaaa>- " + effect.name;
+        }
+
+        if (effect.amount != 0)
+            text +=  ": " + effect.amount;
+        
+        text += "</color>";
 
         VisualAction v = new VisualAction {type = VisualActionType.FLOATINGINFO, text = text};
         visual_action_queue.Add(v);

@@ -1123,11 +1123,14 @@ public class ActorData
 
     public void AddEffect(EffectData effect)
     {
-        if (this is PlayerData)
-            GameLogger.Log("The Player gains the effect: " + effect.name.ToLower() + ".");
-        else
-            GameLogger.Log("The " + prototype.name + " gains the effect: " + effect.name.ToLower() + ".");
+        string text = "The " + prototype.name + " gains the effect: " + effect.name.ToLower();
+        if (effect.amount != 0) 
+            text += ": " + effect.amount;
+        
+        text += ".";
 
+        GameLogger.Log(text);
+        
         HandleEffect?.Invoke(true, effect);
 
         if (effect.execution_time == EffectDataExecutionTime.START || effect.execution_time == EffectDataExecutionTime.CONTINUOUS) 
@@ -1141,10 +1144,13 @@ public class ActorData
 
     public void RemoveEffect(ActorEffectData effect)
     {
-        if (this is PlayerData)
-            GameLogger.Log("The Player loses the effect: " + effect.effect.name.ToLower() + ".");
-        else
-            GameLogger.Log("The " + prototype.name + " loses the effect: " + effect.effect.name.ToLower() + ".");
+        string text = "The "+ prototype.name +"  loses the effect: " + effect.effect.name.ToLower();
+        if (effect.effect.amount != 0) 
+            text += ": " + effect.effect.amount;
+        
+        text += ".";
+
+        GameLogger.Log(text);
 
         HandleEffect?.Invoke(false, effect.effect);
 

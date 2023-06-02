@@ -273,7 +273,7 @@ public class EffectAddStrength : EffectData
 {
     public EffectAddStrength()
     {
-        name = "Add Strength";
+        name = "Strength";
         icon = "";
     }
 
@@ -283,7 +283,7 @@ public class EffectAddDexterity : EffectData
 {
     public EffectAddDexterity()
     {
-        name = "Add Dexterity";
+        name = "Dexterity";
         icon = "";
     }
 
@@ -293,7 +293,7 @@ public class EffectAddVitality : EffectData
 {
     public EffectAddVitality()
     {
-        name = "Add Vitality";
+        name = "Vitality";
         icon = "";
     }
 
@@ -303,7 +303,7 @@ public class EffectAddIntelligence : EffectData
 {
     public EffectAddIntelligence()
     {
-        name = "Add Intelligence";
+        name = "Intelligence";
         icon = "";
     }
 
@@ -313,7 +313,7 @@ public class EffectAddConstitution : EffectData
 {
     public EffectAddConstitution()
     {
-        name = "Add Constitution";
+        name = "Constitution";
         icon = "";
     }
 
@@ -323,7 +323,7 @@ public class EffectAddWillpower : EffectData
 {
     public EffectAddWillpower()
     {
-        name = "Add Willpower";
+        name = "Willpower";
         icon = "";
     }
 
@@ -333,7 +333,7 @@ public class EffectAddToHit: EffectData
 {
     public EffectAddToHit()
     {
-        name = "Add To Hit";
+        name = "To Hit";
         icon = "";
     }
 }
@@ -342,7 +342,7 @@ public class EffectAddDodge: EffectData
 {
     public EffectAddDodge()
     {
-        name = "Add Dodge";
+        name = "Dodge";
         icon = "";
     }
 }
