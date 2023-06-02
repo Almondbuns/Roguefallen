@@ -162,6 +162,7 @@ public class ActorData
     public event VoidHandler HandleResist;
     public event VoidHandler HandleLevelUp;
     public event VoidHandler HandleParry;
+    public event VoidHandler HandleBlock;
     public event VoidHandler HandleMovement;
      public event VoidHandler HandleTeleport;
     public event ActorDataHandler HandleUnhide;
@@ -544,24 +545,28 @@ public class ActorData
 
     public virtual int GetArmor(string body_part, ArmorType armor_type)
     {
-        int value = 0;
-        if (armor_type == ArmorType.PHYSICAL)
-            value = prototype.stats.body_armor.Find(x => x.body_part == body_part).armor.physical;
-        else if (armor_type == ArmorType.ELEMENTAL)
-            value = prototype.stats.body_armor.Find(x => x.body_part == body_part).armor.elemental;
-        else if (armor_type == ArmorType.MAGICAL)
-            value = prototype.stats.body_armor.Find(x => x.body_part == body_part).armor.magical;
-        else
-            value = 0;
+        int current_armor = 0;
+        ArmorStats armor_stats = prototype.stats.body_armor.Find(x => x.body_part.ToLower().Equals(body_part.ToLower()));
+
+        if (armor_stats != null)
+        {
+            if (armor_type == ArmorType.PHYSICAL)
+                current_armor = armor_stats.armor.physical;
+            else if (armor_type == ArmorType.ELEMENTAL)
+                current_armor = armor_stats.armor.elemental;
+            else if (armor_type == ArmorType.MAGICAL)
+                current_armor = armor_stats.armor.magical;
+            else current_armor = 0;
+        }
 
         if (armor_type == ArmorType.PHYSICAL)
-            value += GetCurrentAdditiveEffectAmount<EffectAddArmorPhysical>();
+            current_armor += GetCurrentAdditiveEffectAmount<EffectAddArmorPhysical>();
         else if (armor_type == ArmorType.ELEMENTAL)
-            value += GetCurrentAdditiveEffectAmount<EffectAddArmorElemental>();
+            current_armor += GetCurrentAdditiveEffectAmount<EffectAddArmorElemental>();
         else if (armor_type == ArmorType.MAGICAL)
-            value += GetCurrentAdditiveEffectAmount<EffectAddArmorMagical>();
+            current_armor += GetCurrentAdditiveEffectAmount<EffectAddArmorMagical>();
 
-        return value;
+        return current_armor;
     }
 
     public virtual int GetMaxDurability(string body_part)
@@ -591,7 +596,11 @@ public class ActorData
 
     public virtual int ReduceDurability(string body_part, int value)
     {
-        return body_armor.Find(x => x.body_part == body_part).SubstractDamage(value);
+        ArmorStatsData armor_stats = body_armor.Find(x => x.body_part == body_part);
+        if (armor_stats != null)
+            return armor_stats.SubstractDamage(value);
+        
+        return value;
     }
 
     public virtual void TryToHit(ActorData src_actor, int to_hit, List<(DamageType type , int damage, int armor_penetration)> damage, List<EffectData> effects, List<Type> diseases = null, List<Type> poisons = null)
@@ -749,9 +758,23 @@ public class ActorData
             }
             else
             {
-                damage_absorbed = Mathf.Min(damage_multiplied, Mathf.Max(0, GetArmor(body_part, armor_type) - damage_per_type.armor_penetration));
+                int passive_block_chance = GetCurrentAdditiveEffectAmount<EffectPassiveBlock>();
+                int r = UnityEngine.Random.Range(0,100);
+                int shield_armor = GetArmor("shield", armor_type);
+                if (shield_armor > 0 && passive_block_chance > 0 && r < passive_block_chance)
+                {
+                    damage_absorbed = Mathf.Min(damage_multiplied, Mathf.Max(0, shield_armor + GetArmor(body_part, armor_type) - damage_per_type.armor_penetration));
+                    output = damage_multiplied - shield_armor + ReduceDurability("shield", shield_armor);
+                    output = ReduceDurability(body_part, output);
+                    HandleBlock?.Invoke();
+                    GameLogger.Log("The " + prototype.name + " blocks.");
+                }
+                else
+                {
+                    damage_absorbed = Mathf.Min(damage_multiplied, Mathf.Max(0, GetArmor(body_part, armor_type) - damage_per_type.armor_penetration));
+                    output = ReduceDurability(body_part, damage_absorbed);
+                }
                 damage_taken = damage_multiplied - damage_absorbed;
-                output = ReduceDurability(body_part, damage_absorbed);
             }
             if (output > 0)
             {

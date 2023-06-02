@@ -379,6 +379,8 @@ public class ItemData
             typeof(ItemPoemOfReturn),
             typeof(ItemPoemOfAWalk),
             typeof(ItemPoemOfAJourney),
+            typeof(ItemShieldHeavy),
+            typeof(ItemShieldMedium),
             //typeof(ItemFluteOfHealing),
         };
 

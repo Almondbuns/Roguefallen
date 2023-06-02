@@ -251,6 +251,54 @@ public class PlayerStatsData
 
                 new SkillData
                 {
+                    name = "Shields",
+                    icon = "images/skills/skill_armor_heavy",
+                    expertises = new List<SkillExpertiseData>
+                    {
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.NOVICE,
+                            talents = new List<SkillTalentData>
+                            {   
+                                 new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldPassiveBlock()),
+                                    description = "When attacked you have a 25% chance to add your shields armor to your body armor.",
+                                },                                                         
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.ADEPT,
+                            talents = new List<SkillTalentData>
+                            {         
+                                
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.EXPERT,
+                            talents = new List<SkillTalentData>
+                            {          
+                               
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.MASTER,
+                            talents = new List<SkillTalentData>
+                            {
+                                                 
+                            }
+                        }
+                    }
+                },
+
+                new SkillData
+                {
                     name = "Awareness",
                     icon = "images/skills/skill_awareness",
                     expertises = new List<SkillExpertiseData>

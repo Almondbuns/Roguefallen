@@ -11,7 +11,8 @@ public class ItemShieldHeavy : ItemPrototype
         type = ItemType.SHIELD;
         weight = 5;
         
-        effects_when_equipped.Add(new EffectAddMovementTime { amount = 50 });
+        effects_when_equipped.Add(new EffectAddMovementTime { amount = 25 });
+        effects_when_equipped.Add(new EffectAddAttackTime { amount = 25 });
 
         if (level <= 20)
         {
@@ -52,7 +53,8 @@ public class ItemShieldMedium : ItemPrototype
         type = ItemType.SHIELD;
         weight = 5;
         
-        effects_when_equipped.Add(new EffectAddMovementTime { amount = 50 });
+        effects_when_equipped.Add(new EffectAddMovementTime { amount = 15 });
+        effects_when_equipped.Add(new EffectAddAttackTime { amount = 15 });
 
         if (level <= 20)
         {

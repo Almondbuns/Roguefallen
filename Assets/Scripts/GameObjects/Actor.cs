@@ -95,6 +95,7 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         actor_data.HandleTeleport += HandleTeleport;
         actor_data.HandleEffect+= HandleEffect;
         actor_data.HandleParry+= HandleParry;
+        actor_data.HandleBlock+= HandleBlock;
 
         if (actor_data is PlayerData)
         {
@@ -212,6 +213,12 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         visual_action_queue.Add(v);
     }
 
+    void HandleBlock()
+    {
+        string text = "<color=#ffff00>Blocked</color>";
+        VisualAction v = new VisualAction {type = VisualActionType.FLOATINGINFO, text = text};
+        visual_action_queue.Add(v);
+    }
     void HandleResist()
     {
         string text = "<color=#aaaa00>Resisted</color>";
@@ -252,6 +259,7 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         actor_data.HandleTeleport -= HandleTeleport;
         actor_data.HandleEffect -= HandleEffect;
         actor_data.HandleParry -= HandleParry;
+        actor_data.HandleParry -= HandleBlock;
     }
 
     void HandleMeleeAttack(List<AttackedTileData> tiles)

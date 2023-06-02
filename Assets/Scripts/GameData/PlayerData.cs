@@ -148,6 +148,8 @@ public class PlayerData : ActorData
             equipment.Find(x => x.name == "Finger 2").item = new ItemData(new ItemRing(starting_level));
             equipment.Find(x => x.name == "Neck").item = new ItemData(new ItemAmulet(starting_level));
 
+            equipment.Find(x => x.name == "Shield").item = new ItemData(new ItemShieldHeavy(starting_level));
+
             //Since we do not know which quality levels are allowed at a level just try to increase
             equipment.Find(x => x.name == "Chest").item.SetQuality(ItemQuality.Magical1);
             equipment.Find(x => x.name == "Hands").item.SetQuality(ItemQuality.Magical1); 
@@ -417,13 +419,17 @@ public class PlayerData : ActorData
 
     public override int GetArmor(string body_part, ArmorType armor_type)
     {
+        ArmorStats armor_stats = prototype.stats.body_armor.Find(x => x.body_part.ToLower().Equals(body_part.ToLower()));
         int current_armor = 0;
-        if (armor_type == ArmorType.PHYSICAL)
-            current_armor = prototype.stats.body_armor.Find(x => x.body_part.ToLower().Equals(body_part.ToLower())).armor.physical;
-        else if (armor_type == ArmorType.ELEMENTAL)
-            current_armor = prototype.stats.body_armor.Find(x => x.body_part.ToLower().Equals(body_part.ToLower())).armor.elemental;
-        else
-            current_armor = prototype.stats.body_armor.Find(x => x.body_part.ToLower().Equals(body_part.ToLower())).armor.magical;
+        if (armor_stats != null)
+        {
+            if (armor_type == ArmorType.PHYSICAL)
+                current_armor = armor_stats.armor.physical;
+            else if (armor_type == ArmorType.ELEMENTAL)
+                current_armor = armor_stats.armor.elemental;
+            else
+                current_armor = armor_stats.armor.magical;
+        }
 
         foreach (EquipmentSlotData equip in equipment)
         {
