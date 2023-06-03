@@ -82,11 +82,51 @@ public class TalentShieldPassiveBlock : TalentPassiveEffects
         cost_stamina = 0;
         recover_time = 0;
         cooldown = 0;
-        description = "When attacked 25% chance to add shield armor to body armor.";
+        description = "When attacked 20% chance to add shield armor to body armor.";
 
         passive_effects = new List<EffectData>();
 
-        passive_effects.Add(new EffectPassiveBlock { amount = 25 });
+        passive_effects.Add(new EffectPassiveBlock { amount = 20 });
+
+    }
+}
+
+public class TalentShieldPassiveBlockAdvanced : TalentPassiveEffects
+{
+    public TalentShieldPassiveBlockAdvanced()
+    {
+        name = "Advanced Passive Block";
+        target = TalentTarget.Self;
+        target_range = 0;
+        icon = "images/talents/sword_attack_heavy";
+        cost_stamina = 0;
+        recover_time = 0;
+        cooldown = 0;
+        description = "When attacked additional 10% chance to add shield armor to body armor.";
+
+        passive_effects = new List<EffectData>();
+
+        passive_effects.Add(new EffectPassiveBlock { amount = 10 });
+
+    }
+}
+
+public class TalentShieldPassiveBlockSkilled : TalentPassiveEffects
+{
+    public TalentShieldPassiveBlockSkilled()
+    {
+        name = "Skilled Passive Block";
+        target = TalentTarget.Self;
+        target_range = 0;
+        icon = "images/talents/sword_attack_heavy";
+        cost_stamina = 0;
+        recover_time = 0;
+        cooldown = 0;
+        description = "When attacked additional 10% chance to add shield armor to body armor.";
+
+        passive_effects = new List<EffectData>();
+
+        passive_effects.Add(new EffectPassiveBlock { amount = 10 });
 
     }
 }
@@ -99,8 +139,8 @@ public class TalentShieldSubstainedBlock : TalentSubstainedEffects
         target = TalentTarget.Self;
         target_range = 0;
         icon = "images/talents/sword_attack_heavy";
-        cost_stamina = 0;
-        recover_time = 0;
+        cost_stamina = 1;
+        recover_time = 50;
         cooldown = 0;
         description = "When attacked adds shield armor to body armor but loses 1 stamina with each hit and increase movement time by 50.";
 

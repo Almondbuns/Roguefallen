@@ -260,10 +260,10 @@ public class PlayerStatsData
                             level = SkillExpertiseLevel.NOVICE,
                             talents = new List<SkillTalentData>
                             {   
-                                 new SkillTalentData
+                                new SkillTalentData
                                 {
                                     talent = new TalentData(new TalentShieldPassiveBlock()),
-                                    description = "When attacked you have a 25% chance to add your shield armor to your body armor.",
+                                    description = "When attacked you have a 20% chance to add your shield armor to your body armor.",
                                 },                                                         
 
                                 new SkillTalentData
@@ -279,7 +279,11 @@ public class PlayerStatsData
                             level = SkillExpertiseLevel.ADEPT,
                             talents = new List<SkillTalentData>
                             {         
-                                
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldPassiveBlockSkilled()),
+                                    description = "When attacked you have an additional 10% chance to add your shield armor to your body armor.",
+                                },                                                         
                             }
                         },
 
@@ -288,7 +292,11 @@ public class PlayerStatsData
                             level = SkillExpertiseLevel.EXPERT,
                             talents = new List<SkillTalentData>
                             {          
-                               
+                               new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldPassiveBlockAdvanced()),
+                                    description = "When attacked you have an additional 10% chance to add your shield armor to your body armor.",
+                                },                                                         
                             }
                         },
 
