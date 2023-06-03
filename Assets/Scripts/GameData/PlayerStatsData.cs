@@ -263,8 +263,14 @@ public class PlayerStatsData
                                  new SkillTalentData
                                 {
                                     talent = new TalentData(new TalentShieldPassiveBlock()),
-                                    description = "When attacked you have a 25% chance to add your shields armor to your body armor.",
+                                    description = "When attacked you have a 25% chance to add your shield armor to your body armor.",
                                 },                                                         
+
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldSubstainedBlock()),
+                                    description = "When attacked add your shield armor to your body armor but be slower and lose 1 stamina with each hit.",
+                                },  
                             }
                         },
 

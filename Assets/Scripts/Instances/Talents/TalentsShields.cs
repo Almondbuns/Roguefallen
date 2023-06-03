@@ -82,7 +82,7 @@ public class TalentShieldPassiveBlock : TalentPassiveEffects
         cost_stamina = 0;
         recover_time = 0;
         cooldown = 0;
-        description = "When attacked you have a 25% chance to add your shield armor to your body armor.";
+        description = "When attacked 25% chance to add shield armor to body armor.";
 
         passive_effects = new List<EffectData>();
 
@@ -90,4 +90,26 @@ public class TalentShieldPassiveBlock : TalentPassiveEffects
 
     }
 }
+
+public class TalentShieldSubstainedBlock : TalentSubstainedEffects
+{
+    public TalentShieldSubstainedBlock()
+    {
+        name = "Active Block";
+        target = TalentTarget.Self;
+        target_range = 0;
+        icon = "images/talents/sword_attack_heavy";
+        cost_stamina = 0;
+        recover_time = 0;
+        cooldown = 0;
+        description = "When attacked adds shield armor to body armor but loses 1 stamina with each hit and increase movement time by 50.";
+
+        substained_effects = new List<EffectData>();
+
+        substained_effects.Add(new EffectActiveBlock { amount = 100 });
+        substained_effects.Add(new EffectAddMovementTime { amount = 50 });
+
+    }
+}
+
 

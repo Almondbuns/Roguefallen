@@ -126,6 +126,15 @@ public class EffectPassiveBlock : EffectData
     }
 }
 
+public class EffectActiveBlock : EffectData
+{
+    public EffectActiveBlock()
+    {
+        name = "Active Block";
+        icon = "images/effects/effect_confusion";
+    }
+}
+
 public class EffectParry : EffectData
 {
     public EffectParry()
