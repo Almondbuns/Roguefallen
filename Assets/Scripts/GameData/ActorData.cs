@@ -765,7 +765,7 @@ public class ActorData
                 int passive_block_chance = GetCurrentAdditiveEffectAmount<EffectPassiveBlock>();
                 int r_passive = UnityEngine.Random.Range(0,100);
                 int shield_armor = GetArmor("shield", armor_type);
-                if (shield_armor > 0 && active_block_chance > 0 && r_active < active_block_chance)
+                if (stamina_current >= 1 && shield_armor > 0 && active_block_chance > 0 && r_active < active_block_chance)
                 {
                     damage_absorbed = Mathf.Min(damage_multiplied, Mathf.Max(0, shield_armor + GetArmor(body_part, armor_type) - damage_per_type.armor_penetration));
                     output = damage_multiplied - shield_armor + ReduceDurability("shield", shield_armor);
