@@ -114,7 +114,7 @@ public class TalentBluntHammer2HAttackHeavy : TalentWeaponAttack
 {
     public TalentBluntHammer2HAttackHeavy()
     {
-        name = "Heave 2H Attack";
+        name = "Heavy 2H Attack";
         target = TalentTarget.Tile;
         target_range = 1;
         icon = "images/talents/blunt_heavy";

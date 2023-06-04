@@ -358,6 +358,8 @@ public class Map : MonoBehaviour
     {
         if (tile.x < 0 || tile.y < 0 || tile.x >= map_data.tiles.GetLength(0) || tile.y >= map_data.tiles.GetLength(1)) return;
 
+        if (map_data.tiles[tile.x, tile.y].visibility != Visibility.Active) return;
+        
         if (effect == VisualEffect.Hit)
         {
             GameObject visual_effect = GameObject.Instantiate(visual_effect_hit_prefab, transform);
