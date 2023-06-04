@@ -1003,6 +1003,7 @@ public class CreateProjectileCommand : CommandData
     {
         base.Save(save);
 
+        save.Write(projectile.GetType().ToString());
         projectile.Save(save);
     }
 
@@ -1010,9 +1011,9 @@ public class CreateProjectileCommand : CommandData
     {
         base.Load(save);
 
-        projectile = new ProjectileData(-1,-1);
+        Type type = Type.GetType(save.ReadString());
+        projectile = (ProjectileData) Activator.CreateInstance(type, -1,-1, null);
         projectile.Load(save);
-
     }
 
     public CreateProjectileCommand()

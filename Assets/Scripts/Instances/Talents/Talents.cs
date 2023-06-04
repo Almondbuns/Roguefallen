@@ -71,47 +71,6 @@ public class TalentExplode : TalentPrototype
     }
 }
 
-public class TalentBlock : TalentPrototype
-{
-    public TalentBlock()
-    {
-        name = "Block";
-        target = TalentTarget.Tile;
-        target_range = 1;
-        icon = "images/talents/sword_attack_heavy";
-        cost_stamina = 50;
-        recover_time = 200;
-        description = "Converts all blocked damage to stamina damage";
-    }
-
-    public override ActionData CreateAction(TalentInputData input)
-    {
-        ActionData action = new ActionData(input.talent);
-        return action;
-    }
-
-}
-
-public class TalentParry : TalentPrototype
-{
-    public TalentParry()
-    {
-        name = "Parry";
-        target = TalentTarget.Tile;
-        target_range = 1;
-        icon = "images/talents/sword_attack_heavy";
-        cost_stamina = 50;
-        recover_time = 200;
-        description = "Tries to block the next incoming melee attack and immediatly start a counter attack";
-    }
-
-    public override ActionData CreateAction(TalentInputData input)
-    {
-        ActionData action = new ActionData(input.talent);
-        return action;
-    }
-
-}
 //TODO: Combine all Throwing Talents into one
 public class TalentThrowFirebomb : TalentPrototype
 {
@@ -140,7 +99,7 @@ public class TalentThrowFirebomb : TalentPrototype
              
         ProjectileData bomb = new ProjectileData( input.target_tiles[0].Item1, input.target_tiles[0].Item2, new ProjectileFirebomb(level));
         bomb.path = input.target_tiles;
-        bomb.is_shoot_by_player = true;
+        bomb.is_shot_by_player = true;
 
         action.commands.Add(new CreateProjectileCommand(bomb));
 
@@ -215,7 +174,7 @@ public class TalentItemThrowThrowingKnife : TalentPrototype
 
         ProjectileData bomb = new ProjectileData(input.target_tiles[0].Item1, input.target_tiles[0].Item2, new ProjectileThrowingKnife(level));
         bomb.path = input.target_tiles;
-        bomb.is_shoot_by_player = true;
+        bomb.is_shot_by_player = true;
 
         action.commands.Add(new CreateProjectileCommand(bomb));
 
@@ -252,7 +211,7 @@ public class TalentThrowAcidFlask : TalentPrototype
 
         ProjectileData bomb = new ProjectileData(input.target_tiles[0].Item1, input.target_tiles[0].Item2, new ProjectileAcidFlask(level));
         bomb.path = input.target_tiles;
-        bomb.is_shoot_by_player = true;
+        bomb.is_shot_by_player = true;
 
         action.commands.Add(new CreateProjectileCommand(bomb));
       

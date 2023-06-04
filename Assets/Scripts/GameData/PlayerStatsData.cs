@@ -281,9 +281,14 @@ public class PlayerStatsData
                             {         
                                 new SkillTalentData
                                 {
-                                    talent = new TalentData(new TalentShieldPassiveBlockSkilled()),
-                                    description = "When attacked you have an additional 10% chance to add your shield armor to your body armor.",
-                                },                                                         
+                                    talent = new TalentData(new TalentShieldAdvancedParry()),
+                                    description = "When using parry with a shield increase your chance to parry by another 20%.",
+                                }, 
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldAdvancedBash()),
+                                    description = "When using bash with a shield increase your damage by 50% and increase daze time by a turn.",
+                                },                                                                                                             
                             }
                         },
 
@@ -292,12 +297,18 @@ public class PlayerStatsData
                             level = SkillExpertiseLevel.EXPERT,
                             talents = new List<SkillTalentData>
                             {          
-                               new SkillTalentData
+                                new SkillTalentData
                                 {
-                                    talent = new TalentData(new TalentShieldPassiveBlockAdvanced()),
+                                    talent = new TalentData(new TalentShieldPassiveBlockSkilled()),
                                     description = "When attacked you have an additional 10% chance to add your shield armor to your body armor.",
-                                },                                                         
+                                },                                                      
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldThrow()),
+                                    description = "Throws the currently equipped shield at a target dealing four times its weight as pierce damage.",
+                                },                                                      
                             }
+                            
                         },
 
                         new SkillExpertiseData
@@ -305,7 +316,11 @@ public class PlayerStatsData
                             level = SkillExpertiseLevel.MASTER,
                             talents = new List<SkillTalentData>
                             {
-                                                 
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldPassiveBlockAdvanced()),
+                                    description = "When attacked you have an additional 20% chance to add your shield armor to your body armor.",
+                                },               
                             }
                         }
                     }

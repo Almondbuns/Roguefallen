@@ -131,7 +131,7 @@ public class PlayerData : ActorData
         equipment.Add(new EquipmentSlotData { name = "Finger 1", item_type = new List<ItemType> { ItemType.RING } });
         equipment.Add(new EquipmentSlotData { name = "Finger 2", item_type = new List<ItemType> { ItemType.RING } });
         equipment.Add(new EquipmentSlotData { name = "Weapon", item_type = new List<ItemType> { ItemType.WEAPON} });
-         equipment.Add(new EquipmentSlotData { name = "Shield", item_type = new List<ItemType> { ItemType.SHIELD } });
+        equipment.Add(new EquipmentSlotData { name = "Shield", item_type = new List<ItemType> { ItemType.SHIELD } });
         //equipment.Add(new EquipmentSlotData { name = "Weapon 2L", item_type = new List<ItemType> { ItemType.WEAPON, ItemType.SHIELD } });
         //equipment.Add(new EquipmentSlotData { name = "Weapon 2R", item_type = new List<ItemType> { ItemType.WEAPON, ItemType.SHIELD } });
 
@@ -213,6 +213,19 @@ public class PlayerData : ActorData
         }
 
         return main_weapon;
+    }
+
+    internal ItemData GetMainShield()
+    {
+        ItemData main_shield = null;
+        
+        foreach(EquipmentSlotData slot in equipment)
+        {
+            if (slot.name == "Shield")
+                return slot.item;
+        }
+
+        return main_shield;
     }
 
     public void AddQuest(QuestData quest_data)

@@ -148,10 +148,29 @@ public class EffectCounterStrikeVulnerable : EffectData
 {
     public EffectCounterStrikeVulnerable()
     {
-        name = "Counter Vulnerable";
+        name = "Vulnerable";
         icon = "images/effects/effect_confusion";
     }
 }
+
+public class EffectBashDamageRelative : EffectData
+{
+    public EffectBashDamageRelative()
+    {
+        name = "Bash Damage";
+        icon = "images/effects/effect_confusion";
+    }
+}
+
+public class EffectDazeTime : EffectData
+{
+    public EffectDazeTime()
+    {
+        name = "Daze Time";
+        icon = "images/effects/effect_confusion";
+    }
+}
+
 
 public class EffectRemoveMovementTimeRelative : EffectData
 {
