@@ -238,7 +238,7 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             text = "<color=#00aaaa>- " + effect.name;
         }
 
-        if (effect.amount != 0)
+        if (effect.show_amount_info == true)
             text +=  ": " + effect.amount;
         
         text += "</color>";

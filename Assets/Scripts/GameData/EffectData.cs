@@ -21,6 +21,7 @@ public class EffectData
     // Use Copy!
     public string name;
     public string icon;
+    public bool show_amount_info = true;
 
     public DamageType damage_type;
     public float amount;
@@ -33,6 +34,7 @@ public class EffectData
 
         the_copy.name = this.name;
         the_copy.icon = this.icon;
+        the_copy.show_amount_info = this.show_amount_info;
         the_copy.damage_type = this.damage_type;
         the_copy.amount = this.amount;
         the_copy.duration = this.duration;
@@ -45,6 +47,7 @@ public class EffectData
     {
         save.Write(name);
         save.Write(icon);
+        save.Write(show_amount_info);
 
         save.Write((int)damage_type);
         save.Write(amount);
@@ -56,6 +59,7 @@ public class EffectData
     {
         name = save.ReadString();
         icon = save.ReadString();
+        show_amount_info = save.ReadBoolean();
 
         damage_type = (DamageType)save.ReadInt32();
         amount = save.ReadSingle();
@@ -66,7 +70,6 @@ public class EffectData
 
 public class ActorEffectSpecialCommand : EffectData
 {
-    //TODO Save/Load(!)
     public CommandData command;
 
     public override void Save(BinaryWriter save)
@@ -102,7 +105,7 @@ public class EffectAddMovementTime : EffectData
 {
     public EffectAddMovementTime()
     {
-        name = "Slow Down";
+        name = "Move";
         icon = "images/effects/effect_slowdown";
     }
    
@@ -112,8 +115,9 @@ public class EffectConfusion : EffectData
 {
     public EffectConfusion()
     {
-        name = "Confusion";
+        name = "Confused";
         icon = "images/effects/effect_confusion";
+        show_amount_info = false;
     }
 }
 
@@ -132,6 +136,7 @@ public class EffectActiveBlock : EffectData
     {
         name = "Active Block";
         icon = "images/effects/effect_confusion";
+        show_amount_info = false;
     }
 }
 
@@ -141,6 +146,7 @@ public class EffectParry : EffectData
     {
         name = "Parry Stance";
         icon = "images/effects/effect_confusion";
+        show_amount_info = false;
     }
 }
 
@@ -150,6 +156,7 @@ public class EffectCounterStrikeVulnerable : EffectData
     {
         name = "Vulnerable";
         icon = "images/effects/effect_confusion";
+        show_amount_info = false;
     }
 }
 
@@ -159,6 +166,7 @@ public class EffectBashDamageRelative : EffectData
     {
         name = "Bash Damage";
         icon = "images/effects/effect_confusion";
+        show_amount_info = false;
     }
 }
 
@@ -188,6 +196,7 @@ public class EffectInterrupt : EffectData
     {
         name = "Interrupt";
         icon = "";
+        show_amount_info = false;
     }
 
 }
@@ -196,8 +205,9 @@ public class EffectStun : EffectData
 {
     public EffectStun()
     {
-        name = "Stun";
+        name = "Stunned";
         icon = "images/effects/effect_slowdown";
+        show_amount_info = false;
     }
 
 }
@@ -208,6 +218,7 @@ public class EffectAddHitpoints : EffectData
     {
         name = "Heal";
         icon = "images/effects/effect_heal";
+        show_amount_info = false;
     }
 
 }
@@ -218,6 +229,7 @@ public class EffectSubstractHitpoints : EffectData
     {
         name = "Damage";
         icon = "images/effects/effect_heal";
+        show_amount_info = false;
     }
 
 }
@@ -228,6 +240,7 @@ public class EffectAddStamina : EffectData
     {
         name = "Refresh Stamina";
         icon = "images/effects/effect_heal";
+        show_amount_info = false;
     }
 
 }
@@ -238,6 +251,7 @@ public class EffectSubstractStamina : EffectData
     {
         name = "Lose Stamina";
         icon = "images/effects/effect_hurt";
+        show_amount_info = false;
     }
 
 }
@@ -248,6 +262,7 @@ public class EffectAddMana : EffectData
     {
         name = "Refresh Mana";
         icon = "images/effects/effect_heal";
+        show_amount_info = false;
     }
 
 }
@@ -258,6 +273,7 @@ public class EffectAddRelativeTrapSpotting : EffectData
     {
         name = "Trap Spotting Chance";
         icon = "";
+        show_amount_info = false;
     }
 }
 
@@ -267,6 +283,7 @@ public class EffectMonsterStats : EffectData
     {
         name = "See Monster Attributes";
         icon = "";
+        show_amount_info = false;
     }
 }
 
@@ -276,6 +293,7 @@ public class EffectMonsterAdvancedStats : EffectData
     {
         name = "See Advanced Monster Attributes";
         icon = "";
+        show_amount_info = false;
     }
 }
 
@@ -285,6 +303,7 @@ public class EffectMonsterArmor : EffectData
     {
         name = "See Monster Armor";
         icon = "";
+        show_amount_info = false;
     }
 }
 
@@ -294,6 +313,7 @@ public class EffectMonsterResistances: EffectData
     {
         name = "See Monster Resistances";
         icon = "";
+        show_amount_info = false;
     }
 }
 
@@ -379,7 +399,7 @@ public class EffectAddMaxDiseaseResistance: EffectData
 {
     public EffectAddMaxDiseaseResistance()
     {
-        name = "Add Disease Resistance";
+        name = "Disease Res";
         icon = "";
     }
 }
@@ -388,7 +408,7 @@ public class EffectAddMaxPoisonResistance: EffectData
 {
     public EffectAddMaxPoisonResistance()
     {
-        name = "Add Poison Resistance";
+        name = "Poison Res";
         icon = "";
     }
 }
@@ -396,7 +416,7 @@ public class EffectAddMaxInsanityResistance: EffectData
 {
     public EffectAddMaxInsanityResistance()
     {
-        name = "Add Insanity Resistance";
+        name = "Insanity Res";
         icon = "";
     }
 }
@@ -405,7 +425,7 @@ public class EffectAddMinWeaponDamage : EffectData
 {
     public EffectAddMinWeaponDamage()
     {
-        name = "Add Minimum Damage";
+        name = "Minimum Damage";
         icon = "";
     }
 }
@@ -414,7 +434,7 @@ public class EffectAddAttackTime : EffectData
 {
     public EffectAddAttackTime()
     {
-        name = "Add Attack Time";
+        name = "Attack Time";
         icon = "";
     }
 }
@@ -423,7 +443,7 @@ public class EffectAddMaxWeaponDamage : EffectData
 {
     public EffectAddMaxWeaponDamage()
     {
-        name = "Add Maximum Damage";
+        name = "Maximum Damage";
         icon = "";
     }
 }
@@ -432,7 +452,7 @@ public class EffectAddWeaponPenetration : EffectData
 {
     public EffectAddWeaponPenetration()
     {
-        name = "Add Armor Penetration";
+        name = "Penetration";
         icon = "";
     }
 }
@@ -441,7 +461,7 @@ public class EffectAddWeaponFireDamage : EffectData
 {
     public EffectAddWeaponFireDamage()
     {
-        name = "Add Fire Damage";
+        name = "Fire Damage";
         icon = "";
     }
 }
@@ -450,7 +470,7 @@ public class EffectAddWeaponIceDamage : EffectData
 {
     public EffectAddWeaponIceDamage()
     {
-        name = "Add Ice Damage";
+        name = "Ice Damage";
         icon = "";
     }
 }
@@ -459,7 +479,7 @@ public class EffectAddWeaponLightningDamage : EffectData
 {
     public EffectAddWeaponLightningDamage()
     {
-        name = "Add Lightning Damage";
+        name = "Lightning Damage";
         icon = "";
     }
 }
@@ -468,7 +488,7 @@ public class EffectAddArmorPhysical: EffectData
 {
     public EffectAddArmorPhysical()
     {
-        name = "Add Physical Armor";
+        name = "Physical Armor";
         icon = "";
     }
 }
@@ -477,7 +497,7 @@ public class EffectAddArmorElemental : EffectData
 {
     public EffectAddArmorElemental()
     {
-        name = "Add Elemental Armor";
+        name = "Elemental Armor";
         icon = "";
     }
 }
@@ -486,7 +506,7 @@ public class EffectAddArmorMagical : EffectData
 {
     public EffectAddArmorMagical()
     {
-        name = "Add Magic Armor";
+        name = "Magic Armor";
         icon = "";
     }
 }
@@ -495,7 +515,7 @@ public class EffectAddArmorDurability : EffectData
 {
     public EffectAddArmorDurability()
     {
-        name = "Add Durability";
+        name = "Durability";
         icon = "";
     }
 }
@@ -504,7 +524,7 @@ public class EffectAddRelativeArmorDurability : EffectData
 {
     public EffectAddRelativeArmorDurability()
     {
-        name = "Add % Durability";
+        name = "% Durability";
         icon = "";
     }
 }
@@ -513,7 +533,7 @@ public class EffectAddThrowingWeaponDamageRelative  : EffectData
 {
     public EffectAddThrowingWeaponDamageRelative ()
     {
-        name = "Add % Throwing Weapon Damage";
+        name = "% Throwing Weapon Damage";
         icon = "";
     }
 }
@@ -522,7 +542,7 @@ public class EffectAddThrowingWeaponAmountRelative  : EffectData
 {
     public EffectAddThrowingWeaponAmountRelative ()
     {
-        name = "Add % Throwing Weapon Amount";
+        name = "% Throwing Weapon Amount";
         icon = "";
     }
 }
