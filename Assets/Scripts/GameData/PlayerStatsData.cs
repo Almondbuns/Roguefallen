@@ -318,8 +318,8 @@ public class PlayerStatsData
                             {
                                 new SkillTalentData
                                 {
-                                    talent = new TalentData(new TalentShieldPassiveBlockAdvanced()),
-                                    description = "When attacked you have an additional 20% chance to add your shield armor to your body armor.",
+                                    talent = new TalentData(new TalentShieldBlockMastery()),
+                                    description = "Additional 20% passive block chance, 15% parry chance and 50% bash damage.",
                                 },               
                             }
                         }

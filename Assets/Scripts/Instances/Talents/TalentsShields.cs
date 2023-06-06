@@ -11,10 +11,10 @@ public class TalentShieldBash : TalentPrototype
         target = TalentTarget.Tile;
         target_range = 1;
         icon = "images/talents/sword_attack_heavy";
-        cost_stamina = 3;
+        cost_stamina = 2;
         recover_time = 100;
         cooldown = 800;
-        description = "Attacks with the shield dealing crush damage equal to double the sum of its armor values. May daze the target for 3 turns.";
+        description = "Attacks with the shield and deals crush damage equal to double the sum of its armor values. May daze the target for 3 turns lowering to hit and dodge by 30.";
         action_message ="The <name> bashes with a shield.";
     }
 
@@ -34,8 +34,8 @@ public class TalentShieldBash : TalentPrototype
             damage_on_hit = new (){(DamageType.CRUSH, damage, 0)},
             effects_on_hit = new ()
             {
-                new EffectAddToHit(){damage_type = DamageType.CRUSH, amount = -50, duration = daze_duration},
-                new EffectAddDodge(){damage_type = DamageType.CRUSH, amount = -50, duration = daze_duration},
+                new EffectAddToHit(){damage_type = DamageType.CRUSH, amount = -30, duration = daze_duration},
+                new EffectAddDodge(){damage_type = DamageType.CRUSH, amount = -30, duration = daze_duration},
             },
         });
         
@@ -57,7 +57,7 @@ public class TalentShieldParry : TalentPrototype
         cost_stamina = 2;
         recover_time = 100;
         cooldown = 300;
-        description = "40% chance to parry an attack within the next turn negating the damage and leaving the source open for a counterattack.";
+        description = "40% chance to parry an attack within the next turn negating the damage and leaving the source open for a double damage counterattack.";
         action_message ="The <name> prepares to parry.";
     }
 
@@ -93,22 +93,24 @@ public class TalentShieldPassiveBlock : TalentPassiveEffects
     }
 }
 
-public class TalentShieldPassiveBlockAdvanced : TalentPassiveEffects
+public class TalentShieldBlockMastery : TalentPassiveEffects
 {
-    public TalentShieldPassiveBlockAdvanced()
+    public TalentShieldBlockMastery()
     {
-        name = "Masterful Passive Block";
+        name = "Masterful Block";
         target = TalentTarget.Self;
         target_range = 0;
         icon = "images/talents/sword_attack_heavy";
         cost_stamina = 0;
         recover_time = 0;
         cooldown = 0;
-        description = "When attacked additional 20% chance to add shield armor to body armor.";
+        description = "Additional 20% passive block chance, 15% parry chance and 50% bash damage.";
 
         passive_effects = new List<EffectData>();
 
         passive_effects.Add(new EffectPassiveBlock { amount = 20 });
+        passive_effects.Add(new EffectParry { amount = 15 });
+        passive_effects.Add(new EffectBashDamageRelative { amount = 50 });
 
     }
 }
