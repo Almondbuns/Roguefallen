@@ -14,7 +14,7 @@ public class ItemShieldHeavy : ItemPrototype
         effects_when_equipped.Add(new EffectAddMovementTime { amount = 25 });
         effects_when_equipped.Add(new EffectAddAttackTime { amount = 25 });
 
-        if (level <= 20)
+        if (level <= 4)
         {
             tier = 0;
             armor = new ArmorPrototype
@@ -23,13 +23,43 @@ public class ItemShieldHeavy : ItemPrototype
                 armor_physical = 2,
                 armor_elemental = 1,
                 armor_magical = 0,
-                durability_max = 400,
+                durability_max = 200,
             };
             
             gold_value = 100;
             required_attributes.strength = 5;
         }
-
+        else if (level <= 8)
+        {
+            tier = 1;
+            armor = new ArmorPrototype
+            {
+                sub_type = ArmorSubType.HEAVY,
+                armor_physical = 3,
+                armor_elemental = 2,
+                armor_magical = 0,
+                durability_max = 300,
+            };
+            
+            gold_value = 300;
+            required_attributes.strength = 15;
+        }
+        else
+        {
+            tier = 2;
+            armor = new ArmorPrototype
+            {
+                sub_type = ArmorSubType.HEAVY,
+                armor_physical = 4,
+                armor_elemental = 3,
+                armor_magical = 0,
+                durability_max = 400,
+            };
+            
+            gold_value = 500;
+            required_attributes.strength = 25;
+        }
+      
         shield = new()
         {
             sub_type = ShieldSubType.HEAVY, 
@@ -217,6 +247,22 @@ public class ItemShieldHeavy : ItemPrototype
                 effect = new EffectAddMaxInsanityResistance() { amount = 5*(tier+1)},
                 trigger = ItemEffectTrigger.Equipped,
             },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Protecting",
+                effect = new EffectPassiveBlock() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Smashing",
+                effect = new EffectBashDamageRelative() { amount = 10*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
         };
     }
 }
@@ -233,20 +279,50 @@ public class ItemShieldMedium : ItemPrototype
         effects_when_equipped.Add(new EffectAddMovementTime { amount = 15 });
         effects_when_equipped.Add(new EffectAddAttackTime { amount = 15 });
 
-        if (level <= 20)
+        if (level <= 4)
         {
             tier = 0;
             armor = new ArmorPrototype
             {                
                 sub_type = ArmorSubType.MEDIUM,
                 armor_physical = 1,
+                armor_elemental = 1,
+                armor_magical = 0,
+                durability_max = 200,
+            };
+            
+            gold_value = 100;
+            required_attributes.dexterity = 5;
+        }
+        else if (level <= 8)
+        {
+            tier = 1;
+            armor = new ArmorPrototype
+            {
+                sub_type = ArmorSubType.MEDIUM,
+                armor_physical = 1,
                 armor_elemental = 2,
+                armor_magical = 1,
+                durability_max = 300,
+            };
+            
+            gold_value = 300;
+            required_attributes.dexterity = 15;
+        }
+        else
+        {
+            tier = 2;
+            armor = new ArmorPrototype
+            {
+                sub_type = ArmorSubType.MEDIUM,
+                armor_physical = 2,
+                armor_elemental = 3,
                 armor_magical = 1,
                 durability_max = 400,
             };
             
-            gold_value = 100;
-            required_attributes.strength = 5;
+            gold_value = 500;
+            required_attributes.dexterity = 25;
         }
 
         shield = new()
@@ -434,6 +510,22 @@ public class ItemShieldMedium : ItemPrototype
                 type = ItemEffectType.Prefix,
                 name_presuffix = "Calming",
                 effect = new EffectAddMaxInsanityResistance() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Protecting",
+                effect = new EffectPassiveBlock() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Parry",
+                effect = new EffectParryChanceBonus() { amount = 5*(tier+1)},
                 trigger = ItemEffectTrigger.Equipped,
             },
         };

@@ -363,6 +363,15 @@ public class ItemInfo : MonoBehaviour
                 case EffectAddMaxInsanityResistance:
                     effect_string += effect.amount + " insanity resistance";
                     break;
+                case EffectPassiveBlock:
+                    effect_string += effect.amount + " % block chance";
+                    break;
+                case EffectParryChanceBonus:
+                    effect_string += effect.amount + " % parry chance";
+                    break;
+                case EffectBashDamageRelative:
+                    effect_string += effect.amount + " % bash damage";
+                    break;
             }
 
 
