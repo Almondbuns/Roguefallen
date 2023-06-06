@@ -140,11 +140,21 @@ public class EffectActiveBlock : EffectData
     }
 }
 
-public class EffectParry : EffectData
+public class EffectParryChance : EffectData
 {
-    public EffectParry()
+    public EffectParryChance()
     {
         name = "Parry Stance";
+        icon = "images/effects/effect_confusion";
+        show_amount_info = false;
+    }
+}
+
+public class EffectParryChanceBonus : EffectData
+{
+    public EffectParryChanceBonus()
+    {
+        name = "Parry Stance Bonus";
         icon = "images/effects/effect_confusion";
         show_amount_info = false;
     }

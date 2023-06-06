@@ -66,7 +66,7 @@ public class TalentShieldParry : TalentPrototype
         ActionData action = new ActionData(input.talent);
 
         action.commands.Add(new GetEffectCommand(input.source_actor, 
-        new EffectParry(){damage_type = DamageType.SLASH, duration = 100, amount = 40,}));
+        new EffectParryChance(){damage_type = DamageType.SLASH, duration = 100, amount = 40,}));
 
         return action;
     }
@@ -109,7 +109,7 @@ public class TalentShieldBlockMastery : TalentPassiveEffects
         passive_effects = new List<EffectData>();
 
         passive_effects.Add(new EffectPassiveBlock { amount = 20 });
-        passive_effects.Add(new EffectParry { amount = 15 });
+        passive_effects.Add(new EffectParryChanceBonus { amount = 15 });
         passive_effects.Add(new EffectBashDamageRelative { amount = 50 });
 
     }
@@ -171,7 +171,7 @@ public class TalentShieldAdvancedParry : TalentPassiveEffects
 
         passive_effects = new List<EffectData>();
 
-        passive_effects.Add(new EffectParry { amount = 20 });
+        passive_effects.Add(new EffectParryChanceBonus { amount = 20 });
 
     }
 }

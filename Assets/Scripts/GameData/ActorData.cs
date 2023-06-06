@@ -606,9 +606,10 @@ public class ActorData
     public virtual void TryToHit(ActorData src_actor, int to_hit, List<(DamageType type , int damage, int armor_penetration)> damage, List<EffectData> effects, List<Type> diseases = null, List<Type> poisons = null)
     {
         //Parry
-        int parry_chance = GetCurrentAdditiveEffectAmount<EffectParry>();
+        int parry_chance = GetCurrentAdditiveEffectAmount<EffectParryChance>();
         if (parry_chance > 0)
         {
+            parry_chance += GetCurrentAdditiveEffectAmount<EffectParryChanceBonus>();
             int r = UnityEngine.Random.Range(0,100);
             if (r < parry_chance)
             {
