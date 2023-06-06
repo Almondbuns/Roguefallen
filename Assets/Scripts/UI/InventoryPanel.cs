@@ -396,7 +396,7 @@ public class InventoryPanel : MonoBehaviour
                 && inventory_slot_src.type == InventorySlotType.INVENTORY)
             {
                 //Stack Items if possible
-                if (item_src != null && item_target != null && item_src.GetType() == item_target.GetType() && item_src.GetPrototype().is_stackable == true)
+                if (item_src != null && item_target != null && item_src.GetPrototype().GetType() == item_target.GetPrototype().GetType() && item_src.GetPrototype().is_stackable == true)
                 {
                     if (item_src.GetTier() == item_target.GetTier() && item_src.amount + item_target.amount <= item_src.GetPrototype().stack_max)
                     {
