@@ -74,15 +74,20 @@ public class TalentPanel : MonoBehaviour
             {
                 if (player_data.current_substained_talents_id.Contains(usable_talent.talent.id) == true)
                 {
-                    talent_buttons[counter].GetComponent<Image>().color = new Color(1, 1, .5f);
+                    talent_buttons[counter].GetComponent<Image>().color = new Color(1, 1, 1);
+                    talent_buttons[counter].transform.Find("Substained").gameObject.SetActive(true);
                 }
                 else
                 {
                     talent_buttons[counter].GetComponent<Image>().color = new Color(1, 1, 1);
+                    talent_buttons[counter].transform.Find("Substained").gameObject.SetActive(false);
                 }
             }
             else
+            {
                 talent_buttons[counter].GetComponent<Image>().color = new Color(.2f, .2f, .2f); 
+                talent_buttons[counter].transform.Find("Substained").gameObject.SetActive(false);
+            }
 
             
 
@@ -99,7 +104,7 @@ public class TalentPanel : MonoBehaviour
 
             if (usable_talent.source.type == PlayerTalentSourceType.Item)
             {
-                if (usable_talent.talent.prototype is TalentWeaponAttack)
+                if (usable_talent.talent.prototype is TalentWeaponAttack || usable_talent.source.item.GetPrototype().shield != null)
                 {
                     talent_buttons[counter].transform.Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "";  
                 }
@@ -116,7 +121,23 @@ public class TalentPanel : MonoBehaviour
             {
                 talent_buttons[counter].transform.Find("Amount").GetComponent<TMPro.TextMeshProUGUI>().text = "";  
             }
+            
+            if (usable_talent.talent.cooldown_current > 0)
+            {
+                talent_buttons[counter].transform.Find("Cooldown").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = usable_talent.talent.cooldown_current.ToString();
+            }
+            else
+            {
+                talent_buttons[counter].transform.Find("Cooldown").gameObject.SetActive(false);
+            }
+
             counter += 1;
+        }
+
+        for (int i = counter; i < 24; ++ i)
+        {
+            talent_buttons[i].transform.Find("Cooldown").gameObject.SetActive(false);
+            talent_buttons[i].transform.Find("Substained").gameObject.SetActive(false);
         }
     }
 }
