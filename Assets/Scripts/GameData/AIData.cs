@@ -81,7 +81,7 @@ public class DumbAI : AIData
         if (personality == AIPersonality.HitAndRun)
             detection_range = 16;
 
-        if ((Mathf.Abs(game_data.player_data.x - actor_data.x) > detection_range || Mathf.Abs(game_data.player_data.y - actor_data.y) > detection_range))
+        if ((Mathf.Abs(game_data.player_data.X - actor_data.X) > detection_range || Mathf.Abs(game_data.player_data.Y - actor_data.Y) > detection_range))
             return new WaitAction(100);
 
         //TODO: input depending on talent
@@ -89,7 +89,7 @@ public class DumbAI : AIData
         {
             source_actor = actor_data,
             target_actor = game_data.player_data,
-            target_tiles = new List<(int, int)> { (game_data.player_data.x, game_data.player_data.y) },
+            target_tiles = new List<(int, int)> { (game_data.player_data.X, game_data.player_data.Y) },
             local_data = game_data.current_map
         };
 
@@ -108,7 +108,7 @@ public class DumbAI : AIData
             //Only select talent if player range is within limits
             if (talent.prototype.ai_data.player_range.HasValue == true)
             {
-                if (MathF.Max(MathF.Abs(game_data.player_data.x - actor_data.x),MathF.Abs(game_data.player_data.y - actor_data.y)) > talent.prototype.ai_data.player_range)
+                if (MathF.Max(MathF.Abs(game_data.player_data.X - actor_data.X),MathF.Abs(game_data.player_data.Y - actor_data.Y)) > talent.prototype.ai_data.player_range)
                 continue;
             }
 
@@ -123,7 +123,7 @@ public class DumbAI : AIData
 
             if (talent.prototype.target == TalentTarget.Tile)
             {
-                input.target_tiles = new List<(int, int)> {(game_data.player_data.x, game_data.player_data.y)};
+                input.target_tiles = new List<(int, int)> {(game_data.player_data.X, game_data.player_data.Y)};
                 bool success = actor_data.ActivateTalent(talent, input);
                 return null;
             }
@@ -132,7 +132,7 @@ public class DumbAI : AIData
         //Move to target
         if (current_target.HasValue)
         {
-            if (actor_data.x == current_target.Value.x && actor_data.y == current_target.Value.y)
+            if (actor_data.X == current_target.Value.x && actor_data.Y == current_target.Value.y)
             {
                 current_target = null;
             }
@@ -149,14 +149,14 @@ public class DumbAI : AIData
         }
         else
         {
-            target_x = game_data.player_data.x;
-            target_y = game_data.player_data.y;
+            target_x = game_data.player_data.X;
+            target_y = game_data.player_data.Y;
         }
       
         //Do melee attacks if player is next to actor instead of moving
-        if (game_data.player_data.x >= actor_data.x - 1 && game_data.player_data.y >= actor_data.y - 1
-            && game_data.player_data.x <= actor_data.x + (actor_data.prototype.tile_width - 1) + 1
-            && game_data.player_data.y <= actor_data.y + (actor_data.prototype.tile_height - 1) + 1)
+        if (game_data.player_data.X >= actor_data.X - 1 && game_data.player_data.Y >= actor_data.Y - 1
+            && game_data.player_data.X <= actor_data.X + (actor_data.prototype.tile_width - 1) + 1
+            && game_data.player_data.Y <= actor_data.Y + (actor_data.prototype.tile_height - 1) + 1)
         {
             if (usable_talents.Count > 0)
             {
@@ -177,8 +177,8 @@ public class DumbAI : AIData
                         int random_x = UnityEngine.Random.Range(-16, 17);
                         int random_y = UnityEngine.Random.Range(-16, 17);
 
-                        if (game_data.current_map.CanBeMovedInByActor(actor_data.x + random_x, actor_data.y + random_y, actor_data))
-                            current_target = (actor_data.x + random_x, actor_data.y + random_y); 
+                        if (game_data.current_map.CanBeMovedInByActor(actor_data.X + random_x, actor_data.Y + random_y, actor_data))
+                            current_target = (actor_data.X + random_x, actor_data.Y + random_y); 
                         ++tries;
                     }
                 }
@@ -189,7 +189,7 @@ public class DumbAI : AIData
 
         //Move to player
 
-        Path path = Algorithms.AStar(game_data.current_map,(actor_data.x, actor_data.y), 
+        Path path = Algorithms.AStar(game_data.current_map,(actor_data.X, actor_data.Y), 
             (target_x, target_y), false, false, actor_data);
         
 

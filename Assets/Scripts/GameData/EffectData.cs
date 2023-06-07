@@ -121,6 +121,16 @@ public class EffectConfusion : EffectData
     }
 }
 
+public class EffectExhaustion : EffectData
+{
+    public EffectExhaustion()
+    {
+        name = "Exhausted";
+        icon = "images/effects/effect_confusion";
+        show_amount_info = false;
+    }
+}
+
 public class EffectPassiveBlock : EffectData
 {
     public EffectPassiveBlock()

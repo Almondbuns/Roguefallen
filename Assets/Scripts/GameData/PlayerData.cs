@@ -21,6 +21,19 @@ public struct PlayerTalentSource
 
 public class PlayerData : ActorData
 {
+    public override int Stamina_current
+    {
+        get
+        {
+            return _stamina_current;
+        } 
+        set
+        {
+            _stamina_current = value;           
+            CheckExhaustion();
+        }
+    }
+
     public PlayerStatsData player_stats;
     public int gold_amount = 100;
     
@@ -95,8 +108,8 @@ public class PlayerData : ActorData
         usable_talents = new();
         active_quests = new();
      
-        health_current = GetHealthMax();
-        stamina_current = GetStaminaMax();
+        Health_current = GetHealthMax();
+        Stamina_current = GetStaminaMax();
         mana_current = GetManaMax();
 
 
@@ -201,6 +214,23 @@ public class PlayerData : ActorData
             player_stats.experience = experience_levels[starting_level - 2];
 
     }
+
+    public void CheckExhaustion()
+    {
+        if (Stamina_current <= 0 && current_effects.Find(x => x.effect is EffectExhaustion) == null)
+        {
+            AddEffect(new EffectExhaustion{amount = 1, duration = 5000});
+            DeactivateAllSubstainedTalents();
+            return;
+        }
+        
+        if (Stamina_current > 0 && current_effects.Find(x => x.effect is EffectExhaustion) != null)
+        {
+            List<ActorEffectData> effects =current_effects.FindAll(x => x.effect is EffectExhaustion);
+            foreach (ActorEffectData effect in effects)
+                RemoveEffect(effect);
+        }
+    } 
 
     internal ItemData GetMainWeapon()
     {
@@ -341,8 +371,8 @@ public class PlayerData : ActorData
 
         base.OnLevelUp();
 
-        health_current = GetHealthMax();
-        stamina_current = GetStaminaMax();
+        Health_current = GetHealthMax();
+        Stamina_current = GetStaminaMax();
         mana_current = GetManaMax();
     }
 
@@ -797,15 +827,15 @@ public class PlayerData : ActorData
             inventory.RemoveItem(slot_index);
             GameData game_data = GameObject.Find("GameData").GetComponent<GameData>();
             
-            item_data.x = x;
-            item_data.y = y;
+            item_data.x = X;
+            item_data.y = Y;
             game_data.current_map.Add(item_data);
         }
         else
         {
             inventory.RemoveItem(slot_index, amount);
             GameData game_data = GameObject.Find("GameData").GetComponent<GameData>();
-            ItemData new_item = new ItemData((ItemPrototype) Activator.CreateInstance(item_data.GetPrototype().GetType(), item_data.GetLevel()), x, y);
+            ItemData new_item = new ItemData((ItemPrototype) Activator.CreateInstance(item_data.GetPrototype().GetType(), item_data.GetLevel()), X, Y);
             new_item.amount = amount;
             game_data.current_map.Add(new_item);
         }
@@ -841,7 +871,7 @@ public class PlayerData : ActorData
         if (talent_data.IsUsable() == false)
             return false;
 
-        if (talent_data.prototype.cost_stamina > stamina_current)
+        if (talent_data.prototype.cost_stamina > Stamina_current)
         {
             if (talent_data.prototype.type == TalentType.Substained && current_substained_talents_id.Contains(talent_data.id))
             {
@@ -884,7 +914,11 @@ public class PlayerData : ActorData
             if (GameObject.Find("GameData").GetComponent<GameData>().global_ticks % 100 == 0)
             {
                 List<TalentData> unlocked_talents = player_stats.skill_tree.GetUnlockedTalents();
-                foreach (long talent_id in current_substained_talents_id)
+                
+                //Substained talents may be deleted within loop because of exhaustion due to stamina loss
+                var copy_list = new List<long>(current_substained_talents_id);
+
+                foreach (long talent_id in copy_list)
                 {
                     foreach (TalentData talent in unlocked_talents.FindAll(x => x.id == talent_id))
                     {
@@ -893,8 +927,7 @@ public class PlayerData : ActorData
                             foreach (EffectData effect in ((TalentSubstainedEffects)(talent.prototype)).substained_effects)
                             {
                                 if (effect.execution_time == EffectDataExecutionTime.CONTINUOUS )
-                                {
-                                    
+                                {                                    
                                         DoEffectOnce(effect);
                                 }
                             }
@@ -906,7 +939,7 @@ public class PlayerData : ActorData
 
         if (current_passive_talents_id.Count > 0)
         {
-            if (GameObject.Find("GameData").GetComponent<GameData>().global_ticks == 0)
+            if (GameObject.Find("GameData").GetComponent<GameData>().global_ticks % 100 == 0)
             {
                 List<TalentData> unlocked_talents = player_stats.skill_tree.GetUnlockedTalents();
                 foreach (long talent_id in current_passive_talents_id)
@@ -928,8 +961,8 @@ public class PlayerData : ActorData
                     }
                 }
             }
-        }
-
+        }       
+        
         return wait_time;
     }
 
@@ -987,7 +1020,7 @@ public class PlayerData : ActorData
 
         foreach (ItemData item in map.items)
         {
-            if (item.GetPrototype() is ItemGold && x == item.x && y == item.y)
+            if (item.GetPrototype() is ItemGold && X == item.x && Y == item.y)
             {
                 CollectItemCommand c = new(item);
                 c.Execute();
@@ -1001,8 +1034,8 @@ public class PlayerData : ActorData
         CureAllPoisons();
         CureAllDiseases();
 
-        health_current = GetHealthMax();
-        stamina_current = GetStaminaMax();
+        Health_current = GetHealthMax();
+        Stamina_current = GetStaminaMax();
         mana_current = GetManaMax();
 
         int relative_armor_durability_effect_amount = GetCurrentAdditiveEffectAmount<EffectAddRelativeArmorDurability>();

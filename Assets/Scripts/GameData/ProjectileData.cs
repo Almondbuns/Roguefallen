@@ -122,8 +122,8 @@ public class ItemProjectileData : ProjectileData
     public override void OnKill()
     {
         MapData map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
-        item.x = x;
-        item.y = y;
+        item.x = X;
+        item.y = Y;
 
         map.Add(item);
         base.OnKill();

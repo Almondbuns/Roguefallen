@@ -77,7 +77,7 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         shift_sprite_position_x = actor_data.prototype.tile_width / 2.0f;
         shift_sprite_position_y = actor_data.prototype.tile_height / 2.0f;
-        transform.position = new Vector3(actor_data.x + shift_sprite_position_x, actor_data.y + shift_sprite_position_y, 0);
+        transform.position = new Vector3(actor_data.X + shift_sprite_position_x, actor_data.Y + shift_sprite_position_y, 0);
         
         actor_data.HandlePrepareActionTick += HandlePrepareActionTick;
         actor_data.HandleStartActionTick += HandleStartActionTick;
@@ -112,14 +112,14 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void HandleMovement()
     {
-        VisualAction v = new VisualAction {type = VisualActionType.MOVEMENT, target_tile = (actor_data.x, actor_data.y)};
+        VisualAction v = new VisualAction {type = VisualActionType.MOVEMENT, target_tile = (actor_data.X, actor_data.Y)};
         visual_action_queue.Add(v);
         UpdateVisibility(GameObject.Find("GameData").GetComponent<GameData>().current_map);
     }
 
     public void HandleTeleport()
     {
-        VisualAction v = new VisualAction {type = VisualActionType.TELEPORT, target_tile = (actor_data.x, actor_data.y)};
+        VisualAction v = new VisualAction {type = VisualActionType.TELEPORT, target_tile = (actor_data.X, actor_data.Y)};
         visual_action_queue.Add(v);
         UpdateVisibility(GameObject.Find("GameData").GetComponent<GameData>().current_map);
     }
@@ -132,15 +132,15 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (actor_data is PlayerData)
             return;
             
-        if (actor_data.is_currently_hidden == false && map.tiles[actor_data.x, actor_data.y].visibility == Visibility.Active)
+        if (actor_data.is_currently_hidden == false && map.tiles[actor_data.X, actor_data.Y].visibility == Visibility.Active)
         {
-            VisualAction v = new VisualAction {type = VisualActionType.SHOW, target_tile = (actor_data.x, actor_data.y)};
+            VisualAction v = new VisualAction {type = VisualActionType.SHOW, target_tile = (actor_data.X, actor_data.Y)};
             visual_action_queue.Add(v); 
             gameObject.SetActive(true); //if not set true immediately script will not work
         }
         else
         {
-            VisualAction v = new VisualAction {type = VisualActionType.HIDE, target_tile = (actor_data.x, actor_data.y)};
+            VisualAction v = new VisualAction {type = VisualActionType.HIDE, target_tile = (actor_data.X, actor_data.Y)};
             visual_action_queue.Add(v);
         }
     }
@@ -317,7 +317,7 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     void RefreshHealth()
     {
-        health = actor_data.health_current;
+        health = actor_data.Health_current;
 
         //Only show health bar if damaged and skill aquired
         if (health_bar == null && health < actor_data.GetHealthMax())
@@ -335,12 +335,12 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
 
         if (health_bar != null)
-            health_bar.GetComponent<ActorHealthBar>().SetValues(actor_data.health_current, actor_data.GetHealthMax());
+            health_bar.GetComponent<ActorHealthBar>().SetValues(actor_data.Health_current, actor_data.GetHealthMax());
     }
 
     void FixedUpdate()
     {
-        if (actor_data.health_current != health)
+        if (actor_data.Health_current != health)
             RefreshHealth();
 
         //Movement
@@ -394,7 +394,7 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     }
                     else if (visual_action_time >= 0.0f)
                     {
-                        transform.position = Vector3.MoveTowards(transform.position, new Vector3(actor_data.x + shift_sprite_position_x, actor_data.y + shift_sprite_position_y, 0), 10f * Time.deltaTime);
+                        transform.position = Vector3.MoveTowards(transform.position, new Vector3(actor_data.X + shift_sprite_position_x, actor_data.Y + shift_sprite_position_y, 0), 10f * Time.deltaTime);
                         check_direction = false;
                     }
                 }
@@ -454,10 +454,10 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 GetComponent<SpriteRenderer>().flipX = false;
         }
 
-        if (actor_data is ProjectileData && (transform.position.x != actor_data.x + shift_sprite_position_x || transform.position.y != actor_data.y + shift_sprite_position_y))
+        if (actor_data is ProjectileData && (transform.position.x != actor_data.X + shift_sprite_position_x || transform.position.y != actor_data.Y + shift_sprite_position_y))
         {
-            float angle = Vector2.Angle(Vector2.up, new Vector2(actor_data.x + shift_sprite_position_x - transform.position.x, actor_data.y + shift_sprite_position_y - transform.position.y));
-            if (actor_data.x + shift_sprite_position_x - transform.position.x > 0)
+            float angle = Vector2.Angle(Vector2.up, new Vector2(actor_data.X + shift_sprite_position_x - transform.position.x, actor_data.Y + shift_sprite_position_y - transform.position.y));
+            if (actor_data.X + shift_sprite_position_x - transform.position.x > 0)
                 angle = -angle;
             transform.rotation = Quaternion.Euler(0, 0, angle);
         }
@@ -541,12 +541,12 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         visual_action_queue.Clear();
         current_visual_action = null;
 
-        transform.position = new Vector3(actor_data.x + shift_sprite_position_x, actor_data.y + shift_sprite_position_y, 0); // Always end at the current tile
+        transform.position = new Vector3(actor_data.X + shift_sprite_position_x, actor_data.Y + shift_sprite_position_y, 0); // Always end at the current tile
     }
 
     public void HandleKill()
     {
-        VisualAction v = new VisualAction {type = VisualActionType.KILL, target_tile = (actor_data.x, actor_data.y)};
+        VisualAction v = new VisualAction {type = VisualActionType.KILL, target_tile = (actor_data.X, actor_data.Y)};
         visual_action_queue.Add(v);
     }
 

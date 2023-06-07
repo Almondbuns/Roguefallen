@@ -621,8 +621,8 @@ public class TalentBossTrollEarthquake : TalentPrototype
                 tiles.Add(
                     new AttackedTileData
                     {
-                        x = input.source_actor.x + i,
-                        y = input.source_actor.y + j,
+                        x = input.source_actor.X + i,
+                        y = input.source_actor.Y + j,
                         damage_on_hit = { (DamageType.CRUSH,10,0)},
                         effects_on_hit = { new EffectStun { damage_type = DamageType.CRUSH, duration = 500} },
                         diseases_on_hit = null,
@@ -646,8 +646,8 @@ public class TalentBossTrollEarthquake : TalentPrototype
                 tiles.Add(
                     new AttackedTileData
                     {
-                        x = input.source_actor.x + i,
-                        y = input.source_actor.y + j,
+                        x = input.source_actor.X + i,
+                        y = input.source_actor.Y + j,
                         damage_on_hit = { (DamageType.CRUSH,10,0)},
                         effects_on_hit = { new EffectStun { damage_type = DamageType.CRUSH, duration = 500} },
                         diseases_on_hit = null,
@@ -671,8 +671,8 @@ public class TalentBossTrollEarthquake : TalentPrototype
                 tiles.Add(
                     new AttackedTileData
                     {
-                        x = input.source_actor.x + i,
-                        y = input.source_actor.y + j,
+                        x = input.source_actor.X + i,
+                        y = input.source_actor.Y + j,
                         damage_on_hit = { (DamageType.CRUSH,10,0)},
                         effects_on_hit = { new EffectStun { damage_type = DamageType.CRUSH, duration = 500} },
                         diseases_on_hit = null,

@@ -307,55 +307,55 @@ public class TalentAxeAttackAdjacent : TalentPrototype
 
         //Calculate adjacent tiles
         List<(int x, int y)> adjacent_tiles = new();
-        int relative_x = input.target_tiles[0].Item1 - input.source_actor.x;
-        int relative_y = input.target_tiles[0].Item2 - input.source_actor.y;
+        int relative_x = input.target_tiles[0].Item1 - input.source_actor.X;
+        int relative_y = input.target_tiles[0].Item2 - input.source_actor.Y;
         if (relative_x == -1 && relative_y == -1)
         {
-            adjacent_tiles.Add((input.source_actor.x, input.source_actor.y - 1));
+            adjacent_tiles.Add((input.source_actor.X, input.source_actor.Y - 1));
             adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.x - 1, input.source_actor.y));
+            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y));
         }
         if (relative_x == -1 && relative_y == 0)
         {
-            adjacent_tiles.Add((input.source_actor.x - 1, input.source_actor.y - 1));
+            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y - 1));
             adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.x - 1, input.source_actor.y + 1));
+            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y + 1));
         }
         if (relative_x == -1 && relative_y == 1)
         {
-            adjacent_tiles.Add((input.source_actor.x - 1, input.source_actor.y));
+            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y));
             adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.x, input.source_actor.y + 1));
+            adjacent_tiles.Add((input.source_actor.X, input.source_actor.Y + 1));
         }
         if (relative_x == 0 && relative_y == 1)
         {
-            adjacent_tiles.Add((input.source_actor.x - 1, input.source_actor.y + 1));
+            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y + 1));
             adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.x + 1, input.source_actor.y + 1));
+            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y + 1));
         }
         if (relative_x == 1 && relative_y == 1)
         {
-            adjacent_tiles.Add((input.source_actor.x, input.source_actor.y + 1));
+            adjacent_tiles.Add((input.source_actor.X, input.source_actor.Y + 1));
             adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.x + 1, input.source_actor.y));
+            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y));
         }
         if (relative_x == 1 && relative_y == 0)
         {
-            adjacent_tiles.Add((input.source_actor.x + 1, input.source_actor.y + 1));
+            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y + 1));
             adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.x + 1, input.source_actor.y - 1));
+            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y - 1));
         }
         if (relative_x == 1 && relative_y == -1)
         {
-            adjacent_tiles.Add((input.source_actor.x + 1, input.source_actor.y));
+            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y));
             adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.x, input.source_actor.y - 1));
+            adjacent_tiles.Add((input.source_actor.X, input.source_actor.Y - 1));
         }
         if (relative_x == 0 && relative_y == -1)
         {
-            adjacent_tiles.Add((input.source_actor.x + 1, input.source_actor.y - 1));
+            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y - 1));
             adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.x - 1, input.source_actor.y - 1));
+            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y - 1));
         }
 
         foreach ((int x, int y) in adjacent_tiles)
@@ -506,8 +506,8 @@ public class TalentBluntEarthquake : TalentWeaponAttack
 
                 tiles.Add(new AttackedTileData
                 {
-                    x = input.source_actor.x + i,
-                    y = input.source_actor.y + j,
+                    x = input.source_actor.X + i,
+                    y = input.source_actor.Y + j,
                     damage_on_hit = dealt_damage,
                     effects_on_hit = this.effects,
                 });

@@ -17,8 +17,8 @@ public class PlayerPanel : MonoBehaviour
             return;
 
         //HP
-        transform.Find("HPBar").GetComponent<CurrentMaxBar>().SetValues(player_data.health_current, player_data.GetHealthMax());
-        transform.Find("StaminaBar").GetComponent<CurrentMaxBar>().SetValues(player_data.stamina_current, player_data.GetStaminaMax());
+        transform.Find("HPBar").GetComponent<CurrentMaxBar>().SetValues(player_data.Health_current, player_data.GetHealthMax());
+        transform.Find("StaminaBar").GetComponent<CurrentMaxBar>().SetValues(player_data.Stamina_current, player_data.GetStaminaMax());
         transform.Find("ManaBar").GetComponent<CurrentMaxBar>().SetValues(player_data.mana_current, player_data.GetManaMax());
         if (player_data.player_stats.level <= player_data.experience_levels.Count)
             transform.Find("ExperienceBar").GetComponent<CurrentMaxBar>().SetValues(player_data.player_stats.experience, player_data.experience_levels[player_data.player_stats.level - 1]);

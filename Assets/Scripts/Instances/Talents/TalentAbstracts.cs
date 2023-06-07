@@ -286,8 +286,8 @@ public class TalentRadiusAllAttack : TalentPrototype
                 tiles.Add(
                     new AttackedTileData
                     {
-                        x = input.source_actor.x + i,
-                        y = input.source_actor.y + j,
+                        x = input.source_actor.X + i,
+                        y = input.source_actor.Y + j,
                         damage_on_hit = actual_damage,
                         effects_on_hit = effects,
                         diseases_on_hit = diseases,

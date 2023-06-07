@@ -212,12 +212,12 @@ public class MapData
         for (int i = 0; i < size; ++ i)
         {         
             Type a_type = Type.GetType(save.ReadString());
-            Debug.Log("Type " + a_type);
+            //Debug.Log("Type " + a_type);
 
             ActorData a = (ActorData)Activator.CreateInstance(a_type, -1, -1, null);
             a.Load(save);
             actors.Add(a);
-            Debug.Log(a.prototype.name);
+            //Debug.Log(a.prototype.name);
         }
 
         size = save.ReadInt32();
@@ -322,8 +322,8 @@ public class MapData
         {
             if (actor_data.prototype.blocks_tiles == true)
             {
-                if (actor_data.x <= x && actor_data.x + actor_data.prototype.tile_width - 1 >= x 
-                    && actor_data.y <= y && actor_data.y + actor_data.prototype.tile_height - 1 >= y )
+                if (actor_data.X <= x && actor_data.X + actor_data.prototype.tile_width - 1 >= x 
+                    && actor_data.Y <= y && actor_data.Y + actor_data.prototype.tile_height - 1 >= y )
                 {
                     return true;
                 }
@@ -337,8 +337,8 @@ public class MapData
     {
         foreach (ActorData actor_data in actors)
         {
-            if (actor_data.x <= x && actor_data.x + actor_data.prototype.tile_width - 1 >= x 
-                    && actor_data.y <= y && actor_data.y + actor_data.prototype.tile_height - 1 >= y )
+            if (actor_data.X <= x && actor_data.X + actor_data.prototype.tile_width - 1 >= x 
+                    && actor_data.Y <= y && actor_data.Y + actor_data.prototype.tile_height - 1 >= y )
             {
                 return actor_data;
             }
@@ -423,21 +423,21 @@ public class MapData
         int player_sight = 16;
         int player_light = 6;
 
-        for (int x = player_data.x - player_sight; x <= player_data.x + player_sight; ++x)
+        for (int x = player_data.X - player_sight; x <= player_data.X + player_sight; ++x)
         {
-            for (int y = player_data.y - player_sight; y <= player_data.y + player_sight; ++y)
+            for (int y = player_data.Y - player_sight; y <= player_data.Y + player_sight; ++y)
             {
                 if (x < 0 || y < 0 || x >= tiles.GetLength(0) || y >= tiles.GetLength(1))
                     continue;
 
-                List<(int x, int y)> path = Algorithms.LineofSight((player_data.x, player_data.y), (x, y));
+                List<(int x, int y)> path = Algorithms.LineofSight((player_data.X, player_data.Y), (x, y));
 
 
                 bool blocked = IsLineofSightBlocked(path);
 
                 if (blocked == false)
                 {
-                    if ((x >= player_data.x - player_light && x <= player_data.x + player_light && y >= player_data.y - player_light && y <= player_data.y + player_light)
+                    if ((x >= player_data.X - player_light && x <= player_data.X + player_light && y >= player_data.Y - player_light && y <= player_data.Y + player_light)
                        || tiles[x, y].light.maxColorComponent > 0.8)
                     {
                         tiles[x, y].visibility = Visibility.Active;
@@ -532,8 +532,8 @@ public class MapData
 
         foreach(ActorData actor in actors_copy)
         {
-            if (tile.x >= actor.x && tile.y >= actor.y
-                && tile.x <= actor.x + actor.prototype.tile_width - 1&& tile.y <= actor.y + actor.prototype.tile_height - 1)
+            if (tile.x >= actor.X && tile.y >= actor.Y
+                && tile.x <= actor.X + actor.prototype.tile_width - 1&& tile.y <= actor.Y + actor.prototype.tile_height - 1)
             {
                 actor.TryToHit(src_actor, src_actor.GetToHit(), tile.damage_on_hit, tile.effects_on_hit, tile.diseases_on_hit, tile.poisons_on_hit);
             }
@@ -556,8 +556,8 @@ public class MapData
 
         foreach (ActorData a in actors_copy)
         {
-            if (a.x >= actor.x && a.y >= actor.y && actor != a
-                && a.x <= actor.x + actor.prototype.tile_width - 1 && a.y <= actor.y + actor.prototype.tile_height - 1)
+            if (a.X >= actor.X && a.Y >= actor.Y && actor != a
+                && a.X <= actor.X + actor.prototype.tile_width - 1 && a.Y <= actor.Y + actor.prototype.tile_height - 1)
             {
                 a.OnEnterTile(actor);
             }

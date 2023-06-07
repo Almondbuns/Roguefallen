@@ -30,8 +30,8 @@ public class CharacterPanel : MonoBehaviour
             experience_next_level = player_data.experience_levels[player_data.player_stats.level - 1];
 
         transform.Find("ExperienceBar").GetComponent<CurrentMaxBar>().SetValues(player_data.player_stats.experience, experience_next_level);
-        transform.Find("HealthBar").GetComponent<CurrentMaxBar>().SetValues(player_data.health_current, player_data.GetHealthMax());
-        transform.Find("StaminaBar").GetComponent<CurrentMaxBar>().SetValues(player_data.stamina_current, player_data.GetStaminaMax());
+        transform.Find("HealthBar").GetComponent<CurrentMaxBar>().SetValues(player_data.Health_current, player_data.GetHealthMax());
+        transform.Find("StaminaBar").GetComponent<CurrentMaxBar>().SetValues(player_data.Stamina_current, player_data.GetStaminaMax());
         transform.Find("ManaBar").GetComponent<CurrentMaxBar>().SetValues(player_data.mana_current, player_data.GetManaMax());
 
         transform.Find("BaseStats").Find("Strength").Find("Base").GetComponent<TMPro.TextMeshProUGUI>().text = player_data.player_stats.strength.ToString();

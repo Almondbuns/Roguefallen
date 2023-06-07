@@ -91,7 +91,6 @@ public class GameData : MonoBehaviour
         player_data.Load(save);
 
         int dungeon_index = save.ReadInt32();
-        Debug.Log(dungeon_index);
         current_dungeon = dungeons[dungeon_index];
 
         int dungeon_level_index = save.ReadInt32();

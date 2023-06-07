@@ -41,8 +41,8 @@ public class ActorPanel : MonoBehaviour
 
         if (monster_stats > 0)
         {
-            transform.Find("HPBar").GetComponent<CurrentMaxBar>().SetValues(actor_data.health_current, actor_data.GetHealthMax());
-            transform.Find("StaminaBar").GetComponent<CurrentMaxBar>().SetValues(actor_data.stamina_current, actor_data.GetStaminaMax());
+            transform.Find("HPBar").GetComponent<CurrentMaxBar>().SetValues(actor_data.Health_current, actor_data.GetHealthMax());
+            transform.Find("StaminaBar").GetComponent<CurrentMaxBar>().SetValues(actor_data.Stamina_current, actor_data.GetStaminaMax());
             transform.Find("ManaBar").GetComponent<CurrentMaxBar>().SetValues(actor_data.mana_current, actor_data.GetManaMax());
         }
         else

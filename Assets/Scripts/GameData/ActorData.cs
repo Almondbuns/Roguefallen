@@ -115,14 +115,27 @@ public class ActorData
 
     public ActorPrototype prototype;
 
-    public int x {get; private set;}
-    public int y {get; private set;}
+    public int X {get; private set;}
+    public int Y {get; private set;}
 
     public bool is_dead = false;
     public bool is_currently_hidden = false;
 
-    public int health_current;
-    public int stamina_current;
+    public int Health_current {get; set;}
+
+    protected int _stamina_current;    
+    public virtual int Stamina_current
+    {
+        get
+        {
+            return _stamina_current;
+        } 
+        set
+        {
+            _stamina_current = value;           
+        }
+    }
+
     public int mana_current;
 
     public ActorMeterResistanceData meter_resistances;
@@ -179,14 +192,14 @@ public class ActorData
         save.Write(prototype.GetType().Name);
         save.Write(prototype.stats.level);
 
-        save.Write(x);
-        save.Write(y);
+        save.Write(X);
+        save.Write(Y);
 
         save.Write(is_dead);
         save.Write(is_currently_hidden);
 
-        save.Write(health_current);
-        save.Write(stamina_current);
+        save.Write(Health_current);
+        save.Write(Stamina_current);
         save.Write(mana_current);
 
         meter_resistances.Save(save);
@@ -274,9 +287,9 @@ public class ActorData
         is_dead = save.ReadBoolean();
         is_currently_hidden = save.ReadBoolean();
 
-        health_current = save.ReadInt32();
+        Health_current = save.ReadInt32();
         //Debug.Log(health_current);
-        stamina_current = save.ReadInt32();
+        Stamina_current = save.ReadInt32();
         mana_current = save.ReadInt32();
 
         meter_resistances.Load(save);
@@ -372,8 +385,8 @@ public class ActorData
         id = id_counter;
         ++id_counter;
 
-        this.x = x;
-        this.y = y;
+        this.X = x;
+        this.Y = y;
         
         talents = new List<TalentData>();
         current_effects = new();
@@ -397,8 +410,8 @@ public class ActorData
                 talents.Add(new TalentData(talent));
             }
 
-            health_current = GetHealthMax();
-            stamina_current = GetStaminaMax();
+            Health_current = GetHealthMax();
+            Stamina_current = GetStaminaMax();
             mana_current = GetManaMax();
 
             foreach (ArmorStats armor_stats in prototype.stats.body_armor)
@@ -430,8 +443,8 @@ public class ActorData
 
     public virtual void MoveTo(int destination_x, int destination_y, bool is_teleport = false)
     {
-        x = destination_x;
-        y = destination_y;
+        X = destination_x;
+        Y = destination_y;
 
         if (is_teleport == true)
             HandleTeleport?.Invoke();
@@ -518,6 +531,9 @@ public class ActorData
         int value = prototype.stats.movement_time;
 
         value += GetCurrentAdditiveEffectAmount<EffectAddMovementTime>();
+        
+        if (GetCurrentAdditiveEffectAmount<EffectExhaustion>() >= 1)
+            value += 100;
 
         value = (int) Mathf.Max(0,(value * (100 - GetCurrentAdditiveEffectAmount<EffectRemoveMovementTimeRelative>()) / 100f));
 
@@ -766,7 +782,7 @@ public class ActorData
                 int passive_block_chance = GetCurrentAdditiveEffectAmount<EffectPassiveBlock>();
                 int r_passive = UnityEngine.Random.Range(0,100);
                 int shield_armor = GetArmor("shield", armor_type);
-                if (stamina_current >= 1 && shield_armor > 0 && active_block_chance > 0 && r_active < active_block_chance)
+                if (Stamina_current >= 1 && shield_armor > 0 && active_block_chance > 0 && r_active < active_block_chance)
                 {
                     damage_absorbed = Mathf.Min(damage_multiplied, Mathf.Max(0, shield_armor + GetArmor(body_part, armor_type) - damage_per_type.armor_penetration));
                     output = damage_multiplied - shield_armor + ReduceDurability("shield", shield_armor);
@@ -797,7 +813,7 @@ public class ActorData
                 damage_absorbed -= output;
             }
 
-            health_current -= damage_taken;
+            Health_current -= damage_taken;
             damage_sum += damage_taken;
             absorb_sum += damage_absorbed;
 
@@ -903,7 +919,7 @@ public class ActorData
             }
         }
 
-        if (health_current <= 0)
+        if (Health_current <= 0)
         {
             OnKill();
         }
@@ -936,7 +952,7 @@ public class ActorData
         if (talent_data.IsUsable() == false)
             return false;
 
-        if (talent_data.prototype.cost_stamina > stamina_current)
+        if (talent_data.prototype.cost_stamina > Stamina_current)
             return false;
 
         if (current_effects.Find(x => x.effect is EffectStun) != null)
@@ -965,7 +981,7 @@ public class ActorData
 
         if (talent.prototype.type == TalentType.Active)
         {
-            stamina_current -= talent.prototype.cost_stamina;
+            Stamina_current -= talent.prototype.cost_stamina;
             talent.cooldown_current = talent.prototype.cooldown;
 
             current_action = talent.CreateAction(input);
@@ -974,7 +990,7 @@ public class ActorData
         {
             if (current_substained_talents_id.Contains(talent.id) == false)
             {
-                stamina_current -= talent.prototype.cost_stamina;
+                Stamina_current -= talent.prototype.cost_stamina;
             }
             talent.cooldown_current = talent.prototype.cooldown;
 
@@ -1084,7 +1100,7 @@ public class ActorData
         if (is_currently_hidden == false) return;
         
         MapData map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
-        if (map.tiles[x, y].visibility != Visibility.Active) return;
+        if (map.tiles[X, Y].visibility != Visibility.Active) return;
 
         PlayerData player = GameObject.Find("GameData").GetComponent<GameData>().player_data;
 
@@ -1139,7 +1155,7 @@ public class ActorData
     public void AddEffect(EffectData effect)
     {
         string text = "The " + prototype.name + " gains the effect: " + effect.name.ToLower();
-        if (effect.amount != 0) 
+        if (effect.amount != 0 && effect.show_amount_info == true) 
             text += ": " + effect.amount;
         
         text += ".";
@@ -1160,7 +1176,7 @@ public class ActorData
     public void RemoveEffect(ActorEffectData effect)
     {
         string text = "The "+ prototype.name +"  loses the effect: " + effect.effect.name.ToLower();
-        if (effect.effect.amount != 0) 
+        if (effect.effect.amount != 0 && effect.effect.show_amount_info == true) 
             text += ": " + effect.effect.amount;
         
         text += ".";
@@ -1175,16 +1191,16 @@ public class ActorData
 
     public void Heal(int amount)
     {
-        health_current = Mathf.Min(GetHealthMax(), health_current + amount);
+        Health_current = Mathf.Min(GetHealthMax(), Health_current + amount);
         HandleHeal?.Invoke(amount, "Health");
     }
 
     public void Damage(int amount)
     {
-        health_current -= amount;
+        Health_current -= amount;
         HandleDamage?.Invoke(amount, "Health");
 
-        if (health_current <= 0)
+        if (Health_current <= 0)
         {
             OnKill();
         }
@@ -1192,13 +1208,13 @@ public class ActorData
 
     public void RefreshStamina(int amount)
     {
-        stamina_current = Mathf.Min(GetStaminaMax(), stamina_current + amount);
+        Stamina_current = Mathf.Min(GetStaminaMax(), Stamina_current + amount);
         HandleHeal?.Invoke(amount, "Stamina");
     }
 
     public void RemoveStamina(int amount)
     {
-        stamina_current = Mathf.Max(0, stamina_current - amount);
+        Stamina_current = Mathf.Max(0, Stamina_current - amount);
         HandleDamage?.Invoke(amount, "Stamina");
     }
 
@@ -1253,5 +1269,26 @@ public class ActorData
         this.current_diseases.Clear();
         meter_resistances.resistances[DamageType.DISEASE] = 0;
         GameLogger.Log("The " + prototype.name + " feels very healthy.");
+    }
+
+    public void DeactivateSubstainedTalent(long talent_id)
+    {
+        if (current_substained_talents_id.Contains(talent_id) == true)
+        {
+            current_substained_talents_id.RemoveAll(x => x == talent_id);
+        }
+    }
+
+    public void ActivateSubstainedTalent(long talent_id)
+    {
+        if (current_substained_talents_id.Contains(talent_id) == false)
+        {
+            current_substained_talents_id.Add(talent_id);
+        }
+    }
+
+    public void DeactivateAllSubstainedTalents()
+    {
+        current_substained_talents_id.Clear();
     }
 }

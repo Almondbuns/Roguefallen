@@ -87,7 +87,7 @@ public class Crate : ActorPrototype
         if (random < 20)
         {
             //Spawn monster
-            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.x, actor_data.y);
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.X, actor_data.Y);
             if (tile == null) return;
 
             ActorData monster;
@@ -107,7 +107,7 @@ public class Crate : ActorPrototype
         else if (random < 60)
         {
             //Spawn item
-            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.x, actor_data.y);
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.X, actor_data.Y);
             if (tile == null) return;
             ItemData item = ItemData.GetRandomItem(tile.Value.x, tile.Value.y, stats.level);
             map.Add(item);
@@ -146,7 +146,7 @@ public class Jar : ActorPrototype
         if (random < 33)
         {
             //Spawn gold
-            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.x, actor_data.y);
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.X, actor_data.Y);
             if (tile == null) return;
 
             ItemData gold;
@@ -192,7 +192,7 @@ public class Jar : ActorPrototype
                     if (i == 0 && j == 0)
                     continue;
                     
-                    map.DistributeDamage(actor_data, new AttackedTileData(){x = actor_data.x + i, y = actor_data.y + j, damage_on_hit = {(damage_type,Random.Range(5,11),0)}});
+                    map.DistributeDamage(actor_data, new AttackedTileData(){x = actor_data.X + i, y = actor_data.Y + j, damage_on_hit = {(damage_type,Random.Range(5,11),0)}});
                 }
             }
             return;

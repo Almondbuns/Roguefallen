@@ -97,8 +97,8 @@ public class MoveCommand : CommandData
         if (actor.GetCurrentAdditiveEffectAmount<EffectConfusion>() > 0)
         {
             GameLogger.Log("The " + actor.prototype.name + " is confused and runs into a random direction.");
-            destination_x = actor.x + UnityEngine.Random.Range(-1,2);
-            destination_y = actor.y + UnityEngine.Random.Range(-1,2);
+            destination_x = actor.X + UnityEngine.Random.Range(-1,2);
+            destination_y = actor.Y + UnityEngine.Random.Range(-1,2);
         }
 
         if (ignore_blocked_tiles == false && map_data.CanBeMovedInByActor(destination_x, destination_y,actor) == false)
@@ -158,8 +158,8 @@ public class KnockbackCommand : CommandData
 
         if (target_actor == null) return 0f;
 
-        int push_direction_x = target_tile_x - src_actor.x;
-        int push_direction_y = target_tile_y - src_actor.y;
+        int push_direction_x = target_tile_x - src_actor.X;
+        int push_direction_y = target_tile_y - src_actor.Y;
 
         int push_tile_x = target_tile_x + push_direction_x;
         int push_tile_y = target_tile_y + push_direction_y;
@@ -257,19 +257,19 @@ public class PullCommand : CommandData
         //Pull as long as distance gets smaller and distance < max_distance
 
         int pull_direction_x = 0;
-        if (target_actor.x < src_actor.x - 1)
+        if (target_actor.X < src_actor.X - 1)
             pull_direction_x = 1;
-        if (target_actor.x > src_actor.x + 1)
+        if (target_actor.X > src_actor.X + 1)
             pull_direction_x = -1;
 
         int pull_direction_y = 0;
-        if (target_actor.y < src_actor.y - 1)
+        if (target_actor.Y < src_actor.Y - 1)
             pull_direction_y = 1;
-        if (target_actor.y > src_actor.y + 1)
+        if (target_actor.Y > src_actor.Y + 1)
             pull_direction_y = -1;       
 
-        int pull_tile_x = target_actor.x + pull_direction_x;
-        int pull_tile_y = target_actor.y + pull_direction_y;
+        int pull_tile_x = target_actor.X + pull_direction_x;
+        int pull_tile_y = target_actor.Y + pull_direction_y;
 
         int current_distance = 1;
         bool is_pulled = false;
@@ -298,15 +298,15 @@ public class PullCommand : CommandData
             }
 
             pull_direction_x = 0;
-            if (target_actor.x < src_actor.x - 1)
+            if (target_actor.X < src_actor.X - 1)
                 pull_direction_x = 1;
-            if (target_actor.x > src_actor.x + 1)
+            if (target_actor.X > src_actor.X + 1)
                 pull_direction_x = -1;
 
             pull_direction_y = 0;
-            if (target_actor.y < src_actor.y - 1)
+            if (target_actor.Y < src_actor.Y - 1)
                 pull_direction_y = 1;
-            if (target_actor.y > src_actor.y + 1)
+            if (target_actor.Y > src_actor.Y + 1)
                 pull_direction_y = -1;       
 
             pull_tile_x += pull_direction_x;
@@ -360,7 +360,7 @@ public class HealActorCommand : CommandData
         MapData map_data = GameObject.Find("GameData").GetComponent<GameData>().current_map;
         ActorData actor = map_data.GetActor(actor_id);
 
-        actor.health_current += amount;
+        actor.Heal(amount);
         return 0.00f;
     }
 }
@@ -981,10 +981,10 @@ public class MultiplyCommand : CommandData
         {
             for (int y = -1; y <= 1; ++y)
             {
-                if (map_data.CanBeMovedInByActor(actor.x + x, actor.y + y, actor) == true)
+                if (map_data.CanBeMovedInByActor(actor.X + x, actor.Y + y, actor) == true)
                 {                    
                     ActorData actor_data = null;
-                    actor_data = new MonsterData(actor.x + x, actor.y + y, (ActorPrototype)Activator.CreateInstance(actor.prototype.GetType(), actor.prototype.stats.level));
+                    actor_data = new MonsterData(actor.X + x, actor.Y + y, (ActorPrototype)Activator.CreateInstance(actor.prototype.GetType(), actor.prototype.stats.level));
                     map_data.Add(actor_data);
 
                     return 0.0f;
@@ -1029,7 +1029,7 @@ public class CreateProjectileCommand : CommandData
     public override float Execute()
     {
         MapData map_data = GameObject.Find("GameData").GetComponent<GameData>().current_map;
-        bool hit = !map_data.IsAccessableTile(projectile.x, projectile.y);
+        bool hit = !map_data.IsAccessableTile(projectile.X, projectile.Y);
 
         GameObject.Find("GameData").GetComponent<GameData>().current_map.Add(projectile);
         if (hit)
@@ -1081,7 +1081,7 @@ public class CreateProjectileToPlayerCommand : CommandData
         PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
         ActorData actor = map_data.GetActor(actor_id);
 
-        Path path = Algorithms.AStar(map_data, (actor.x, actor.y), (player_data.x, player_data.y), true, true, actor);
+        Path path = Algorithms.AStar(map_data, (actor.X, actor.Y), (player_data.X, player_data.Y), true, true, actor);
 
         ProjectileData bomb = new ProjectileData( path.path[0].x, path.path[0].y, (ActorPrototype)Activator.CreateInstance(type, level));
         List<(int x, int y)> bomb_path = new();
@@ -1096,7 +1096,7 @@ public class CreateProjectileToPlayerCommand : CommandData
         }
 
         bomb.path = bomb_path;
-        bool hit = !map_data.IsAccessableTile(bomb.x, bomb.y, false, actor);
+        bool hit = !map_data.IsAccessableTile(bomb.X, bomb.Y, false, actor);
         map_data.Add(bomb);
 
         if (hit)
@@ -1138,10 +1138,7 @@ internal class ActivateSubstainedTalentCommand : CommandData
         MapData map_data = GameObject.Find("GameData").GetComponent<GameData>().current_map;
         ActorData source_actor = map_data.GetActor(actor_id);
 
-        if (source_actor.current_substained_talents_id.Contains(talent_id) == false)
-        {
-            source_actor.current_substained_talents_id.Add(talent_id);
-        }
+        source_actor.ActivateSubstainedTalent(talent_id);      
 
         return 0.0f;
     }
@@ -1179,10 +1176,7 @@ internal class DeactivateSubstainedTalentCommand : CommandData
         MapData map_data = GameObject.Find("GameData").GetComponent<GameData>().current_map;
         ActorData source_actor = map_data.GetActor(actor_id);
 
-        if (source_actor.current_substained_talents_id.Contains(talent_id) == true)
-        {
-            source_actor.current_substained_talents_id.RemoveAll(x => x == talent_id);
-        }
+        source_actor.DeactivateSubstainedTalent(talent_id);       
 
         return 0.0f;
     }
@@ -1247,9 +1241,9 @@ public class ExplodeCommand : CommandData
         MapData map_data = GameObject.Find("GameData").GetComponent<GameData>().current_map;
         ActorData actor = map_data.GetActor(actor_id);
 
-        for (int i = actor.x - damage_radius; i <= actor.x + damage_radius; ++i)
+        for (int i = actor.X - damage_radius; i <= actor.X + damage_radius; ++i)
         {
-            for (int j = actor.y - damage_radius; j <= actor.y + damage_radius; ++j)
+            for (int j = actor.Y - damage_radius; j <= actor.Y + damage_radius; ++j)
             {
                 AttackedTileData attacked_tile = new AttackedTileData
                 {
@@ -1425,8 +1419,8 @@ public class TeleportRandomCommand : CommandData
         int tries = 0;
         while(real_target == null && tries < 1000)
         { 
-            int x = actor.x + UnityEngine.Random.Range(-distance,distance+1);
-            int y = actor.y + UnityEngine.Random.Range(-distance,distance+1);
+            int x = actor.X + UnityEngine.Random.Range(-distance,distance+1);
+            int y = actor.Y + UnityEngine.Random.Range(-distance,distance+1);
 
             if (map_data.IsAccessableTile(x, y) == true)
             {
