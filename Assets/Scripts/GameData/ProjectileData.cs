@@ -8,7 +8,7 @@ public class ProjectileData : ActorData
 {
     public List<(int x, int y)> path;
     public int path_index = 0;
-    public bool is_shoot_by_player = false;
+    public bool is_shot_by_player = false;
 
     internal override void Save(BinaryWriter save)
     {
@@ -22,7 +22,7 @@ public class ProjectileData : ActorData
         }
 
         save.Write(path_index);
-        save.Write(is_shoot_by_player);
+        save.Write(is_shot_by_player);
     }
 
     internal override void Load(BinaryReader save)
@@ -37,7 +37,7 @@ public class ProjectileData : ActorData
         }
 
         path_index = save.ReadInt32();
-        is_shoot_by_player = save.ReadBoolean();
+        is_shot_by_player = save.ReadBoolean();
     }
 
     public ProjectileData(int x, int y, ActorPrototype prototype = null) : base(x,y,prototype)
@@ -45,7 +45,7 @@ public class ProjectileData : ActorData
         path = new();
     }
 
-    public override void TryToHit(int to_hit, List<(DamageType type, int damage, int armor_penetration)> damage, List<EffectData> effects, List<Type> diseases, List<Type> poisons)
+    public override void TryToHit(ActorData src_actor, int to_hit, List<(DamageType type, int damage, int armor_penetration)> damage, List<EffectData> effects, List<Type> diseases, List<Type> poisons)
     {
 
     }
@@ -55,7 +55,7 @@ public class ProjectileData : ActorData
         List<(DamageType type, int amount, int penetration)> damage = new();
             
         float multiplier = 1f;
-        if (is_shoot_by_player == true)
+        if (is_shot_by_player == true)
             multiplier = (100 + GameObject.Find("GameData").GetComponent<GameData>().player_data.GetCurrentAdditiveEffectAmount<EffectAddThrowingWeaponDamageRelative>()) / 100f;
         
         foreach(var v in prototype.projectile.damage)
@@ -95,4 +95,40 @@ public class ProjectileData : ActorData
         base.OnKill();
     }
 }
+
+public class ItemProjectileData : ProjectileData
+{
+    public ItemData item;
+
+    internal override void Save(BinaryWriter save)
+    {
+        item.Save(save);
+        base.Save(save);
+    }
+
+    internal override void Load(BinaryReader save)
+    {
+       item = new ItemData(null);
+       item.Load(save);
+       
+       base.Load(save);
+       ((ItemProjectile) prototype).CreateProjectile(item);
+    }
+
+    public ItemProjectileData(int x, int y, ActorPrototype prototype = null) : base(x,y,prototype)
+    {
+    }
+
+    public override void OnKill()
+    {
+        MapData map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
+        item.x = X;
+        item.y = Y;
+
+        map.Add(item);
+        base.OnKill();
+    }
+}
+
+
 

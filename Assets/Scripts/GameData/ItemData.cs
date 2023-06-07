@@ -39,8 +39,56 @@ public class WeaponData
             //attack_talents.Add(v);
         }
     }
+
+    public void Tick()
+    {
+        foreach(var talent in attack_talents)
+            talent.Tick();
+    }
 }
 
+public class ShieldData
+{
+    public List<TalentData> talents;
+    
+
+    public ShieldData(ShieldPrototype prototype)
+    {
+        talents = new();
+
+        if (prototype != null)
+        {
+            foreach (TalentPrototype talent in prototype.talents)
+            {
+                talents.Add(new TalentData(talent));
+            }
+        }
+    }
+
+    internal void Save(BinaryWriter save)
+    {
+        save.Write(talents.Count);
+        foreach (TalentData v in talents)
+            v.Save(save);
+    }
+
+    internal void Load(BinaryReader save)
+    {
+        int size = save.ReadInt32();
+        for (int i = 0; i < size; ++ i)
+        {
+            //TalentData v = new(null);
+            talents[i].Load(save);
+            //attack_talents.Add(v);
+        }
+    }
+
+     public void Tick()
+    {
+        foreach(var talent in talents)
+            talent.Tick();
+    }
+}
 public class ArmorData
 {
     public int durability_current;
@@ -97,6 +145,7 @@ public class ItemData
 
     public WeaponData weapon_data;
     public ArmorData armor_data;
+    public ShieldData shield_data;
 
     public UsableItemData usable_item_data;
 
@@ -138,6 +187,14 @@ public class ItemData
         {
             save.Write(true);
             armor_data.Save(save);
+        }
+        else
+            save.Write(false);
+
+        if (shield_data != null)
+        {
+            save.Write(true);
+            shield_data.Save(save);
         }
         else
             save.Write(false);
@@ -203,6 +260,13 @@ public class ItemData
         b = save.ReadBoolean();
         if (b == true)
         {
+            shield_data = new ShieldData(prototype.shield);
+            shield_data.Load(save);
+        }
+
+        b = save.ReadBoolean();
+        if (b == true)
+        {
             usable_item_data = new();
             usable_item_data.Load(save);
         }
@@ -246,6 +310,11 @@ public class ItemData
             {
                 armor_data = new ArmorData(prototype.armor);
                 armor_data.durability_current = GetMaxDurability();
+            }
+
+            if (prototype.shield != null)
+            {
+                shield_data = new ShieldData(prototype.shield);
             }
 
             if (prototype.usable_item != null)
@@ -310,6 +379,8 @@ public class ItemData
             typeof(ItemPoemOfReturn),
             typeof(ItemPoemOfAWalk),
             typeof(ItemPoemOfAJourney),
+            typeof(ItemShieldHeavy),
+            typeof(ItemShieldMedium),
             //typeof(ItemFluteOfHealing),
         };
 
@@ -701,6 +772,14 @@ public class ItemData
         name = name.ToUpper()[0] + name.Substring(1);
         return name;
 
+    }
+
+    public void Tick()
+    {
+        if (weapon_data != null)
+            weapon_data.Tick();
+        if (shield_data != null)
+            shield_data.Tick();
     }
 }
 

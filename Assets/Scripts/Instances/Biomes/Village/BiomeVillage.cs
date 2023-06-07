@@ -7,6 +7,7 @@ public class BiomeVillage : BiomeData
     public BiomeVillage()
     {
         name = "Village";
+        ambience_light = Color.white;
 
         MapObjectCollectionData collection = new();
         collection.Add(new MapObjectData("grassland_background_1"));

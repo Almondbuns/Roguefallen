@@ -106,14 +106,14 @@ public class Map : MonoBehaviour
         }
 
         int player_light = 2;
-        for (int x = player_data.x - player_light; x <= player_data.x + player_light; ++x)
+        for (int x = player_data.X - player_light; x <= player_data.X + player_light; ++x)
         {
-            for (int y = player_data.y - player_light; y <= player_data.y + player_light; ++y)
+            for (int y = player_data.Y - player_light; y <= player_data.Y + player_light; ++y)
             {
                 if (x < 0 || y < 0 || x >= map_data.tiles.GetLength(0) || y >= map_data.tiles.GetLength(1))
                     continue;
 
-                List<(int x, int y)> path = Algorithms.LineofSight((player_data.x, player_data.y), (x, y));
+                List<(int x, int y)> path = Algorithms.LineofSight((player_data.X, player_data.Y), (x, y));
 
                 bool blocked = false;
                 int counter = 0;
@@ -358,6 +358,8 @@ public class Map : MonoBehaviour
     {
         if (tile.x < 0 || tile.y < 0 || tile.x >= map_data.tiles.GetLength(0) || tile.y >= map_data.tiles.GetLength(1)) return;
 
+        if (map_data.tiles[tile.x, tile.y].visibility != Visibility.Active) return;
+        
         if (effect == VisualEffect.Hit)
         {
             GameObject visual_effect = GameObject.Instantiate(visual_effect_hit_prefab, transform);

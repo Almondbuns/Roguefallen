@@ -91,7 +91,6 @@ public class GameData : MonoBehaviour
         player_data.Load(save);
 
         int dungeon_index = save.ReadInt32();
-        Debug.Log(dungeon_index);
         current_dungeon = dungeons[dungeon_index];
 
         int dungeon_level_index = save.ReadInt32();
@@ -104,7 +103,9 @@ public class GameData : MonoBehaviour
         ItemData.id_counter = save.ReadInt64();
         QuestData.id_counter = save.ReadInt64();
         TalentData.id_counter = save.ReadInt64();
-        
+
+        GameObject.Find("DungeonInfo").transform.Find("DungeonName").GetComponent<TMPro.TextMeshProUGUI>().text = current_dungeon.name;
+        GameObject.Find("DungeonInfo").transform.Find("DungeonLevel").GetComponent<TMPro.TextMeshProUGUI>().text = "Level " + (current_map_level.dungeon_level + 1);        
         save.Close();
     }
 
@@ -261,6 +262,8 @@ public class GameData : MonoBehaviour
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHandsHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHammer2H), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHeadHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemShieldHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemShieldMedium), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
 
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemRing), prob_amount = {(.70f, 0),(.25f, 1),(.05f, 2)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemAmulet), prob_amount = {(.70f, 0),(.25f, 1),(.05f, 2)}});
@@ -310,6 +313,9 @@ public class GameData : MonoBehaviour
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHandsHeavy), prob_amount ={(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHammer2H), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHeadHeavy), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemShieldHeavy), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemShieldMedium), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+
 
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemRing), prob_amount = {(.25f, 0),(.5f, 1),(.25f, 2)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemAmulet), prob_amount = {(.25f, 0),(.5f, 1),(.25f, 2)}});

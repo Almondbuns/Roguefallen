@@ -41,23 +41,23 @@ public class InputManager : MonoBehaviour
 
             if (Keyboard.current.qKey.wasPressedThisFrame || Keyboard.current.numpad7Key.wasPressedThisFrame)
             {
-                move_destination_x = game_data.player_data.x - 1;
-                move_destination_y = game_data.player_data.y + 1;
+                move_destination_x = game_data.player_data.X - 1;
+                move_destination_y = game_data.player_data.Y + 1;
             }
             else if (Keyboard.current.wKey.wasPressedThisFrame || Keyboard.current.numpad8Key.wasPressedThisFrame)
             {
-                move_destination_x = game_data.player_data.x;
-                move_destination_y = game_data.player_data.y + 1;
+                move_destination_x = game_data.player_data.X;
+                move_destination_y = game_data.player_data.Y + 1;
             }
             else if (Keyboard.current.eKey.wasPressedThisFrame || Keyboard.current.numpad9Key.wasPressedThisFrame)
             {
-                move_destination_x = game_data.player_data.x + 1;
-                move_destination_y = game_data.player_data.y + 1;
+                move_destination_x = game_data.player_data.X + 1;
+                move_destination_y = game_data.player_data.Y + 1;
             }
             else if (Keyboard.current.aKey.wasPressedThisFrame || Keyboard.current.numpad4Key.wasPressedThisFrame)
             {
-                move_destination_x = game_data.player_data.x - 1;
-                move_destination_y = game_data.player_data.y;
+                move_destination_x = game_data.player_data.X - 1;
+                move_destination_y = game_data.player_data.Y;
             }
             else if (Keyboard.current.sKey.wasPressedThisFrame || Keyboard.current.numpad5Key.wasPressedThisFrame)
             {
@@ -67,23 +67,23 @@ public class InputManager : MonoBehaviour
             }
             else if (Keyboard.current.dKey.wasPressedThisFrame || Keyboard.current.numpad6Key.wasPressedThisFrame)
             {
-                move_destination_x = game_data.player_data.x + 1;
-                move_destination_y = game_data.player_data.y;
+                move_destination_x = game_data.player_data.X + 1;
+                move_destination_y = game_data.player_data.Y;
             }
             else if (Keyboard.current.zKey.wasPressedThisFrame || Keyboard.current.yKey.wasPressedThisFrame || Keyboard.current.numpad1Key.wasPressedThisFrame)
             {
-                move_destination_x = game_data.player_data.x - 1;
-                move_destination_y = game_data.player_data.y - 1;
+                move_destination_x = game_data.player_data.X - 1;
+                move_destination_y = game_data.player_data.Y - 1;
             }
             else if (Keyboard.current.xKey.wasPressedThisFrame || Keyboard.current.numpad2Key.wasPressedThisFrame)
             {
-                move_destination_x = game_data.player_data.x;
-                move_destination_y = game_data.player_data.y - 1;
+                move_destination_x = game_data.player_data.X;
+                move_destination_y = game_data.player_data.Y - 1;
             }
             else if (Keyboard.current.cKey.wasPressedThisFrame || Keyboard.current.numpad3Key.wasPressedThisFrame)
             {
-                move_destination_x = game_data.player_data.x + 1;
-                move_destination_y = game_data.player_data.y - 1;
+                move_destination_x = game_data.player_data.X + 1;
+                move_destination_y = game_data.player_data.Y - 1;
             }
 
             if (move_destination_x.HasValue && move_destination_y.HasValue)
@@ -133,7 +133,7 @@ public class InputManager : MonoBehaviour
             {
                 foreach (ItemData item in game_data.current_map.items)
                 {
-                    if (game_data.player_data.x == item.x && game_data.player_data.y == item.y)
+                    if (game_data.player_data.X == item.x && game_data.player_data.Y == item.y)
                     {
                         game_data.player_data.current_action =
                     new CollectItemAction(item, 100);

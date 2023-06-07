@@ -242,6 +242,8 @@ public class MFStoreWeapons : MFStore
         item_types.Add(typeof(ItemHammer2H));
         //item_types.Add(typeof(ItemSpear1H));
         //item_types.Add(typeof(ItemSpear2H));
+        item_types.Add(typeof(ItemShieldHeavy));
+        item_types.Add(typeof(ItemShieldMedium));
     }
 }
 

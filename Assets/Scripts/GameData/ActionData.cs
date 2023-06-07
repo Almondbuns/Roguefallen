@@ -84,7 +84,7 @@ public class ActionData
             CommandData c = (CommandData) Activator.CreateInstance(type);
             c.Load(save);
             commands.Add(c);
-            Debug.Log(type.ToString());
+            //Debug.Log(type.ToString());
         }
     }
 

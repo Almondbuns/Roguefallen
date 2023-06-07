@@ -87,7 +87,7 @@ public class Crate : ActorPrototype
         if (random < 20)
         {
             //Spawn monster
-            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.x, actor_data.y);
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.X, actor_data.Y);
             if (tile == null) return;
 
             ActorData monster;
@@ -107,7 +107,7 @@ public class Crate : ActorPrototype
         else if (random < 60)
         {
             //Spawn item
-            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.x, actor_data.y);
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.X, actor_data.Y);
             if (tile == null) return;
             ItemData item = ItemData.GetRandomItem(tile.Value.x, tile.Value.y, stats.level);
             map.Add(item);
@@ -146,7 +146,7 @@ public class Jar : ActorPrototype
         if (random < 33)
         {
             //Spawn gold
-            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.x, actor_data.y);
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.X, actor_data.Y);
             if (tile == null) return;
 
             ItemData gold;
@@ -192,7 +192,7 @@ public class Jar : ActorPrototype
                     if (i == 0 && j == 0)
                     continue;
                     
-                    map.DistributeDamage(actor_data, new AttackedTileData(){x = actor_data.x + i, y = actor_data.y + j, damage_on_hit = {(damage_type,Random.Range(5,11),0)}});
+                    map.DistributeDamage(actor_data, new AttackedTileData(){x = actor_data.X + i, y = actor_data.Y + j, damage_on_hit = {(damage_type,Random.Range(5,11),0)}});
                 }
             }
             return;
@@ -247,7 +247,7 @@ public class BearTrap : ActorPrototype
             this_actor.SetHidden(false);
         
         GameLogger.Log("The " + name.ToLower() + " snaps.");
-        target_actor.TryToHit(stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 5, 5)}, null);
+        target_actor.TryToHit(this_actor, stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 5, 5)}, null);
     }
 }
 
@@ -286,7 +286,7 @@ public class SpiderWebTrap : ActorPrototype
         else
             GameLogger.Log("The " + target_actor.prototype.name.ToLower() + " steps into a web.");
 
-        target_actor.TryToHit(this_actor.prototype.stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 0, 0) },
+        target_actor.TryToHit(this_actor, this_actor.prototype.stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.SLASH, 0, 0) },
             new List<EffectData> { new EffectAddMovementTime { damage_type = DamageType.SLASH, amount = 50, duration = 1000 }});
     }
 }

@@ -346,6 +346,10 @@ public class MFCavePoisonFlowerRoom : MapFeatureData
     public MFCavePoisonFlowerRoom(MapData map) : base(map)
     {
         dimensions = (8, 8);
+
+        MapObjectCollectionData collection = new();
+        collection.Add(new MapObjectData("invisible") { emits_light = true, light_color = new Color(0.0f,0.6f,0.0f), movement_blocked = false, sight_blocked = false });
+        objects["light"] = collection;
     }
 
     public override void Generate()
@@ -372,6 +376,7 @@ public class MFCavePoisonFlowerRoom : MapFeatureData
             {
                 flower.MoveTo(x,y);
                 map.Add(flower);
+                map.tiles[x, y].objects.Add(objects["light"].Random());
             }
         }
     }

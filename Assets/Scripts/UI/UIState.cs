@@ -273,8 +273,8 @@ public class UIStateSelectTile : UIState
             {
                 if (i == 0 && j == 0) continue;
 
-                int x = player_data.x + i;
-                int y = player_data.y + j;
+                int x = player_data.X + i;
+                int y = player_data.Y + j;
                 if (x < 0 || x >= game_data.current_map.tiles.GetLength(0) || y < 0 || y >= game_data.current_map.tiles.GetLength(1)) continue;
 
                 GameObject tile_selector = GameObject.Instantiate(GameObject.Find("Map").GetComponent<Map>().tile_selector_prefab, GameObject.Find("Map").transform);
@@ -292,43 +292,43 @@ public class UIStateSelectTile : UIState
 
         if (Keyboard.current.qKey.wasPressedThisFrame || Keyboard.current.numpad7Key.wasPressedThisFrame)
         {
-            x = game_data.player_data.x - 1;
-            y = game_data.player_data.y + 1;
+            x = game_data.player_data.X - 1;
+            y = game_data.player_data.Y + 1;
         }
         else if (Keyboard.current.wKey.wasPressedThisFrame || Keyboard.current.numpad8Key.wasPressedThisFrame)
         {
-            x = game_data.player_data.x;
-            y = game_data.player_data.y + 1;
+            x = game_data.player_data.X;
+            y = game_data.player_data.Y + 1;
         }
         else if (Keyboard.current.eKey.wasPressedThisFrame || Keyboard.current.numpad9Key.wasPressedThisFrame)
         {
-            x = game_data.player_data.x + 1;
-            y = game_data.player_data.y + 1;
+            x = game_data.player_data.X + 1;
+            y = game_data.player_data.Y + 1;
         }
         else if (Keyboard.current.aKey.wasPressedThisFrame || Keyboard.current.numpad4Key.wasPressedThisFrame)
         {
-            x = game_data.player_data.x - 1;
-            y = game_data.player_data.y;
+            x = game_data.player_data.X - 1;
+            y = game_data.player_data.Y;
         }
         else if (Keyboard.current.dKey.wasPressedThisFrame || Keyboard.current.numpad6Key.wasPressedThisFrame)
         {
-            x = game_data.player_data.x + 1;
-            y = game_data.player_data.y;
+            x = game_data.player_data.X + 1;
+            y = game_data.player_data.Y;
         }
         else if (Keyboard.current.zKey.wasPressedThisFrame || Keyboard.current.yKey.wasPressedThisFrame || Keyboard.current.numpad1Key.wasPressedThisFrame)
         {
-            x = game_data.player_data.x - 1;
-            y = game_data.player_data.y - 1;
+            x = game_data.player_data.X - 1;
+            y = game_data.player_data.Y - 1;
         }
         else if (Keyboard.current.xKey.wasPressedThisFrame || Keyboard.current.numpad2Key.wasPressedThisFrame)
         {
-            x = game_data.player_data.x;
-            y = game_data.player_data.y - 1;
+            x = game_data.player_data.X;
+            y = game_data.player_data.Y - 1;
         }
         else if (Keyboard.current.cKey.wasPressedThisFrame || Keyboard.current.numpad3Key.wasPressedThisFrame)
         {
-            x = game_data.player_data.x + 1;
-            y = game_data.player_data.y - 1;
+            x = game_data.player_data.X + 1;
+            y = game_data.player_data.Y - 1;
         }
         else if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
@@ -361,7 +361,7 @@ public class UIStateSelectTile : UIState
     public void SetTarget((int x, int y ) position)
     {
         PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
-        List<(int x, int y)> path = Algorithms.LineofSight((player_data.x, player_data.y), position);
+        List<(int x, int y)> path = Algorithms.LineofSight((player_data.X, player_data.Y), position);
         foreach(GameObject o in tile_selectors)
         {
             o.GetComponent<TileSelector>().CheckSelected(path);
@@ -371,7 +371,7 @@ public class UIStateSelectTile : UIState
     public void SetClickedTarget((int x, int y) position)
     {
         PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
-        List<(int x, int y)> path = Algorithms.LineofSight((player_data.x, player_data.y), position);
+        List<(int x, int y)> path = Algorithms.LineofSight((player_data.X, player_data.Y), position);
         
         path.RemoveAt(0); // Ignore Player Tile
 

@@ -175,6 +175,18 @@ public class ItemInfo : MonoBehaviour
                 item_data.GetArmor(ArmorType.MAGICAL).ToString();
             armor_info.transform.Find("Durability").GetComponent<CurrentMaxBar>().SetValues(item_data.armor_data.durability_current, item_data.GetMaxDurability());
         }
+
+         if (item_data.GetPrototype().shield != null)
+        {
+            foreach (TalentData talent in item_data.shield_data.talents)
+            {
+                GameObject talent_info = GameObject.Instantiate(prefab_talent_data, transform, false);
+                talent_info.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -height);
+                talent_info.GetComponent<TalentInfo>().talent_data = talent;
+                talent_info.GetComponent<TalentInfo>().check_screen_position = false;
+                height += 250;       
+            }
+        }
        
         if (item_data.GetPrototype().required_attributes.strength != 0 
             || item_data.GetPrototype().required_attributes.vitality != 0
@@ -351,6 +363,15 @@ public class ItemInfo : MonoBehaviour
                 case EffectAddMaxInsanityResistance:
                     effect_string += effect.amount + " insanity resistance";
                     break;
+                case EffectPassiveBlock:
+                    effect_string += effect.amount + " % block chance";
+                    break;
+                case EffectParryChanceBonus:
+                    effect_string += effect.amount + " % parry chance";
+                    break;
+                case EffectBashDamageRelative:
+                    effect_string += effect.amount + " % bash damage";
+                    break;
             }
 
 
@@ -367,67 +388,7 @@ public class ItemInfo : MonoBehaviour
         }
         return (text, height);
     }
-
-    public void SetShieldData()
-    {
-        ShieldPrototype shield_data = item_data.GetPrototype().shield;
-        string sub_type_string;
-        if (shield_data.sub_type == ShieldSubType.HEAVY)
-            sub_type_string = "Heavy";
-        else if (shield_data.sub_type == ShieldSubType.MEDIUM)
-            sub_type_string = "Medium";
-        else
-            sub_type_string = "Light";
-        transform.Find("Type").GetComponent<TMPro.TextMeshProUGUI>().text = "Shield" + " (" + sub_type_string + ")";
-        transform.Find("ArmorPhysical").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.armor_physical.ToString();
-        transform.Find("ArmorElemental").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.armor_elemental.ToString();
-        transform.Find("ArmorMagical").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.armor_magical.ToString();
-        transform.Find("Effects").GetComponent<TMPro.TextMeshProUGUI>().text = "";
-
-        Texture2D texture1 = Resources.Load<Texture2D>(shield_data.block.prototype.icon);
-        transform.Find("BlockTalent").Find("Icon").GetComponent<Image>().sprite =
-            Sprite.Create(texture1, new Rect(0, 0, texture1.width, texture1.height), new Vector2(0.5f, 0.5f));
-        transform.Find("BlockTalent").Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.block.prototype.name;
-        transform.Find("BlockTalent").Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.block.prototype.description;
-        transform.Find("BlockTalent").Find("ReductionPhysical").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.reduction_physical.ToString();
-        transform.Find("BlockTalent").Find("ReductionElemental").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.reduction_elemental.ToString();
-        transform.Find("BlockTalent").Find("ReductionMagical").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.reduction_magical.ToString();
-        transform.Find("BlockTalent").Find("StaminaAbsorption").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.stamina_absorption.ToString();
-        transform.Find("BlockTalent").Find("Time").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.block.prototype.recover_time.ToString();
-
-        Texture2D texture2 = Resources.Load<Texture2D>(shield_data.parry.prototype.icon);
-        transform.Find("ParryTalent").Find("Icon").GetComponent<Image>().sprite =
-            Sprite.Create(texture2, new Rect(0, 0, texture2.width, texture2.height), new Vector2(0.5f, 0.5f));
-        transform.Find("ParryTalent").Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.parry.prototype.name;
-        transform.Find("ParryTalent").Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.parry.prototype.description;
-        transform.Find("ParryTalent").Find("ParryChance").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.parry_chance.ToString();
-        transform.Find("ParryTalent").Find("Stamina").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.parry.prototype.cost_stamina.ToString();
-        transform.Find("ParryTalent").Find("Time").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.parry.prototype.recover_time.ToString();
-
-        Texture2D texture3 = Resources.Load<Texture2D>(shield_data.bash.prototype.icon);
-        transform.Find("BashTalent").Find("Icon").GetComponent<Image>().sprite =
-            Sprite.Create(texture3, new Rect(0, 0, texture3.width, texture3.height), new Vector2(0.5f, 0.5f));
-        transform.Find("BashTalent").Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.bash.prototype.name;
-        transform.Find("BashTalent").Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.bash.prototype.description;
-        transform.Find("BashTalent").Find("Damage").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.bash_damage.ToString();
-        transform.Find("BashTalent").Find("Stamina").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.bash.prototype.cost_stamina.ToString();
-        transform.Find("BashTalent").Find("Time").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = shield_data.bash.prototype.recover_time.ToString();
-
-        if (item_data.GetPrototype().required_attributes.strength > 0)
-            transform.Find("Strength").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item_data.GetPrototype().required_attributes.strength.ToString();
-        if (item_data.GetPrototype().required_attributes.vitality > 0)
-            transform.Find("Vitality").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item_data.GetPrototype().required_attributes.vitality.ToString();
-        if (item_data.GetPrototype().required_attributes.dexterity > 0)
-            transform.Find("Dexterity").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item_data.GetPrototype().required_attributes.dexterity.ToString();
-        if (item_data.GetPrototype().required_attributes.constitution > 0)
-            transform.Find("Constitution").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item_data.GetPrototype().required_attributes.constitution.ToString();
-        if (item_data.GetPrototype().required_attributes.intelligence > 0)
-            transform.Find("Intelligence").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item_data.GetPrototype().required_attributes.intelligence.ToString();
-        if (item_data.GetPrototype().required_attributes.willpower > 0)
-            transform.Find("Willpower").Find("Value").GetComponent<TMPro.TextMeshProUGUI>().text = item_data.GetPrototype().required_attributes.willpower.ToString();
-
-    }
-
+  
     public void CheckScreenPosition()
     {
         rect = GetComponent<RectTransform>();

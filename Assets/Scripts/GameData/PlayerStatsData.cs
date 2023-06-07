@@ -251,6 +251,83 @@ public class PlayerStatsData
 
                 new SkillData
                 {
+                    name = "Shields",
+                    icon = "images/skills/skill_shield",
+                    expertises = new List<SkillExpertiseData>
+                    {
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.NOVICE,
+                            talents = new List<SkillTalentData>
+                            {   
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldPassiveBlock()),
+                                    description = "When attacked you have a 20% chance to add your shield armor to your body armor.",
+                                },                                                         
+
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldActiveBlock()),
+                                    description = "When attacked add your shield armor to your body armor but be slower and lose 1 stamina with each hit.",
+                                },  
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.ADEPT,
+                            talents = new List<SkillTalentData>
+                            {         
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldAdvancedParry()),
+                                    description = "When using parry with a shield increase your chance to parry by another 20%.",
+                                }, 
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldAdvancedBash()),
+                                    description = "When using bash with a shield increase your damage by 50% and increase daze time by a turn.",
+                                },                                                                                                             
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.EXPERT,
+                            talents = new List<SkillTalentData>
+                            {          
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldPassiveBlockSkilled()),
+                                    description = "When attacked you have an additional 10% chance to add your shield armor to your body armor.",
+                                },                                                      
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldThrow()),
+                                    description = "Throws the currently equipped shield at a target dealing four times its weight as pierce damage.",
+                                },                                                      
+                            }
+                            
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.MASTER,
+                            talents = new List<SkillTalentData>
+                            {
+                                new SkillTalentData
+                                {
+                                    talent = new TalentData(new TalentShieldBlockMastery()),
+                                    description = "Additional 20% passive block chance, 15% parry chance and 50% bash damage.",
+                                },               
+                            }
+                        }
+                    }
+                },
+
+                new SkillData
+                {
                     name = "Awareness",
                     icon = "images/skills/skill_awareness",
                     expertises = new List<SkillExpertiseData>

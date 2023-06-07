@@ -2,30 +2,533 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/*public class ItemShieldHeavy : ItemData
+public class ItemShieldHeavy : ItemPrototype
 {
-    public ItemShieldHeavy(int x, int y) : base(x, y)
+    public ItemShieldHeavy(int level) : base(level)
     {
         name = "Heavy Shield";
         icon = "images/objects/shield_heavy";
-        weight = 10;
-        shield_data = new ShieldData
+        type = ItemType.SHIELD;
+        weight = 5;
+        
+        effects_when_equipped.Add(new EffectAddMovementTime { amount = 25 });
+        effects_when_equipped.Add(new EffectAddAttackTime { amount = 25 });
+
+        if (level <= 4)
         {
-            sub_type = ShieldSubType.HEAVY,
-            armor_physical = 10,
-            armor_elemental = 5,
-            armor_magical = 0,
-            stamina_absorption = 75,
-            bash_damage = 50,
-            parry_chance = 35,
-            reduction_physical = 90,
-            reduction_elemental = 75,
-            reduction_magical = 25,
-            block = new TalentBlock(),
-            parry = new TalentParry(),
-            bash = new TalentBash()
+            tier = 0;
+            armor = new ArmorPrototype
+            {                
+                sub_type = ArmorSubType.HEAVY,
+                armor_physical = 2,
+                armor_elemental = 1,
+                armor_magical = 0,
+                durability_max = 200,
+            };
+            
+            gold_value = 100;
+            required_attributes.strength = 5;
+        }
+        else if (level <= 8)
+        {
+            tier = 1;
+            armor = new ArmorPrototype
+            {
+                sub_type = ArmorSubType.HEAVY,
+                armor_physical = 3,
+                armor_elemental = 2,
+                armor_magical = 0,
+                durability_max = 300,
+            };
+            
+            gold_value = 300;
+            required_attributes.strength = 15;
+        }
+        else
+        {
+            tier = 2;
+            armor = new ArmorPrototype
+            {
+                sub_type = ArmorSubType.HEAVY,
+                armor_physical = 4,
+                armor_elemental = 3,
+                armor_magical = 0,
+                durability_max = 400,
+            };
+            
+            gold_value = 500;
+            required_attributes.strength = 25;
+        }
+      
+        shield = new()
+        {
+            sub_type = ShieldSubType.HEAVY, 
+            talents =
+            {
+                new TalentShieldBash(),
+            },
         };
-        required_attributes.strength = 20;
+
+        if (level % 4 == 1)
+            qualities_possible = new() { ItemQuality.Normal};
+        else if (level % 4 == 2)
+            qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1};
+        else if (level % 4 == 3)
+            qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1, ItemQuality.Magical2};
+        else
+           qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1, ItemQuality.Magical2, ItemQuality.Unique };
+        
+        quality_effects_possible = new()
+        {
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Physical",
+                effect = new EffectAddArmorPhysical() { amount = 1 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Elemental",
+                effect = new EffectAddArmorElemental() { amount = 1 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {                
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Magical",
+                effect = new EffectAddArmorMagical() { amount = 1 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Durability",
+                effect = new EffectAddArmorDurability() { amount = 200*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 1,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Strength",
+                effect = new EffectAddStrength() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 1,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Strength",
+                effect = new EffectAddStrength() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 2,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Dexterity",
+                effect = new EffectAddDexterity() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 2,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Dexterity",
+                effect = new EffectAddDexterity() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 3,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Vitality",
+                effect = new EffectAddVitality() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 3,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Vitality",
+                effect = new EffectAddVitality() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 4,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Intelligence",
+                effect = new EffectAddIntelligence() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 4,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Intelligence",
+                effect = new EffectAddIntelligence() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 5,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Willpower",
+                effect = new EffectAddWillpower() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 5,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Willpower",
+                effect = new EffectAddWillpower() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 6,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Constitution",
+                effect = new EffectAddConstitution() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 6,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Constitution",
+                effect = new EffectAddConstitution() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Vaccinated",
+                effect = new EffectAddMaxDiseaseResistance() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Curing",
+                effect = new EffectAddMaxPoisonResistance() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Calming",
+                effect = new EffectAddMaxInsanityResistance() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Protecting",
+                effect = new EffectPassiveBlock() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Smashing",
+                effect = new EffectBashDamageRelative() { amount = 10*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+        };
     }
-}*/
+}
+
+public class ItemShieldMedium : ItemPrototype
+{
+    public ItemShieldMedium(int level) : base(level)
+    {
+        name = "Medium Shield";
+        icon = "images/objects/shield_medium";
+        type = ItemType.SHIELD;
+        weight = 5;
+        
+        effects_when_equipped.Add(new EffectAddMovementTime { amount = 15 });
+        effects_when_equipped.Add(new EffectAddAttackTime { amount = 15 });
+
+        if (level <= 4)
+        {
+            tier = 0;
+            armor = new ArmorPrototype
+            {                
+                sub_type = ArmorSubType.MEDIUM,
+                armor_physical = 1,
+                armor_elemental = 1,
+                armor_magical = 0,
+                durability_max = 200,
+            };
+            
+            gold_value = 100;
+            required_attributes.dexterity = 5;
+        }
+        else if (level <= 8)
+        {
+            tier = 1;
+            armor = new ArmorPrototype
+            {
+                sub_type = ArmorSubType.MEDIUM,
+                armor_physical = 1,
+                armor_elemental = 2,
+                armor_magical = 1,
+                durability_max = 300,
+            };
+            
+            gold_value = 300;
+            required_attributes.dexterity = 15;
+        }
+        else
+        {
+            tier = 2;
+            armor = new ArmorPrototype
+            {
+                sub_type = ArmorSubType.MEDIUM,
+                armor_physical = 2,
+                armor_elemental = 3,
+                armor_magical = 1,
+                durability_max = 400,
+            };
+            
+            gold_value = 500;
+            required_attributes.dexterity = 25;
+        }
+
+        shield = new()
+        {
+            sub_type = ShieldSubType.MEDIUM, 
+            talents =
+            {
+                new TalentShieldParry(),
+            },
+        };
+
+           if (level % 4 == 1)
+            qualities_possible = new() { ItemQuality.Normal};
+        else if (level % 4 == 2)
+            qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1};
+        else if (level % 4 == 3)
+            qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1, ItemQuality.Magical2};
+        else
+           qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1, ItemQuality.Magical2, ItemQuality.Unique };
+        
+        quality_effects_possible = new()
+        {
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Physical",
+                effect = new EffectAddArmorPhysical() { amount = 1 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Elemental",
+                effect = new EffectAddArmorElemental() { amount = 1 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {                
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Magical",
+                effect = new EffectAddArmorMagical() { amount = 1 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Durability",
+                effect = new EffectAddArmorDurability() { amount = 200*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 1,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Strength",
+                effect = new EffectAddStrength() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 1,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Strength",
+                effect = new EffectAddStrength() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 2,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Dexterity",
+                effect = new EffectAddDexterity() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 2,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Dexterity",
+                effect = new EffectAddDexterity() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 3,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Vitality",
+                effect = new EffectAddVitality() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 3,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Vitality",
+                effect = new EffectAddVitality() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 4,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Intelligence",
+                effect = new EffectAddIntelligence() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 4,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Intelligence",
+                effect = new EffectAddIntelligence() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 5,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Willpower",
+                effect = new EffectAddWillpower() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 5,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Willpower",
+                effect = new EffectAddWillpower() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 6,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Constitution",
+                effect = new EffectAddConstitution() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 6,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Constitution",
+                effect = new EffectAddConstitution() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Vaccinated",
+                effect = new EffectAddMaxDiseaseResistance() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Curing",
+                effect = new EffectAddMaxPoisonResistance() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Calming",
+                effect = new EffectAddMaxInsanityResistance() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Protecting",
+                effect = new EffectPassiveBlock() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Parry",
+                effect = new EffectParryChanceBonus() { amount = 5*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+        };
+    }
+}
 

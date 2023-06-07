@@ -65,10 +65,10 @@ public class PanelSidePlayerInventory : InventoryPanelSide
                         quality_string = "<color=#ffffff>";
                         break;
                     case ItemQuality.Magical1:
-                        quality_string = "<color=#0000aa>";
+                        quality_string = "<color=#6666ff>";
                         break;
                     case ItemQuality.Magical2:
-                        quality_string = "<color=#4444ff>";
+                        quality_string = "<color=#FFFF00ff>";
                         break;
                     case ItemQuality.Unique:
                         quality_string = "<color=#00aa00>";
@@ -146,10 +146,10 @@ public class PanelSideChestInventory : InventoryPanelSide
                         quality_string = "<color=#ffffff>";
                         break;
                     case ItemQuality.Magical1:
-                        quality_string = "<color=#0000aa>";
+                        quality_string = "<color=#6666ff>";
                         break;
                     case ItemQuality.Magical2:
-                        quality_string = "<color=#4444ff>";
+                        quality_string = "<color=#FFFF00ff>";
                         break;
                     case ItemQuality.Unique:
                         quality_string = "<color=#00aa00>";
@@ -213,10 +213,10 @@ public class PanelSidePlayerEquipment : InventoryPanelSide
                 x = -450;
                 y = 180;
             }
-            else if (slot.name == "Weapon 1L")
+            else if (slot.name == "Shield")
             {
                 x = 45 - 800;
-                y = 830 - 450;
+                y = 430 - 450;
             }
             else if (slot.name == "Weapon")
             {
@@ -256,11 +256,11 @@ public class PanelSidePlayerEquipment : InventoryPanelSide
             else if (slot.name == "Finger 1")
             {
                 x = 45 - 800;
-                y = 430 - 450;
+                y = 260 - 450;
             }
             else if (slot.name == "Finger 2")
             {
-                x = 45 - 800;
+                x = 570 - 800;
                 y = 260 - 450;
             }
 
@@ -276,14 +276,14 @@ public class PanelSidePlayerEquipment : InventoryPanelSide
                 string quality_string = "";
                 switch (item.quality)
                 {
-                    case ItemQuality.Normal:
+                   case ItemQuality.Normal:
                         quality_string = "<color=#ffffff>";
                         break;
                     case ItemQuality.Magical1:
-                        quality_string = "<color=#0000aa>";
+                        quality_string = "<color=#6666ff>";
                         break;
                     case ItemQuality.Magical2:
-                        quality_string = "<color=#4444ff>";
+                        quality_string = "<color=#FFFF00ff>";
                         break;
                     case ItemQuality.Unique:
                         quality_string = "<color=#00aa00>";
@@ -396,7 +396,7 @@ public class InventoryPanel : MonoBehaviour
                 && inventory_slot_src.type == InventorySlotType.INVENTORY)
             {
                 //Stack Items if possible
-                if (item_src != null && item_target != null && item_src.GetType() == item_target.GetType() && item_src.GetPrototype().is_stackable == true)
+                if (item_src != null && item_target != null && item_src.GetPrototype().GetType() == item_target.GetPrototype().GetType() && item_src.GetPrototype().is_stackable == true)
                 {
                     if (item_src.GetTier() == item_target.GetTier() && item_src.amount + item_target.amount <= item_src.GetPrototype().stack_max)
                     {
