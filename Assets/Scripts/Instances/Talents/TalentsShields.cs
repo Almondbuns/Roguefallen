@@ -10,7 +10,7 @@ public class TalentShieldBash : TalentPrototype
         name = "Shield Bash";
         target = TalentTarget.Tile;
         target_range = 1;
-        icon = "images/talents/sword_attack_heavy";
+        icon = "images/talents/shield_bash";
         cost_stamina = 2;
         recover_time = 100;
         cooldown = 800;
@@ -53,7 +53,7 @@ public class TalentShieldParry : TalentPrototype
         name = "Shield Parry";
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/sword_attack_heavy";
+        icon = "images/talents/shield_parry";
         cost_stamina = 2;
         recover_time = 100;
         cooldown = 300;
@@ -80,7 +80,7 @@ public class TalentShieldPassiveBlock : TalentPassiveEffects
         name = "Passive Block";
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/sword_attack_heavy";
+        icon = "images/talents/shield_1";
         cost_stamina = 0;
         recover_time = 0;
         cooldown = 0;
@@ -100,7 +100,7 @@ public class TalentShieldBlockMastery : TalentPassiveEffects
         name = "Masterful Block";
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/sword_attack_heavy";
+        icon = "images/talents/shield_3";
         cost_stamina = 0;
         recover_time = 0;
         cooldown = 0;
@@ -122,7 +122,7 @@ public class TalentShieldPassiveBlockSkilled : TalentPassiveEffects
         name = "Skilled Passive Block";
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/sword_attack_heavy";
+        icon = "images/talents/shield_2";
         cost_stamina = 0;
         recover_time = 0;
         cooldown = 0;
@@ -135,14 +135,14 @@ public class TalentShieldPassiveBlockSkilled : TalentPassiveEffects
     }
 }
 
-public class TalentShieldSubstainedBlock : TalentSubstainedEffects
+public class TalentShieldActiveBlock : TalentSubstainedEffects
 {
-    public TalentShieldSubstainedBlock()
+    public TalentShieldActiveBlock()
     {
         name = "Active Block";
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/sword_attack_heavy";
+        icon = "images/talents/shield_active_block";
         cost_stamina = 1;
         recover_time = 50;
         cooldown = 0;
@@ -163,7 +163,7 @@ public class TalentShieldAdvancedParry : TalentPassiveEffects
         name = "Advanced Parry";
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/sword_attack_heavy";
+        icon = "images/talents/shield_parry_plus";
         cost_stamina = 0;
         recover_time = 0;
         cooldown = 0;
@@ -183,7 +183,7 @@ public class TalentShieldAdvancedBash : TalentPassiveEffects
         name = "Advanced Bash";
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/sword_attack_heavy";
+        icon = "images/talents/shield_bash_plus";
         cost_stamina = 0;
         recover_time = 0;
         cooldown = 0;
@@ -208,7 +208,7 @@ public class TalentShieldThrow: TalentPrototype
         name = "Eat that!";
         target = TalentTarget.Tile;
         target_range = 5;
-        icon = "images/objects/shield_heavy";
+        icon = "images/talents/shield_throw";
         cost_stamina = 2;
         prepare_time = 50;
         recover_time = 100;

@@ -65,10 +65,10 @@ public class PanelSidePlayerInventory : InventoryPanelSide
                         quality_string = "<color=#ffffff>";
                         break;
                     case ItemQuality.Magical1:
-                        quality_string = "<color=#0000aa>";
+                        quality_string = "<color=#6666ff>";
                         break;
                     case ItemQuality.Magical2:
-                        quality_string = "<color=#4444ff>";
+                        quality_string = "<color=#FFFF00ff>";
                         break;
                     case ItemQuality.Unique:
                         quality_string = "<color=#00aa00>";
@@ -146,10 +146,10 @@ public class PanelSideChestInventory : InventoryPanelSide
                         quality_string = "<color=#ffffff>";
                         break;
                     case ItemQuality.Magical1:
-                        quality_string = "<color=#0000aa>";
+                        quality_string = "<color=#6666ff>";
                         break;
                     case ItemQuality.Magical2:
-                        quality_string = "<color=#4444ff>";
+                        quality_string = "<color=#FFFF00ff>";
                         break;
                     case ItemQuality.Unique:
                         quality_string = "<color=#00aa00>";
@@ -276,14 +276,14 @@ public class PanelSidePlayerEquipment : InventoryPanelSide
                 string quality_string = "";
                 switch (item.quality)
                 {
-                    case ItemQuality.Normal:
+                   case ItemQuality.Normal:
                         quality_string = "<color=#ffffff>";
                         break;
                     case ItemQuality.Magical1:
-                        quality_string = "<color=#0000aa>";
+                        quality_string = "<color=#6666ff>";
                         break;
                     case ItemQuality.Magical2:
-                        quality_string = "<color=#4444ff>";
+                        quality_string = "<color=#FFFF00ff>";
                         break;
                     case ItemQuality.Unique:
                         quality_string = "<color=#00aa00>";

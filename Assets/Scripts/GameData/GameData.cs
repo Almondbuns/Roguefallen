@@ -103,7 +103,9 @@ public class GameData : MonoBehaviour
         ItemData.id_counter = save.ReadInt64();
         QuestData.id_counter = save.ReadInt64();
         TalentData.id_counter = save.ReadInt64();
-        
+
+        GameObject.Find("DungeonInfo").transform.Find("DungeonName").GetComponent<TMPro.TextMeshProUGUI>().text = current_dungeon.name;
+        GameObject.Find("DungeonInfo").transform.Find("DungeonLevel").GetComponent<TMPro.TextMeshProUGUI>().text = "Level " + (current_map_level.dungeon_level + 1);        
         save.Close();
     }
 

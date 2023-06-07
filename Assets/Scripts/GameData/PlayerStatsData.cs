@@ -252,7 +252,7 @@ public class PlayerStatsData
                 new SkillData
                 {
                     name = "Shields",
-                    icon = "images/skills/skill_armor_heavy",
+                    icon = "images/skills/skill_shield",
                     expertises = new List<SkillExpertiseData>
                     {
                         new SkillExpertiseData
@@ -268,7 +268,7 @@ public class PlayerStatsData
 
                                 new SkillTalentData
                                 {
-                                    talent = new TalentData(new TalentShieldSubstainedBlock()),
+                                    talent = new TalentData(new TalentShieldActiveBlock()),
                                     description = "When attacked add your shield armor to your body armor but be slower and lose 1 stamina with each hit.",
                                 },  
                             }
