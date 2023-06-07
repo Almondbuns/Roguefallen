@@ -126,7 +126,7 @@ public class EffectExhaustion : EffectData
     public EffectExhaustion()
     {
         name = "Exhausted";
-        icon = "images/effects/effect_confusion";
+        icon = "images/effects/effect_exhaustion";
         show_amount_info = false;
     }
 }
@@ -136,7 +136,7 @@ public class EffectPassiveBlock : EffectData
     public EffectPassiveBlock()
     {
         name = "Passive Block";
-        icon = "images/effects/effect_confusion";
+        icon = "images/effects/effect_block_active";
     }
 }
 
@@ -145,7 +145,7 @@ public class EffectActiveBlock : EffectData
     public EffectActiveBlock()
     {
         name = "Active Block";
-        icon = "images/effects/effect_confusion";
+        icon = "images/effects/effect_block_active";
         show_amount_info = false;
     }
 }
@@ -155,7 +155,7 @@ public class EffectParryChance : EffectData
     public EffectParryChance()
     {
         name = "Parry Stance";
-        icon = "images/effects/effect_confusion";
+        icon = "images/effects/effect_parry";
         show_amount_info = false;
     }
 }
@@ -165,7 +165,7 @@ public class EffectParryChanceBonus : EffectData
     public EffectParryChanceBonus()
     {
         name = "Parry Stance Bonus";
-        icon = "images/effects/effect_confusion";
+        icon = "images/effects/effect_parry";
         show_amount_info = false;
     }
 }
