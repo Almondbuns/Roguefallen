@@ -14,7 +14,7 @@ public class TalentShieldBash : TalentPrototype
         cost_stamina = 2;
         recover_time = 100;
         cooldown = 800;
-        description = "Attacks with the shield and deals crush damage equal to double the sum of its armor values. May daze the target for 3 turns lowering to hit and dodge by 30.";
+        description = "Attacks with the shield and deals crush damage equal to the sum of its armor values. May daze the target for 3 turns lowering to hit and dodge by 30.";
         action_message ="The <name> bashes with a shield.";
     }
 
@@ -22,7 +22,7 @@ public class TalentShieldBash : TalentPrototype
     {
         ActionData action = new ActionData(input.talent);
 
-        int damage = 2 * (input.item.GetPrototype().armor.armor_physical + input.item.GetPrototype().armor.armor_elemental + input.item.GetPrototype().armor.armor_magical);
+        int damage = (input.item.GetPrototype().armor.armor_physical + input.item.GetPrototype().armor.armor_elemental + input.item.GetPrototype().armor.armor_magical);
         damage = damage * (100 + input.source_actor.GetCurrentAdditiveEffectAmount<EffectBashDamageRelative>()) / 100;
         List<AttackedTileData> tiles = new List<AttackedTileData>();
 

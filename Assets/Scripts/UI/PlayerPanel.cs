@@ -105,7 +105,7 @@ public class PlayerPanel : MonoBehaviour
             
             go.GetComponent<Tooltip>().text = effect.effect.name;
             
-            if (effect.effect.amount != 0) 
+            if (effect.effect.amount != 0 && effect.effect.show_amount_info == true) 
                 go.GetComponent<Tooltip>().text += ": " + effect.effect.amount;
 
             go.transform.Find("Time").GetComponent<TMPro.TextMeshProUGUI>().text = (effect.effect.duration - effect.current_tick).ToString();

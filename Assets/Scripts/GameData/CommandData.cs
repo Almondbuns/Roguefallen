@@ -1273,6 +1273,7 @@ public class GetEffectCommand : CommandData
         base.Save(save);
 
         save.Write(actor_id);
+        save.Write(effect.GetType().ToString());
         effect.Save(save);
     }
 
@@ -1281,6 +1282,7 @@ public class GetEffectCommand : CommandData
         base.Load(save);
 
         actor_id = save.ReadInt64();
+        effect = (EffectData) Activator.CreateInstance(Type.GetType(save.ReadString()));
         effect.Load(save);
     }
 
