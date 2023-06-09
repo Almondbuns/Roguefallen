@@ -114,8 +114,8 @@ public class GameData : MonoBehaviour
         biomes = new List<BiomeData>
         {
             new BiomeVillage(),
-            //new BiomeSewers(),
             new BiomeCave(),
+            new BiomeSewers(),
         };
 
         player_data = new PlayerData(starting_level);
@@ -183,13 +183,13 @@ public class GameData : MonoBehaviour
         {
             DungeonLevelData level_data = new DungeonLevelData
             {
-                biome_index = 1,
+                biome_index = 2,
 
                 map_features =
                 {                    
                     
-                    (typeof(MFCaveTreasureRoom), 0, 1), 
-                    (typeof(MFCaveOilRoom), 0, 2),                                           
+                    //(typeof(MFCaveTreasureRoom), 0, 1), 
+                    //(typeof(MFCaveOilRoom), 0, 2),                                           
                 },                
 
                 encounters =
