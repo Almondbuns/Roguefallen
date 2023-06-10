@@ -230,7 +230,7 @@ public class MFStoreWeapons : MFStore
 {
     public MFStoreWeapons(MapData map) : base(map)
     {
-        capacity = 18;
+        capacity = 28;
 
         //item_types.Add(typeof(ItemSword1H));
         item_types.Add(typeof(ItemWarAxe1H));
@@ -251,7 +251,7 @@ public class MFStoreArmor : MFStore
 {
     public MFStoreArmor(MapData map) : base(map)
     {
-        capacity = 24;
+        capacity = 18;
 
         item_types.Add(typeof(ItemBootsHeavy));
         //item_types.Add(typeof(ItemBootsMedium));
@@ -272,7 +272,7 @@ public class MFStoreConsumables : MFStore
 {
     public MFStoreConsumables(MapData map) : base(map)
     {
-        capacity = 15;
+        capacity = 28;
 
         item_types.Add(typeof(ItemMeatHorn));
         item_types.Add(typeof(ItemStaminaPotion));
@@ -302,7 +302,7 @@ public class MFStoreUsables : MFStore
 {
     public MFStoreUsables(MapData map) : base(map)
     {
-        capacity = 15;
+        capacity = 23;
 
         item_types.Add(typeof(ItemPoemOfReturn));
         item_types.Add(typeof(ItemPoemOfAJourney));
