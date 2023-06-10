@@ -233,7 +233,7 @@ public class MFStoreWeapons : MFStore
         capacity = 18;
 
         //item_types.Add(typeof(ItemSword1H));
-        //item_types.Add(typeof(ItemAxe1H));
+        item_types.Add(typeof(ItemWarAxe1H));
         item_types.Add(typeof(ItemHammer1H));
         item_types.Add(typeof(ItemMace1H));
         item_types.Add(typeof(ItemFlail1H));

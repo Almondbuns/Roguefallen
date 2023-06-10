@@ -15,18 +15,21 @@ public class ItemWarAxe1H : ItemPrototype
             tier = 0;
             gold_value = 100;
             required_attributes.strength = 5;
+            required_attributes.dexterity = 5;
         }
         else if (level <= 8)
         {
             tier = 1;
             gold_value = 300;
-            required_attributes.strength = 15;
+            required_attributes.strength = 10;
+            required_attributes.dexterity = 10;
         }
         else
         {
             tier = 2;
             gold_value = 500;
-            required_attributes.strength = 25;
+            required_attributes.strength = 15;
+            required_attributes.dexterity = 15;
         }
         
         weapon = new WeaponPrototype
@@ -38,7 +41,7 @@ public class ItemWarAxe1H : ItemPrototype
             attack_talents =
             {
                 new TalentWeaponAttackStandard(),
-                //new TalentBluntHammerAttackHeavy(),
+                new TalentAxeWarAxeAttackHeavy(),
             }
         };
        

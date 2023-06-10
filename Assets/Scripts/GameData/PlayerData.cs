@@ -686,6 +686,12 @@ public class PlayerData : ActorData
                 if (main_weapon == null || main_weapon.weapon_data == null || main_weapon.GetPrototype().weapon.sub_type != WeaponSubType.BLUNT)
                     continue;
             }
+            if (skill_talent.requirement == SkillTalentRequirement.AxeWeapon)
+            {
+                ItemData main_weapon = GetMainWeapon();
+                if (main_weapon == null || main_weapon.weapon_data == null || main_weapon.GetPrototype().weapon.sub_type != WeaponSubType.AXE)
+                    continue;
+            }
             
             if (skill_talent.talent.prototype.type == TalentType.Passive) continue;
 

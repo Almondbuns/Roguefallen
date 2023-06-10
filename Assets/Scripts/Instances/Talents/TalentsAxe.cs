@@ -6,6 +6,27 @@ using UnityEngine.Windows;
 
 //Standard Weapon attacks use weapon attack time as recover time scaled by weapon_attack_time_percentage but can define an additional prepare time
 
+public class TalentAxeWarAxeAttackHeavy : TalentWeaponAttack
+{
+    public TalentAxeWarAxeAttackHeavy()
+    {
+        name = "Heavy War Axe Attack";
+        target = TalentTarget.Tile;
+        target_range = 1;
+        icon = "images/talents/blunt_heavy";
+        cost_stamina = 1;
+        prepare_time = 0;
+        recover_time = 100;
+        description = "Deals 125% weapon damage to one tile";
+
+        weapon_damage_percentage = 125.0f;
+        weapon_attack_time_percentage = 100.0f;
+        weapon_armor_penetration_add = 0;
+
+        prepare_message = "<name> starts a heavy attack.";
+    }
+}
+
 public class TalentAxeAttackInterrupt : TalentWeaponAttack
 {
     public TalentAxeAttackInterrupt()
