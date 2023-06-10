@@ -166,6 +166,62 @@ public class PlayerStatsData
 
                 new SkillData
                 {
+                    name = "Axe Weapons",
+                    icon = "images/skills/skill_blunt",
+                    expertises = new List<SkillExpertiseData>
+                    {
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.NOVICE,
+                            talents = new List<SkillTalentData>
+                            {
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeAttackAdjacent()),
+                                    description = "",
+                                },
+
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeAttackInterrupt()),
+                                    description = "",
+                                },                         
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.ADEPT,
+                            talents = new List<SkillTalentData>
+                            {
+                                
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.EXPERT,
+                            talents = new List<SkillTalentData>
+                            {
+                              
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.MASTER,
+                            talents = new List<SkillTalentData>
+                            {
+                               
+                            }
+                        }
+                    }
+                },
+
+                new SkillData
+                {
                     name = "Heavy Armor",
                     icon = "images/skills/skill_armor_heavy",
                     expertises = new List<SkillExpertiseData>

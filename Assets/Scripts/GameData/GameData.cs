@@ -10,7 +10,7 @@ public class GameData : MonoBehaviour
     public static bool GODMODE = false;
     public int starting_level = 1;
 
-    public string game_version = "0.1 Alpha 3";
+    public string game_version = "0.1 Alpha 5";
     public int world_map_index;
     public long global_ticks = 0;
     
@@ -257,10 +257,14 @@ public class GameData : MonoBehaviour
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHammer1H), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemMace1H), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemFlail1H), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHammer2H), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemWarAxe1H), prob_amount = {(.1f, 20),(.2f, 21),(.3f, 22), (.2f, 23), (.2f, 24)}});
+
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemBootsHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemChestHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHandsHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
-                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHammer2H), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+                
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHeadHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemShieldHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemShieldMedium), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});

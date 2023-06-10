@@ -222,7 +222,7 @@ public abstract class TalentWeaponAttack : TalentPrototype
         action.prepare_message = prepare_message;
         action.prepare_time = prepare_time;
         action.action_message = "The <name> attacks with " + weapon.GetName() + ".";
-        action.recover_time = Mathf.RoundToInt(weapon.GetWeaponAttackTime() * (input.source_actor.GetAttackTime() / 100.0f) * (weapon_attack_time_percentage / 100.0f));
+        action.recover_time = Mathf.RoundToInt(weapon.GetWeaponAttackTime() * (input.source_actor.GetAttackTime() / 100.0f) * (weapon_attack_time_percentage / 100.0f)) - 1;
     }
 
     public override ActionData CreateAction(TalentInputData input)
