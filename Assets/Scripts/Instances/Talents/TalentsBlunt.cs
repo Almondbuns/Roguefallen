@@ -354,9 +354,9 @@ public class TalentBluntEarthquake : TalentWeaponAttack
         icon = "images/talents/blunt_earthquake";
         cost_stamina = 10;
         cooldown = 1000;
-        description = "50% weapon damage to all tiles in a radius of 3";
+        description = "100% weapon damage to all tiles in a radius of 3";
 
-        weapon_damage_percentage = 50.0f;
+        weapon_damage_percentage = 100.0f;
         weapon_attack_time_percentage = 100.0f;
     
         prepare_time = 100;
@@ -410,11 +410,11 @@ public class TalentBluntAdeptBlunt : TalentPassiveEffects
         target_range = 0;
         icon = "images/talents/blunt_plus";
 
-        description = "Increases the damage of blunt weapons by 1.";
+        description = "Increases the damage of blunt weapons by 2.";
 
         passive_effects = new List<EffectData>();
 
-        passive_effects.Add(new EffectAddMinWeaponDamage { amount = 1 });
-        passive_effects.Add(new EffectAddMaxWeaponDamage { amount = 1 });
+        passive_effects.Add(new EffectAddMinWeaponDamage { amount = 2 });
+        passive_effects.Add(new EffectAddMaxWeaponDamage { amount = 2 });
     }
 }
