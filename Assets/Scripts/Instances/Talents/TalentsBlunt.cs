@@ -343,7 +343,7 @@ public class TalentBluntDoubleAttack : TalentWeaponAttack
     }
 }
 
-public class TalentBluntEarthquake : TalentWeaponAttack
+public class TalentBluntEarthquake : TalentAreaWeaponAttack
 {
 
     public TalentBluntEarthquake()
@@ -362,41 +362,10 @@ public class TalentBluntEarthquake : TalentWeaponAttack
         prepare_time = 100;
         recover_time = 100;
 
-        prepare_message = "<name> raises their weapon high up into the air.";
-    }
+        prepare_message = "The <name> raises their weapon high up into the air.";
+        action_message = "The <name> slams the weapon into the ground. The ground shakes.";
 
-    public override ActionData CreateAction(TalentInputData input)
-    {
-        ActionData action = new ActionData(input.talent);
-        List<AttackedTileData> tiles = new List<AttackedTileData>();
-
-        ItemData weapon = GetWeapon(input);
-        List<(DamageType, int, int)> dealt_damage = GetWeaponDamage(weapon,input);
-        SetStandardActionParameters(action, weapon, input);
-
-        action.action_message = "The <name> slams the " + weapon.GetName() + "into the ground. The ground shakes.";
-
-        int distance = 3;
-
-        for (int i = -distance; i <= distance; ++i)
-        {
-            for (int j = -distance; j <= distance; ++j)
-            {
-                if (i == 0 && j == 0) continue; // don't hurt yourself
-
-                tiles.Add(new AttackedTileData
-                {
-                    x = input.source_actor.X + i,
-                    y = input.source_actor.Y + j,
-                    damage_on_hit = dealt_damage,
-                    effects_on_hit = this.effects,
-                });
-            }
-        }
-
-        action.commands.Add(new AttackTilesCommand(input.source_actor, tiles, 1, false));
-
-        return action;
+        distance = 3;
     }
 }
 

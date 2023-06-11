@@ -125,6 +125,8 @@ public class PlayerData : ActorData
 
         inventory.AddItem(new ItemData(new ItemPoemOfReturn(starting_level)));
         inventory.AddItem(new ItemData(new ItemFluteOfHealing(starting_level)));
+
+        inventory.AddItem(new ItemData(new ItemWarAxe1H(starting_level)));
         
         if (starting_level > 1)
         {
@@ -643,6 +645,8 @@ public class PlayerData : ActorData
     public void ReevaluateTalents()
     {
         usable_talents.Clear();
+        current_passive_talents_id = new();
+
         foreach (EquipmentSlotData equipment_slot in equipment)
         {
             if (equipment_slot.item == null)
@@ -693,7 +697,11 @@ public class PlayerData : ActorData
                     continue;
             }
             
-            if (skill_talent.talent.prototype.type == TalentType.Passive) continue;
+            if (skill_talent.talent.prototype.type == TalentType.Passive)
+            {
+                current_passive_talents_id.Add(skill_talent.talent.id);
+                continue;
+            };
 
             PlayerTalentSource pts = new()
             {
@@ -1006,7 +1014,7 @@ public class PlayerData : ActorData
 
                     skill_talent.is_unlocked = true;
                     
-                    //Passive talents are activated imidiately
+                    //Passive talents are activated immediately
                     if (skill_talent.talent != null && skill_talent.talent.prototype.type == TalentType.Passive)
                         current_passive_talents_id.Add(skill_talent.talent.id);
 

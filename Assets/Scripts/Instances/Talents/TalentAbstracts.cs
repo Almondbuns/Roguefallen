@@ -221,8 +221,9 @@ public abstract class TalentWeaponAttack : TalentPrototype
     {
         action.prepare_message = prepare_message;
         action.prepare_time = prepare_time;
-        action.action_message = "The <name> attacks with " + weapon.GetName() + ".";
-        action.recover_time = Mathf.RoundToInt(weapon.GetWeaponAttackTime() * (input.source_actor.GetAttackTime() / 100.0f) * (weapon_attack_time_percentage / 100.0f)) - 1;
+        if (action_message == "")
+            action.action_message = "The <name> attacks with the " + weapon.GetName() + ".";
+        action.recover_time = Mathf.RoundToInt(weapon.GetWeaponAttackTime() * (input.source_actor.GetAttackTime() / 100.0f) * (weapon_attack_time_percentage / 100.0f));
     }
 
     public override ActionData CreateAction(TalentInputData input)
@@ -248,6 +249,53 @@ public abstract class TalentWeaponAttack : TalentPrototype
     }
 
 }
+
+public abstract class TalentAreaWeaponAttack : TalentWeaponAttack
+{
+    public int distance = 1;
+
+    public TalentAreaWeaponAttack()
+    {
+        name = "Area Attack";
+        target = TalentTarget.Self;
+        target_range = 0;
+        
+        weapon_damage_percentage = 100.0f;
+        weapon_attack_time_percentage = 100.0f;
+    }
+
+    public override ActionData CreateAction(TalentInputData input)
+    {
+        ActionData action = new ActionData(input.talent);
+        List<AttackedTileData> tiles = new List<AttackedTileData>();
+
+        ItemData weapon = GetWeapon(input);
+        List<(DamageType, int, int)> dealt_damage = GetWeaponDamage(weapon,input);
+        SetStandardActionParameters(action, weapon, input);
+
+        for (int i = -distance; i <= distance; ++i)
+        {
+            for (int j = -distance; j <= distance; ++j)
+            {
+                if (i == 0 && j == 0) continue; // don't hurt yourself
+
+                tiles.Add(new AttackedTileData
+                {
+                    x = input.source_actor.X + i,
+                    y = input.source_actor.Y + j,
+                    damage_on_hit = dealt_damage,
+                    effects_on_hit = this.effects,
+                });
+            }
+        }
+
+        action.commands.Add(new AttackTilesCommand(input.source_actor, tiles, 1, false));
+        action.recover_time -= 1;
+
+        return action;
+    }
+}
+
 
 public class TalentRadiusAllAttack : TalentPrototype
 {
@@ -297,6 +345,7 @@ public class TalentRadiusAllAttack : TalentPrototype
             }
         }
         action.commands.Add(new AttackTilesCommand(input.source_actor, tiles, 1, false));
+        action.recover_time -= 1;
         
         return action;
     }

@@ -196,7 +196,19 @@ public class PlayerStatsData
                             level = SkillExpertiseLevel.ADEPT,
                             talents = new List<SkillTalentData>
                             {
-                                
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeSpin()),
+                                    description = "",
+                                },
+
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeAdeptAxes()),
+                                    description = "",
+                                },  
                             }
                         },
 

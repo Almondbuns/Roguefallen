@@ -56,6 +56,7 @@ public class TalentAxeAttackAdjacent : TalentWeaponAttack
         icon = "images/talents/sword_attack_heavy";
         cost_stamina = 2;
         prepare_time = 50;
+        cooldown = 400;
         description = "100% weapon damage to target tile and two adjacent tiles";
     }
 
@@ -138,3 +139,46 @@ public class TalentAxeAttackAdjacent : TalentWeaponAttack
 
 }
 
+public class TalentAxeSpin : TalentAreaWeaponAttack
+{
+
+    public TalentAxeSpin()
+    {
+        name = "Axe Spin";
+        target = TalentTarget.Self;
+        target_range = 0;
+        icon = "images/talents/blunt_earthquake";
+        cost_stamina = 3;
+        cooldown = 400;
+        description = "100% weapon damage to all tiles in a radius of 1";
+
+        weapon_damage_percentage = 100.0f;
+        weapon_attack_time_percentage = 100.0f;
+    
+        prepare_time = 50;
+
+        prepare_message = "The <name> holds the axe firmly.";
+        action_message = "The <name> spins around.";
+
+        distance = 1;
+    }
+}
+
+public class TalentAxeAdeptAxes : TalentPassiveEffects
+{
+    public TalentAxeAdeptAxes()
+    {
+        name = "Adept Axeslasher";
+        type = TalentType.Passive;
+        target = TalentTarget.Self;
+        target_range = 0;
+        icon = "images/talents/blunt_plus";
+
+        description = "Increases the damage of axes by 1.";
+
+        passive_effects = new List<EffectData>();
+
+        passive_effects.Add(new EffectAddMinWeaponDamage { amount = 1 });
+        passive_effects.Add(new EffectAddMaxWeaponDamage { amount = 1 });
+    }
+}
