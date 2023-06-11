@@ -153,35 +153,33 @@ public class TalentBluntAttackStun : TalentWeaponAttack
         effects.Add(new EffectStun { damage_type = DamageType.CRUSH, duration = 700 }) ;
 
         prepare_time = 50;
-        recover_time = 100;
 
         prepare_message = "The <name> aims for the head.";
     }
 }
 
-public class TalentBluntAttackMovementDebuff : TalentWeaponAttack
+public class TalentBluntAttackBrute : TalentWeaponAttack
 {
 
-    public TalentBluntAttackMovementDebuff()
+    public TalentBluntAttackBrute()
     {
-        name = "To the Knee";
+        name = "Brute Attack";
         target = TalentTarget.Tile;
         target_range = 1;
-        icon = "images/talents/blunt_slow";
-        cost_stamina = 2;
-        cooldown = 1000;
-        description = "100% weapon damage to one tile and chance to decrease movement speed of target for 15 turns";
+        icon = "images/talents/blunt_stun";
+        cost_stamina = 3;
+        cooldown = 500;
+        description = "200% weapon damage to one tile";
 
-        weapon_damage_percentage = 100.0f;
+        weapon_damage_percentage = 200.0f;
         weapon_attack_time_percentage = 100.0f;
-        effects.Add(new EffectAddMovementTime { amount = 100, damage_type = DamageType.CRUSH, duration = 1500 }) ;
 
         prepare_time = 50;
-        recover_time = 100;
 
-        prepare_message = "The <name> aims for the feet.";
+        prepare_message = "The <name> focuses all energy into a single blow.";
     }
 }
+
 
 public class TalentBluntAttackKnockback : TalentWeaponAttack
 {

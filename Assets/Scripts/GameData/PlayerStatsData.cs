@@ -114,8 +114,8 @@ public class PlayerStatsData
                                 new SkillTalentData
                                 {
                                     requirement = SkillTalentRequirement.BluntWeapon,
-                                    talent = new TalentData(new TalentBluntAttackMovementDebuff()),
-                                    description = "When using a blunt weapon in your main hand hit the feet of the target to slow it down.",
+                                    talent = new TalentData(new TalentBluntAttackBrute()),
+                                    description = "",
                                 },
 
                                 new SkillTalentData
@@ -217,7 +217,12 @@ public class PlayerStatsData
                             level = SkillExpertiseLevel.EXPERT,
                             talents = new List<SkillTalentData>
                             {
-                              
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeAttackMovementDebuff()),
+                                    description = "When using an axe in your main hand hit the feet of the target to slow it down.",
+                                },
                             }
                         },
 

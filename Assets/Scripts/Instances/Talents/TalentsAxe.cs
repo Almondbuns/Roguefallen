@@ -182,3 +182,26 @@ public class TalentAxeAdeptAxes : TalentPassiveEffects
         passive_effects.Add(new EffectAddMaxWeaponDamage { amount = 1 });
     }
 }
+
+public class TalentAxeAttackMovementDebuff : TalentWeaponAttack
+{
+
+    public TalentAxeAttackMovementDebuff()
+    {
+        name = "To the Knee";
+        target = TalentTarget.Tile;
+        target_range = 1;
+        icon = "images/talents/blunt_slow";
+        cost_stamina = 2;
+        cooldown = 1000;
+        description = "150% weapon damage to one tile and chance to decrease movement speed of target for 15 turns";
+
+        weapon_damage_percentage = 150.0f;
+        weapon_attack_time_percentage = 100.0f;
+        effects.Add(new EffectAddMovementTime { amount = 100, damage_type = DamageType.SLASH, duration = 1500 }) ;
+
+        prepare_time = 50;
+
+        prepare_message = "The <name> aims for the feet.";
+    }
+}
