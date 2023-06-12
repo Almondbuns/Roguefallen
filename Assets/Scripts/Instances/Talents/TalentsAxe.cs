@@ -16,12 +16,118 @@ public class TalentAxeWarAxeAttackHeavy : TalentWeaponAttack
         icon = "images/talents/blunt_heavy";
         cost_stamina = 1;
         prepare_time = 0;
-        recover_time = 100;
+        recover_time = 0;
         description = "Deals 125% weapon damage to one tile";
 
         weapon_damage_percentage = 125.0f;
         weapon_attack_time_percentage = 100.0f;
         weapon_armor_penetration_add = 0;
+
+        prepare_message = "<name> starts a heavy attack.";
+    }
+}
+
+public class TalentAxeBattleAxeAttackHeavy : TalentAreaWeaponAttack
+{
+    public TalentAxeBattleAxeAttackHeavy()
+    {
+        name = "Heavy Battle Axe Attack";
+        target = TalentTarget.Self;
+        target_range = 0;
+        icon = "images/talents/blunt_heavy";
+        cost_stamina = 1;
+        prepare_time = 0;
+        recover_time = 0;
+        description = "Deals 50% weapon damage to all tiles at a distance of two tiles";
+
+        weapon_damage_percentage = 50.0f;
+        weapon_attack_time_percentage = 100.0f;
+
+        prepare_message = "The <name> grabs the battle axe with both hands.";
+        action_message = "The <name> spins around.";
+
+        distance = 2;
+        include_closer_tiles = false;
+    }
+}
+
+public class TalentAxeDoubleAxeAttackHeavy : TalentWeaponAttack
+{
+    public TalentAxeDoubleAxeAttackHeavy()
+    {
+        name = "Heavy Double Axe Attack";
+        target = TalentTarget.Tile;
+        target_range = 1;
+        icon = "images/talents/blunt_heavy";
+        cost_stamina = 1;
+        prepare_time = 0;
+        recover_time = 0;
+        description = "Deals two quick blows each doing 75% weapon damage to one tile with 50% attack time";
+
+        weapon_damage_percentage = 75.0f;
+        weapon_attack_time_percentage = 50.0f;
+        weapon_armor_penetration_add = 0;
+
+        prepare_message = "<name> starts a heavy attack.";
+    }
+
+     public override ActionData CreateAction(TalentInputData input)
+    {
+        ActionData action = new ActionData(input.talent);
+
+        ItemData weapon = GetWeapon(input);
+        
+        SetStandardActionParameters(action, weapon, input);
+
+        List<(DamageType, int, int)> dealt_damage_1 = GetWeaponDamage(weapon,input);
+      
+        List<AttackedTileData> tiles_1 = new List<AttackedTileData>();
+        tiles_1.Add(new AttackedTileData
+        {
+            x = input.target_tiles[0].Item1,
+            y = input.target_tiles[0].Item2,
+            damage_on_hit = dealt_damage_1,
+            effects_on_hit = this.effects,
+        });
+
+        action.commands.Add(new AttackTilesCommand(input.source_actor, tiles_1, 1, true));
+        action.commands.Add(new WaitCommand(action.recover_time / 2));
+
+        List<(DamageType, int, int)> dealt_damage_2 = GetWeaponDamage(weapon, input);
+        
+        List<AttackedTileData> tiles_2 = new List<AttackedTileData>();
+        tiles_1.Add(new AttackedTileData
+        {
+            x = input.target_tiles[0].Item1,
+            y = input.target_tiles[0].Item2,
+            damage_on_hit = dealt_damage_2,
+            effects_on_hit = this.effects,
+        });
+
+        action.commands.Add(new AttackTilesCommand(input.source_actor, tiles_2, 1, true));
+
+        action.recover_time = action.recover_time / 2;
+
+        return action;
+    }
+}
+
+public class TalentAxePickaxeAttackHeavy : TalentWeaponAttack
+{
+    public TalentAxePickaxeAttackHeavy()
+    {
+        name = "Heavy Pickaxe Attack";
+        target = TalentTarget.Tile;
+        target_range = 1;
+        icon = "images/talents/blunt_heavy";
+        cost_stamina = 1;
+        prepare_time = 0;
+        recover_time = 0;
+        description = "Deals 100% weapon damage to one tile with +3 armor penetration";
+
+        weapon_damage_percentage = 100.0f;
+        weapon_attack_time_percentage = 100.0f;
+        weapon_armor_penetration_add = 2;
 
         prepare_message = "<name> starts a heavy attack.";
     }

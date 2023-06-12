@@ -260,6 +260,9 @@ public class GameData : MonoBehaviour
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHammer2H), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
 
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemWarAxe1H), prob_amount = {(.1f, 20),(.2f, 21),(.3f, 22), (.2f, 23), (.2f, 24)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemDoubleAxe1H), prob_amount = {(.1f, 20),(.2f, 21),(.3f, 22), (.2f, 23), (.2f, 24)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPickaxe1H), prob_amount = {(.1f, 20),(.2f, 21),(.3f, 22), (.2f, 23), (.2f, 24)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemBattleAxe2H), prob_amount = {(.1f, 20),(.2f, 21),(.3f, 22), (.2f, 23), (.2f, 24)}});
 
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemBootsHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
                 level_data.items.Add(new ItemPlacementData(){type = typeof(ItemChestHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});

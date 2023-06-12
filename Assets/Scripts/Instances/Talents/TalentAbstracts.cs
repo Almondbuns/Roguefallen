@@ -253,6 +253,7 @@ public abstract class TalentWeaponAttack : TalentPrototype
 public abstract class TalentAreaWeaponAttack : TalentWeaponAttack
 {
     public int distance = 1;
+    public bool include_closer_tiles = true;
 
     public TalentAreaWeaponAttack()
     {
@@ -278,6 +279,8 @@ public abstract class TalentAreaWeaponAttack : TalentWeaponAttack
             for (int j = -distance; j <= distance; ++j)
             {
                 if (i == 0 && j == 0) continue; // don't hurt yourself
+                if (include_closer_tiles == false && (Mathf.Abs(i) - distance != 0 && Mathf.Abs(j)- distance != 0))
+                    continue;
 
                 tiles.Add(new AttackedTileData
                 {

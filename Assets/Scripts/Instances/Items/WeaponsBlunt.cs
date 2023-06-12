@@ -770,7 +770,7 @@ public class ItemHammer2H : ItemPrototype
             sub_type = WeaponSubType.BLUNT,
             equip_type = WeaponEquipType.TWOHANDED,
             damage = { (DamageType.CRUSH, 6 + 3*tier, 8 + 3*tier, 3) },
-            attack_time = 175,
+            attack_time = 150,
             attack_talents =
             {
                 new TalentWeaponAttackStandard(),
