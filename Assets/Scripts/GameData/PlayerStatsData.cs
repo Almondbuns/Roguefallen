@@ -223,6 +223,13 @@ public class PlayerStatsData
                                     talent = new TalentData(new TalentAxeAttackMovementDebuff()),
                                     description = "When using an axe in your main hand hit the feet of the target to slow it down.",
                                 },
+
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeFrenzy()),
+                                    description = "",
+                                },
                             }
                         },
 

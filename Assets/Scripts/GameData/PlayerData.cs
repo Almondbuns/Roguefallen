@@ -646,6 +646,8 @@ public class PlayerData : ActorData
     {
         usable_talents.Clear();
         current_passive_talents_id = new();
+        List<long> old_substained_talents_id = current_substained_talents_id;
+        current_substained_talents_id = new();
 
         foreach (EquipmentSlotData equipment_slot in equipment)
         {
@@ -702,6 +704,12 @@ public class PlayerData : ActorData
                 current_passive_talents_id.Add(skill_talent.talent.id);
                 continue;
             };
+
+            if (skill_talent.talent.prototype.type == TalentType.Substained
+                && old_substained_talents_id.Contains(skill_talent.talent.id))
+            {
+                current_substained_talents_id.Add(skill_talent.talent.id);
+            };            
 
             PlayerTalentSource pts = new()
             {

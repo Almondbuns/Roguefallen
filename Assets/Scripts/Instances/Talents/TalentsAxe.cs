@@ -62,7 +62,7 @@ public class TalentAxeDoubleAxeAttackHeavy : TalentWeaponAttack
         cost_stamina = 1;
         prepare_time = 0;
         recover_time = 0;
-        description = "Deals two quick blows each doing 75% weapon damage to one tile with 50% attack time";
+        description = "Two quick blows each dealing 75% weapon damage to one tile with 50% attack time";
 
         weapon_damage_percentage = 75.0f;
         weapon_attack_time_percentage = 50.0f;
@@ -309,5 +309,28 @@ public class TalentAxeAttackMovementDebuff : TalentWeaponAttack
         prepare_time = 50;
 
         prepare_message = "The <name> aims for the feet.";
+    }
+}
+
+public class TalentAxeFrenzy : TalentSubstainedEffects
+{
+    public TalentAxeFrenzy()
+    {
+        name = "Frenzy Swings";
+        type = TalentType.Substained;
+        target = TalentTarget.Self;
+        target_range = 0;
+        icon = "images/talents/heavy_armor_run";
+        cost_stamina = 5;
+        prepare_time = 0;
+        recover_time = 100;
+        cooldown = 100;
+        description = "Deals +1 to +3 damage per attack but loses one point of stamina each turn.";
+
+        substained_effects = new List<EffectData>();
+
+        substained_effects.Add(new EffectAddMaxWeaponDamage { amount = 3 });
+        substained_effects.Add(new EffectAddMinWeaponDamage { amount = 1 });
+        substained_effects.Add(new EffectSubstractStamina{ amount = 1, execution_time = EffectDataExecutionTime.CONTINUOUS });
     }
 }
