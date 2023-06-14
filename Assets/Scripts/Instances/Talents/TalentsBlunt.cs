@@ -320,7 +320,7 @@ public class TalentBluntDoubleAttack : TalentWeaponAttack
         });
 
         action.commands.Add(new AttackTilesCommand(input.source_actor, tiles_1, 1, true));
-        action.commands.Add(new WaitCommand(action.recover_time / 2));
+        action.commands.Add(new WaitCommand(action.recover_time / 2 - 1));
 
         List<(DamageType, int, int)> dealt_damage_2 = GetWeaponDamage(weapon, input);
         
@@ -335,7 +335,7 @@ public class TalentBluntDoubleAttack : TalentWeaponAttack
 
         action.commands.Add(new AttackTilesCommand(input.source_actor, tiles_2, 1, true));
 
-        action.recover_time = action.recover_time / 2;
+        action.recover_time = action.recover_time / 2 - 1;
 
         return action;
     }

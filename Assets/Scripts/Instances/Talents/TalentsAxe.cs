@@ -65,7 +65,7 @@ public class TalentAxeDoubleAxeAttackHeavy : TalentWeaponAttack
         description = "Two quick blows each dealing 75% weapon damage to one tile with 50% attack time";
 
         weapon_damage_percentage = 75.0f;
-        weapon_attack_time_percentage = 50.0f;
+        weapon_attack_time_percentage = 100.0f;
         weapon_armor_penetration_add = 0;
 
         prepare_message = "<name> starts a heavy attack.";
@@ -91,7 +91,7 @@ public class TalentAxeDoubleAxeAttackHeavy : TalentWeaponAttack
         });
 
         action.commands.Add(new AttackTilesCommand(input.source_actor, tiles_1, 1, true));
-        action.commands.Add(new WaitCommand(action.recover_time / 2));
+        action.commands.Add(new WaitCommand(action.recover_time / 2 - 1));
 
         List<(DamageType, int, int)> dealt_damage_2 = GetWeaponDamage(weapon, input);
         
@@ -106,7 +106,7 @@ public class TalentAxeDoubleAxeAttackHeavy : TalentWeaponAttack
 
         action.commands.Add(new AttackTilesCommand(input.source_actor, tiles_2, 1, true));
 
-        action.recover_time = action.recover_time / 2;
+        action.recover_time = action.recover_time / 2 - 1;
 
         return action;
     }
