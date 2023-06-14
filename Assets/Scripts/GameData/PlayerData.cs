@@ -125,8 +125,6 @@ public class PlayerData : ActorData
 
         inventory.AddItem(new ItemData(new ItemPoemOfReturn(starting_level)));
         inventory.AddItem(new ItemData(new ItemFluteOfHealing(starting_level)));
-
-        inventory.AddItem(new ItemData(new ItemHandAxe1H(starting_level)));
         
         if (starting_level > 1)
         {
@@ -151,7 +149,7 @@ public class PlayerData : ActorData
         //equipment.Add(new EquipmentSlotData { name = "Weapon 2R", item_type = new List<ItemType> { ItemType.WEAPON, ItemType.SHIELD } });
 
         equipment.Find(x => x.name == "Chest").item = new ItemData(new ItemChestHeavy(starting_level));
-        equipment.Find(x => x.name == "Weapon").item = new ItemData(new ItemMace1H(starting_level));
+        equipment.Find(x => x.name == "Weapon").item = new ItemData(new ItemHandAxe1H(starting_level));
 
         if (starting_level > 1)
         {
