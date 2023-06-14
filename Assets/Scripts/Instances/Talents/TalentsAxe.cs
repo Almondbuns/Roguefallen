@@ -161,7 +161,7 @@ public class TalentAxeAttackAdjacent : TalentWeaponAttack
         target_range = 1;
         icon = "images/talents/axe_swipe";
         cost_stamina = 2;
-        prepare_time = 50;
+        prepare_time = 25;
         cooldown = 400;
         description = "100% weapon damage to target tile and two adjacent tiles";
     }
