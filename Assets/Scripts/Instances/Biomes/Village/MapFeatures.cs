@@ -240,7 +240,7 @@ public class MFStoreWeapons : MFStore
         item_types.Add(typeof(ItemMace1H));
         item_types.Add(typeof(ItemFlail1H));
         //item_types.Add(typeof(ItemSword2H));
-        item_types.Add(typeof(ItemAxe2H));
+        item_types.Add(typeof(ItemBattleAxe2H));
         item_types.Add(typeof(ItemWarHammer2H));
         //item_types.Add(typeof(ItemSpear1H));
         //item_types.Add(typeof(ItemSpear2H));
