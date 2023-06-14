@@ -737,11 +737,11 @@ public class ItemFlail1H : ItemPrototype
 }
 
 
-public class ItemHammer2H : ItemPrototype
+public class ItemWarHammer2H : ItemPrototype
 {
-    public ItemHammer2H(int level) : base(level)
+    public ItemWarHammer2H(int level) : base(level)
     {
-        name = "Hammer";
+        name = "War Hammer";
         type = ItemType.WEAPON;
         icon = "images/objects/weapon_hammer_2H";
         weight = 10;

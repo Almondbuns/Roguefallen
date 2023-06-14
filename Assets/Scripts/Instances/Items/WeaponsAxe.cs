@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class ItemWarAxe1H : ItemPrototype
+public class ItemHandAxe1H : ItemPrototype
 {
-    public ItemWarAxe1H(int level) : base(level)
+    public ItemHandAxe1H(int level) : base(level)
     {
-        name = "War Axe";
+        name = "Hand Axe";
         type = ItemType.WEAPON;
         icon = "images/objects/weapon_axe_1H";
         weight = 5;
@@ -40,7 +40,7 @@ public class ItemWarAxe1H : ItemPrototype
             attack_time = 110,
             attack_talents =
             {
-                new TalentWeaponAttackStandard(),
+                new TalentWeaponAttackStandard(){icon = "images/talents/axe_standard"},
                 new TalentAxeWarAxeAttackHeavy(),
             }
         };
@@ -288,7 +288,7 @@ public class ItemDoubleAxe1H : ItemPrototype
             attack_time = 110,
             attack_talents =
             {
-                new TalentWeaponAttackStandard(),
+                new TalentWeaponAttackStandard(){icon = "images/talents/axe_standard"},
                 new TalentAxeDoubleAxeAttackHeavy(),
             }
         };
@@ -536,7 +536,7 @@ public class ItemPickaxe1H : ItemPrototype
             attack_time = 110,
             attack_talents =
             {
-                new TalentWeaponAttackStandard(),
+                new TalentWeaponAttackStandard(){icon = "images/talents/axe_standard"},
                 new TalentAxePickaxeAttackHeavy(),
             }
         };
@@ -784,7 +784,7 @@ public class ItemBattleAxe2H : ItemPrototype
             attack_time = 125,
             attack_talents =
             {
-                new TalentWeaponAttackStandard(),
+                new TalentWeaponAttackStandard(){icon = "images/talents/axe_standard"},
                 new TalentAxeBattleAxeAttackHeavy(),
             }
         };

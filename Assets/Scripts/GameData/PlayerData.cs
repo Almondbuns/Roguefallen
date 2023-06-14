@@ -126,7 +126,7 @@ public class PlayerData : ActorData
         inventory.AddItem(new ItemData(new ItemPoemOfReturn(starting_level)));
         inventory.AddItem(new ItemData(new ItemFluteOfHealing(starting_level)));
 
-        inventory.AddItem(new ItemData(new ItemWarAxe1H(starting_level)));
+        inventory.AddItem(new ItemData(new ItemHandAxe1H(starting_level)));
         
         if (starting_level > 1)
         {

@@ -167,7 +167,7 @@ public class PlayerStatsData
                 new SkillData
                 {
                     name = "Axe Weapons",
-                    icon = "images/skills/skill_blunt",
+                    icon = "images/skills/skill_axes",
                     expertises = new List<SkillExpertiseData>
                     {
                         new SkillExpertiseData
@@ -238,7 +238,12 @@ public class PlayerStatsData
                             level = SkillExpertiseLevel.MASTER,
                             talents = new List<SkillTalentData>
                             {
-                               
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeMastery()),
+                                    description = "",
+                                },
                             }
                         }
                     }

@@ -13,7 +13,7 @@ public class TalentAxeWarAxeAttackHeavy : TalentWeaponAttack
         name = "Heavy War Axe Attack";
         target = TalentTarget.Tile;
         target_range = 1;
-        icon = "images/talents/blunt_heavy";
+        icon = "images/talents/axe_heavy";
         cost_stamina = 1;
         prepare_time = 0;
         recover_time = 0;
@@ -34,7 +34,7 @@ public class TalentAxeBattleAxeAttackHeavy : TalentAreaWeaponAttack
         name = "Heavy Battle Axe Attack";
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/blunt_heavy";
+        icon = "images/talents/axe_heavy";
         cost_stamina = 1;
         prepare_time = 0;
         recover_time = 0;
@@ -58,7 +58,7 @@ public class TalentAxeDoubleAxeAttackHeavy : TalentWeaponAttack
         name = "Heavy Double Axe Attack";
         target = TalentTarget.Tile;
         target_range = 1;
-        icon = "images/talents/blunt_heavy";
+        icon = "images/talents/axe_heavy";
         cost_stamina = 1;
         prepare_time = 0;
         recover_time = 0;
@@ -119,7 +119,7 @@ public class TalentAxePickaxeAttackHeavy : TalentWeaponAttack
         name = "Heavy Pickaxe Attack";
         target = TalentTarget.Tile;
         target_range = 1;
-        icon = "images/talents/blunt_heavy";
+        icon = "images/talents/axe_heavy";
         cost_stamina = 1;
         prepare_time = 0;
         recover_time = 0;
@@ -140,7 +140,7 @@ public class TalentAxeAttackInterrupt : TalentWeaponAttack
         name = "Haft Punch";
         target = TalentTarget.Tile;
         target_range = 1;
-        icon = "images/talents/sword_attack_fast";
+        icon = "images/talents/axe_haft";
         cost_stamina = 2;
         description = "50% weapon damage as crush damage with chance to interrupt target";
         effects.Add(new EffectInterrupt { damage_type = DamageType.CRUSH });
@@ -159,7 +159,7 @@ public class TalentAxeAttackAdjacent : TalentWeaponAttack
         name = "Swipe Attack";
         target = TalentTarget.AdjacentTiles;
         target_range = 1;
-        icon = "images/talents/sword_attack_heavy";
+        icon = "images/talents/axe_swipe";
         cost_stamina = 2;
         prepare_time = 50;
         cooldown = 400;
@@ -253,7 +253,7 @@ public class TalentAxeSpin : TalentAreaWeaponAttack
         name = "Axe Spin";
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/blunt_earthquake";
+        icon = "images/talents/axe_spin";
         cost_stamina = 3;
         cooldown = 400;
         description = "100% weapon damage to all tiles in a radius of 1";
@@ -278,7 +278,7 @@ public class TalentAxeAdeptAxes : TalentPassiveEffects
         type = TalentType.Passive;
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/blunt_plus";
+        icon = "images/talents/axe_plus";
 
         description = "Increases the damage of axes by 1.";
 
@@ -297,7 +297,7 @@ public class TalentAxeAttackMovementDebuff : TalentWeaponAttack
         name = "To the Knee";
         target = TalentTarget.Tile;
         target_range = 1;
-        icon = "images/talents/blunt_slow";
+        icon = "images/talents/axe_slow";
         cost_stamina = 2;
         cooldown = 1000;
         description = "150% weapon damage to one tile and chance to decrease movement speed of target for 15 turns";
@@ -320,7 +320,7 @@ public class TalentAxeFrenzy : TalentSubstainedEffects
         type = TalentType.Substained;
         target = TalentTarget.Self;
         target_range = 0;
-        icon = "images/talents/heavy_armor_run";
+        icon = "images/talents/axe_frenzy";
         cost_stamina = 5;
         prepare_time = 0;
         recover_time = 100;
@@ -332,5 +332,26 @@ public class TalentAxeFrenzy : TalentSubstainedEffects
         substained_effects.Add(new EffectAddMaxWeaponDamage { amount = 3 });
         substained_effects.Add(new EffectAddMinWeaponDamage { amount = 1 });
         substained_effects.Add(new EffectSubstractStamina{ amount = 1, execution_time = EffectDataExecutionTime.CONTINUOUS });
+    }
+}
+
+public class TalentAxeMastery : TalentPassiveEffects
+{
+    public TalentAxeMastery()
+    {
+        name = "Axe Mastery";
+        target = TalentTarget.Self;
+        target_range = 0;
+        icon = "images/talents/axe_mastery";
+        cost_stamina = 0;
+        recover_time = 0;
+        cooldown = 0;
+        description = "All attacks with axes deal +1 damage with +1 armor penetration.";
+
+        passive_effects = new List<EffectData>();
+
+        passive_effects.Add(new EffectAddWeaponPenetration { amount = 1});
+        passive_effects.Add(new EffectAddMinWeaponDamage { amount = 1 });
+        passive_effects.Add(new EffectAddMaxWeaponDamage { amount = 1 });
     }
 }

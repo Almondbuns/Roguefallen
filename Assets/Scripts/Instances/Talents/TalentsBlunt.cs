@@ -163,10 +163,10 @@ public class TalentBluntAttackBrute : TalentWeaponAttack
 
     public TalentBluntAttackBrute()
     {
-        name = "Brute Attack";
+        name = "Brute Force Attack";
         target = TalentTarget.Tile;
         target_range = 1;
-        icon = "images/talents/blunt_stun";
+        icon = "images/talents/blunt_brute";
         cost_stamina = 3;
         cooldown = 500;
         description = "200% weapon damage to one tile";
