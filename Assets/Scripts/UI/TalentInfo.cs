@@ -29,7 +29,15 @@ public class TalentInfo : MonoBehaviour
         transform.Find("StaminaCost").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = talent_data.prototype.cost_stamina.ToString();
         //transform.Find("ManaCost").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = talent_data.prototype.cost_mana.ToString();
         transform.Find("PrepareTime").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = talent_data.prototype.prepare_time.ToString();
-        transform.Find("RecoverTime").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = talent_data.prototype.recover_time.ToString();
+        
+        if (talent_data.prototype is TalentWeaponAttack)
+        {
+            transform.Find("RecoverTime").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = ((TalentWeaponAttack)talent_data.prototype).weapon_attack_time_percentage.ToString() + "% Weapon Time";
+        }
+        else
+        {
+            transform.Find("RecoverTime").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = talent_data.prototype.recover_time.ToString();
+        }
 
         transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = talent_data.prototype.description;
 

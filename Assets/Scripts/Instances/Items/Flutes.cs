@@ -15,7 +15,7 @@ public class ItemFluteOfHealing : ItemPrototype
         else
             tier = 1;
 
-        gold_value = 500;
+        gold_value = 500 * (tier + 1);
         weight = 3;
         usable_item = new()
         {
@@ -41,7 +41,7 @@ public class ItemFluteOfEndurance : ItemPrototype
         else
             tier = 1;
 
-        gold_value = 500;
+        gold_value = 500 * (tier + 1);
         weight = 3;
         usable_item = new()
         {
@@ -67,7 +67,7 @@ public class ItemFluteOfBraveness : ItemPrototype
         else
             tier = 1;
 
-        gold_value = 500;
+        gold_value = 500 * (tier + 1);
         weight = 3;
         usable_item = new()
         {

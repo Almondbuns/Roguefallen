@@ -153,35 +153,33 @@ public class TalentBluntAttackStun : TalentWeaponAttack
         effects.Add(new EffectStun { damage_type = DamageType.CRUSH, duration = 700 }) ;
 
         prepare_time = 50;
-        recover_time = 100;
 
         prepare_message = "The <name> aims for the head.";
     }
 }
 
-public class TalentBluntAttackMovementDebuff : TalentWeaponAttack
+public class TalentBluntAttackBrute : TalentWeaponAttack
 {
 
-    public TalentBluntAttackMovementDebuff()
+    public TalentBluntAttackBrute()
     {
-        name = "To the Knee";
+        name = "Brute Force Attack";
         target = TalentTarget.Tile;
         target_range = 1;
-        icon = "images/talents/blunt_slow";
-        cost_stamina = 2;
-        cooldown = 1000;
-        description = "100% weapon damage to one tile and chance to decrease movement speed of target for 15 turns";
+        icon = "images/talents/blunt_brute";
+        cost_stamina = 3;
+        cooldown = 500;
+        description = "200% weapon damage to one tile";
 
-        weapon_damage_percentage = 100.0f;
+        weapon_damage_percentage = 200.0f;
         weapon_attack_time_percentage = 100.0f;
-        effects.Add(new EffectAddMovementTime { amount = 100, damage_type = DamageType.CRUSH, duration = 1500 }) ;
 
         prepare_time = 50;
-        recover_time = 100;
 
-        prepare_message = "The <name> aims for the feet.";
+        prepare_message = "The <name> focuses all energy into a single blow.";
     }
 }
+
 
 public class TalentBluntAttackKnockback : TalentWeaponAttack
 {
@@ -260,126 +258,6 @@ public class TalentWeaponAttackFast : TalentWeaponAttack
     }
 }
 
-public class TalentAxeAttackInterrupt : TalentWeaponAttack
-{
-    public TalentAxeAttackInterrupt()
-    {
-        name = "Haft Punch";
-        target = TalentTarget.Tile;
-        target_range = 1;
-        icon = "images/talents/sword_attack_fast";
-        cost_stamina = 10;
-        recover_time = 25;
-        description = "50% weapon damage as crush damage with chance to interrupt target";
-        effects.Add(new EffectInterrupt { damage_type = DamageType.CRUSH });
-
-        weapon_damage_percentage = 50.0f;
-        weapon_attack_time_percentage = 200.0f;
-
-        prepare_time = 24;
-        prepare_message = "<name> grabs the hilt of the weapon.";
-    }
-}
-
-
-
-public class TalentAxeAttackAdjacent : TalentPrototype
-{
-    public TalentAxeAttackAdjacent()
-    {
-        name = "Swipe Attack";
-        target = TalentTarget.AdjacentTiles;
-        target_range = 1;
-        icon = "images/talents/sword_attack_heavy";
-        cost_stamina = 10;
-        recover_time = 50;
-        description = "100% weapon damage to target tile and two adjacent tiles";
-    }
-
-    public override ActionData CreateAction(TalentInputData input)
-    {
-        ActionData action = new ActionData(input.talent);
-        List<(DamageType, int, int)> dealt_damage = new();
-        foreach (var damage_per_type in input.item.GetWeaponDamage())
-        {
-            dealt_damage.Add((damage_per_type.type, Random.Range(damage_per_type.damage_min, damage_per_type.damage_max + 1), damage_per_type.armor_penetration));
-        }
-
-        //Calculate adjacent tiles
-        List<(int x, int y)> adjacent_tiles = new();
-        int relative_x = input.target_tiles[0].Item1 - input.source_actor.X;
-        int relative_y = input.target_tiles[0].Item2 - input.source_actor.Y;
-        if (relative_x == -1 && relative_y == -1)
-        {
-            adjacent_tiles.Add((input.source_actor.X, input.source_actor.Y - 1));
-            adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y));
-        }
-        if (relative_x == -1 && relative_y == 0)
-        {
-            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y - 1));
-            adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y + 1));
-        }
-        if (relative_x == -1 && relative_y == 1)
-        {
-            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y));
-            adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.X, input.source_actor.Y + 1));
-        }
-        if (relative_x == 0 && relative_y == 1)
-        {
-            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y + 1));
-            adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y + 1));
-        }
-        if (relative_x == 1 && relative_y == 1)
-        {
-            adjacent_tiles.Add((input.source_actor.X, input.source_actor.Y + 1));
-            adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y));
-        }
-        if (relative_x == 1 && relative_y == 0)
-        {
-            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y + 1));
-            adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y - 1));
-        }
-        if (relative_x == 1 && relative_y == -1)
-        {
-            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y));
-            adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.X, input.source_actor.Y - 1));
-        }
-        if (relative_x == 0 && relative_y == -1)
-        {
-            adjacent_tiles.Add((input.source_actor.X + 1, input.source_actor.Y - 1));
-            adjacent_tiles.Add((input.target_tiles[0].Item1, input.target_tiles[0].Item2));
-            adjacent_tiles.Add((input.source_actor.X - 1, input.source_actor.Y - 1));
-        }
-
-        foreach ((int x, int y) in adjacent_tiles)
-        {
-            List<AttackedTileData> tiles = new List<AttackedTileData>();
-            tiles.Add(new AttackedTileData
-            {
-                x = x,
-                y = y,
-                damage_on_hit = dealt_damage,
-            });
-
-            action.commands.Add(new AttackTilesCommand(input.source_actor, tiles, 1, true));
-        }
-
-        action.prepare_time = 24;
-        action.prepare_message = "The <name> draws an axe.";
-        action.action_message = "The <name> attacks with an axe.";
-        action.recover_time = 25;
-        return action;
-    }
-
-}
-
 public class TalentBluntAccuracyBonus : TalentSubstainedEffects
 {
     public TalentBluntAccuracyBonus()
@@ -442,7 +320,7 @@ public class TalentBluntDoubleAttack : TalentWeaponAttack
         });
 
         action.commands.Add(new AttackTilesCommand(input.source_actor, tiles_1, 1, true));
-        action.commands.Add(new WaitCommand(action.recover_time / 2));
+        action.commands.Add(new WaitCommand(action.recover_time / 2 - 1));
 
         List<(DamageType, int, int)> dealt_damage_2 = GetWeaponDamage(weapon, input);
         
@@ -457,13 +335,13 @@ public class TalentBluntDoubleAttack : TalentWeaponAttack
 
         action.commands.Add(new AttackTilesCommand(input.source_actor, tiles_2, 1, true));
 
-        action.recover_time = action.recover_time / 2;
+        action.recover_time = action.recover_time / 2 - 1;
 
         return action;
     }
 }
 
-public class TalentBluntEarthquake : TalentWeaponAttack
+public class TalentBluntEarthquake : TalentAreaWeaponAttack
 {
 
     public TalentBluntEarthquake()
@@ -474,49 +352,18 @@ public class TalentBluntEarthquake : TalentWeaponAttack
         icon = "images/talents/blunt_earthquake";
         cost_stamina = 10;
         cooldown = 1000;
-        description = "50% weapon damage to all tiles in a radius of 3";
+        description = "100% weapon damage to all tiles in a radius of 3";
 
-        weapon_damage_percentage = 50.0f;
+        weapon_damage_percentage = 100.0f;
         weapon_attack_time_percentage = 100.0f;
     
         prepare_time = 100;
         recover_time = 100;
 
-        prepare_message = "<name> raises their weapon high up into the air.";
-    }
+        prepare_message = "The <name> raises their weapon high up into the air.";
+        action_message = "The <name> slams the weapon into the ground. The ground shakes.";
 
-    public override ActionData CreateAction(TalentInputData input)
-    {
-        ActionData action = new ActionData(input.talent);
-        List<AttackedTileData> tiles = new List<AttackedTileData>();
-
-        ItemData weapon = GetWeapon(input);
-        List<(DamageType, int, int)> dealt_damage = GetWeaponDamage(weapon,input);
-        SetStandardActionParameters(action, weapon, input);
-
-        action.action_message = "The <name> slams the " + weapon.GetName() + "into the ground. The ground shakes.";
-
-        int distance = 3;
-
-        for (int i = -distance; i <= distance; ++i)
-        {
-            for (int j = -distance; j <= distance; ++j)
-            {
-                if (i == 0 && j == 0) continue; // don't hurt yourself
-
-                tiles.Add(new AttackedTileData
-                {
-                    x = input.source_actor.X + i,
-                    y = input.source_actor.Y + j,
-                    damage_on_hit = dealt_damage,
-                    effects_on_hit = this.effects,
-                });
-            }
-        }
-
-        action.commands.Add(new AttackTilesCommand(input.source_actor, tiles, 1, false));
-
-        return action;
+        distance = 3;
     }
 }
 
@@ -530,11 +377,11 @@ public class TalentBluntAdeptBlunt : TalentPassiveEffects
         target_range = 0;
         icon = "images/talents/blunt_plus";
 
-        description = "Increases the damage of blunt weapons by 1.";
+        description = "Increases the damage of blunt weapons by 2.";
 
         passive_effects = new List<EffectData>();
 
-        passive_effects.Add(new EffectAddMinWeaponDamage { amount = 1 });
-        passive_effects.Add(new EffectAddMaxWeaponDamage { amount = 1 });
+        passive_effects.Add(new EffectAddMinWeaponDamage { amount = 2 });
+        passive_effects.Add(new EffectAddMaxWeaponDamage { amount = 2 });
     }
 }
