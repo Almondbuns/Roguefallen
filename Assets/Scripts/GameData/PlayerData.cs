@@ -149,7 +149,7 @@ public class PlayerData : ActorData
         //equipment.Add(new EquipmentSlotData { name = "Weapon 2R", item_type = new List<ItemType> { ItemType.WEAPON, ItemType.SHIELD } });
 
         equipment.Find(x => x.name == "Chest").item = new ItemData(new ItemChestHeavy(starting_level));
-        equipment.Find(x => x.name == "Weapon").item = new ItemData(new ItemMace1H(starting_level));
+        equipment.Find(x => x.name == "Weapon").item = new ItemData(new ItemHandAxe1H(starting_level));
 
         if (starting_level > 1)
         {
@@ -643,6 +643,10 @@ public class PlayerData : ActorData
     public void ReevaluateTalents()
     {
         usable_talents.Clear();
+        current_passive_talents_id = new();
+        List<long> old_substained_talents_id = current_substained_talents_id;
+        current_substained_talents_id = new();
+
         foreach (EquipmentSlotData equipment_slot in equipment)
         {
             if (equipment_slot.item == null)
@@ -686,8 +690,24 @@ public class PlayerData : ActorData
                 if (main_weapon == null || main_weapon.weapon_data == null || main_weapon.GetPrototype().weapon.sub_type != WeaponSubType.BLUNT)
                     continue;
             }
+            if (skill_talent.requirement == SkillTalentRequirement.AxeWeapon)
+            {
+                ItemData main_weapon = GetMainWeapon();
+                if (main_weapon == null || main_weapon.weapon_data == null || main_weapon.GetPrototype().weapon.sub_type != WeaponSubType.AXE)
+                    continue;
+            }
             
-            if (skill_talent.talent.prototype.type == TalentType.Passive) continue;
+            if (skill_talent.talent.prototype.type == TalentType.Passive)
+            {
+                current_passive_talents_id.Add(skill_talent.talent.id);
+                continue;
+            };
+
+            if (skill_talent.talent.prototype.type == TalentType.Substained
+                && old_substained_talents_id.Contains(skill_talent.talent.id))
+            {
+                current_substained_talents_id.Add(skill_talent.talent.id);
+            };            
 
             PlayerTalentSource pts = new()
             {
@@ -1000,7 +1020,7 @@ public class PlayerData : ActorData
 
                     skill_talent.is_unlocked = true;
                     
-                    //Passive talents are activated imidiately
+                    //Passive talents are activated immediately
                     if (skill_talent.talent != null && skill_talent.talent.prototype.type == TalentType.Passive)
                         current_passive_talents_id.Add(skill_talent.talent.id);
 

@@ -114,8 +114,8 @@ public class PlayerStatsData
                                 new SkillTalentData
                                 {
                                     requirement = SkillTalentRequirement.BluntWeapon,
-                                    talent = new TalentData(new TalentBluntAttackMovementDebuff()),
-                                    description = "When using a blunt weapon in your main hand hit the feet of the target to slow it down.",
+                                    talent = new TalentData(new TalentBluntAttackBrute()),
+                                    description = "",
                                 },
 
                                 new SkillTalentData
@@ -158,6 +158,91 @@ public class PlayerStatsData
                                     requirement = SkillTalentRequirement.BluntWeapon,
                                     talent = new TalentData(new TalentBluntEarthquake()),
                                     description = "When using a blunt weapon in your main hand create an earthquake that damages all enemies nearby.",
+                                },
+                            }
+                        }
+                    }
+                },
+
+                new SkillData
+                {
+                    name = "Axe Weapons",
+                    icon = "images/skills/skill_axes",
+                    expertises = new List<SkillExpertiseData>
+                    {
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.NOVICE,
+                            talents = new List<SkillTalentData>
+                            {
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeAttackAdjacent()),
+                                    description = "",
+                                },
+
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeAttackInterrupt()),
+                                    description = "",
+                                },                         
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.ADEPT,
+                            talents = new List<SkillTalentData>
+                            {
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeSpin()),
+                                    description = "",
+                                },
+
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeAdeptAxes()),
+                                    description = "",
+                                },  
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.EXPERT,
+                            talents = new List<SkillTalentData>
+                            {
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeAttackMovementDebuff()),
+                                    description = "When using an axe in your main hand hit the feet of the target to slow it down.",
+                                },
+
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeFrenzy()),
+                                    description = "",
+                                },
+                            }
+                        },
+
+                        new SkillExpertiseData
+                        {
+                            level = SkillExpertiseLevel.MASTER,
+                            talents = new List<SkillTalentData>
+                            {
+                                new SkillTalentData
+                                {
+                                    requirement = SkillTalentRequirement.AxeWeapon,
+                                    talent = new TalentData(new TalentAxeMastery()),
+                                    description = "",
                                 },
                             }
                         }

@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class ItemHammer1H : ItemPrototype
+public class ItemHandAxe1H : ItemPrototype
 {
-    public ItemHammer1H(int level) : base(level)
+    public ItemHandAxe1H(int level) : base(level)
     {
-        name = "Hammer";
+        name = "Hand Axe";
         type = ItemType.WEAPON;
-        icon = "images/objects/weapon_hammer_1H";
+        icon = "images/objects/weapon_axe_1H";
         weight = 5;
 
         if (level <= 4)
@@ -15,30 +15,33 @@ public class ItemHammer1H : ItemPrototype
             tier = 0;
             gold_value = 100;
             required_attributes.strength = 5;
+            required_attributes.dexterity = 5;
         }
         else if (level <= 8)
         {
             tier = 1;
             gold_value = 300;
-            required_attributes.strength = 15;
+            required_attributes.strength = 10;
+            required_attributes.dexterity = 10;
         }
         else
         {
             tier = 2;
             gold_value = 500;
-            required_attributes.strength = 25;
+            required_attributes.strength = 15;
+            required_attributes.dexterity = 15;
         }
         
         weapon = new WeaponPrototype
         {
-            sub_type = WeaponSubType.BLUNT,
+            sub_type = WeaponSubType.AXE,
             equip_type = WeaponEquipType.ONEHANDED,
-            damage = { (DamageType.CRUSH, 5 + 2*tier, 5 + 2*tier, 2) },
-            attack_time = 125,
+            damage = { (DamageType.SLASH, 3 + 2*tier, 5 + 2*tier, 1) },
+            attack_time = 110,
             attack_talents =
             {
-                new TalentWeaponAttackStandard(),
-                new TalentBluntHammerAttackHeavy(),
+                new TalentWeaponAttackStandard(){icon = "images/talents/axe_standard"},
+                new TalentAxeWarAxeAttackHeavy(),
             }
         };
        
@@ -246,292 +249,50 @@ public class ItemHammer1H : ItemPrototype
     }
 }
 
-public class ItemMace1H : ItemPrototype
+public class ItemDoubleAxe1H : ItemPrototype
 {
-    public ItemMace1H(int level) : base(level)
+    public ItemDoubleAxe1H(int level) : base(level)
     {
-        name = "Mace";
+        name = "Double Axe";
         type = ItemType.WEAPON;
-        icon = "images/objects/weapon_mace_1H";
+        icon = "images/objects/axe_double";
         weight = 5;
-        
+
         if (level <= 4)
         {
             tier = 0;
             gold_value = 100;
             required_attributes.strength = 5;
+            required_attributes.dexterity = 5;
         }
         else if (level <= 8)
         {
             tier = 1;
             gold_value = 300;
-            required_attributes.strength = 15;
+            required_attributes.strength = 10;
+            required_attributes.dexterity = 10;
         }
         else
         {
             tier = 2;
             gold_value = 500;
-            required_attributes.strength = 25;
-        }
-
-        weapon = new WeaponPrototype
-        {
-            sub_type = WeaponSubType.BLUNT,
-            equip_type = WeaponEquipType.ONEHANDED,
-            damage = { (DamageType.CRUSH, 3 + 2*tier, 7 + 2*tier, 2) },
-            attack_time = 125,
-            attack_talents =
-            {
-                new TalentWeaponAttackStandard(),
-                new TalentBluntMaceAttackHeavy(),
-            },
-        };
-
-        if (level % 4 == 1)
-            qualities_possible = new() { ItemQuality.Normal};
-        else if (level % 4 == 2)
-            qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1};
-        else if (level % 4 == 3)
-            qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1, ItemQuality.Magical2};
-        else
-           qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1, ItemQuality.Magical2, ItemQuality.Unique };
-        
-        quality_effects_possible = new()
-        {
-            new ItemEffectData()
-            {
-                exclude_index = 1,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Strength",
-                effect = new EffectAddStrength() { amount = (tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 1,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Strength",
-                effect = new EffectAddStrength() { amount = 2*(tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                type = ItemEffectType.Prefix,
-                name_presuffix = "Quick",
-                effect = new EffectAddAttackTime() { amount = -10 },
-                trigger = ItemEffectTrigger.Equipped,
-                target = ItemEffectTarget.Item,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 2,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Dexterity",
-                effect = new EffectAddDexterity() { amount = (tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 2,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Dexterity",
-                effect = new EffectAddDexterity() { amount = 2*(tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 3,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Vitality",
-                effect = new EffectAddVitality() { amount = (tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 3,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Vitality",
-                effect = new EffectAddVitality() { amount = 2*(tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 4,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Intelligence",
-                effect = new EffectAddIntelligence() { amount = (tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 4,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Intelligence",
-                effect = new EffectAddIntelligence() { amount = 2*(tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 5,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Willpower",
-                effect = new EffectAddWillpower() { amount = (tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 5,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Willpower",
-                effect = new EffectAddWillpower() { amount = 2*(tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 6,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Constitution",
-                effect = new EffectAddConstitution() { amount = (tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 6,
-                type = ItemEffectType.Suffix,
-                name_presuffix = "of Constitution",
-                effect = new EffectAddConstitution() { amount = 2*(tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                type = ItemEffectType.Prefix,
-                name_presuffix = "Quality",
-                effect = new EffectAddMinWeaponDamage() { amount = 1 },
-                trigger = ItemEffectTrigger.Equipped,
-                target = ItemEffectTarget.Item,
-            },
-
-            new ItemEffectData()
-            {
-                type = ItemEffectType.Prefix,
-                name_presuffix = "Sharp",
-                effect = new EffectAddMaxWeaponDamage() { amount = 1 },
-                trigger = ItemEffectTrigger.Equipped,
-                target = ItemEffectTarget.Item,
-            },
-
-            new ItemEffectData()
-            {
-                type = ItemEffectType.Prefix,
-                name_presuffix = "Penetrating",
-                effect = new EffectAddWeaponPenetration() { amount = 1 },
-                trigger = ItemEffectTrigger.Equipped,
-                target = ItemEffectTarget.Item,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 7,
-                type = ItemEffectType.Prefix,
-                name_presuffix = "Fire",
-                effect = new EffectAddWeaponFireDamage() { amount = 2 },
-                trigger = ItemEffectTrigger.Equipped,
-                target = ItemEffectTarget.Item,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 7,
-                type = ItemEffectType.Prefix,
-                name_presuffix = "Ice",
-                effect = new EffectAddWeaponIceDamage() { amount = 2},
-                trigger = ItemEffectTrigger.Equipped,
-                target = ItemEffectTarget.Item,
-            },
-
-            new ItemEffectData()
-            {
-                exclude_index = 7,
-                type = ItemEffectType.Prefix,
-                name_presuffix = "Lightning",
-                effect = new EffectAddWeaponLightningDamage() { amount = 2},
-                trigger = ItemEffectTrigger.Equipped,
-                target = ItemEffectTarget.Item,
-            },            
-
-            new ItemEffectData()
-            {
-                type = ItemEffectType.Prefix,
-                name_presuffix = "Accurate",
-                effect = new EffectAddToHit() { amount = 2*(tier+1) },
-                trigger = ItemEffectTrigger.Equipped,
-            },
-
-            new ItemEffectData()
-            {
-                type = ItemEffectType.Prefix,
-                name_presuffix = "Agile",
-                effect = new EffectAddDodge() { amount = 2*(tier+1)},
-                trigger = ItemEffectTrigger.Equipped,
-            },
-        };
-    }
-}
-
-public class ItemFlail1H : ItemPrototype
-{
-    public ItemFlail1H(int level) : base(level)
-    {
-        name = "Flail";
-        type = ItemType.WEAPON;
-        icon = "images/objects/weapon_flail_1H";
-        weight = 5;
-        
-        if (level <= 4)
-        {
-            tier = 0;
-            gold_value = 100;
-            required_attributes.strength = 5;
-        }
-        else if (level <= 8)
-        {
-            tier = 1;
-            gold_value = 300;
             required_attributes.strength = 15;
+            required_attributes.dexterity = 15;
         }
-        else
-        {
-            tier = 2;
-            gold_value = 500;
-            required_attributes.strength = 25;
-        }
-
+        
         weapon = new WeaponPrototype
         {
-            sub_type = WeaponSubType.BLUNT,
+            sub_type = WeaponSubType.AXE,
             equip_type = WeaponEquipType.ONEHANDED,
-            attack_time = 125,
-            damage = { (DamageType.CRUSH, 4 + 2*tier, 6 + 2*tier, 2) },
+            damage = { (DamageType.SLASH, 2 + 2*tier, 6 + 2*tier, 1) },
+            attack_time = 110,
             attack_talents =
             {
-                new TalentWeaponAttackStandard(),
-                new TalentBluntFlailAttackHeavy(),
+                new TalentWeaponAttackStandard(){icon = "images/talents/axe_standard"},
+                new TalentAxeDoubleAxeAttackHeavy(),
             }
         };
-
+       
         if (level % 4 == 1)
             qualities_possible = new() { ItemQuality.Normal};
         else if (level % 4 == 2)
@@ -736,14 +497,261 @@ public class ItemFlail1H : ItemPrototype
     }
 }
 
-
-public class ItemWarHammer2H : ItemPrototype
+public class ItemPickaxe1H : ItemPrototype
 {
-    public ItemWarHammer2H(int level) : base(level)
+    public ItemPickaxe1H(int level) : base(level)
     {
-        name = "War Hammer";
+        name = "Pickaxe";
         type = ItemType.WEAPON;
-        icon = "images/objects/weapon_hammer_2H";
+        icon = "images/objects/axe_pick";
+        weight = 5;
+
+        if (level <= 4)
+        {
+            tier = 0;
+            gold_value = 100;
+            required_attributes.strength = 5;
+            required_attributes.dexterity = 5;
+        }
+        else if (level <= 8)
+        {
+            tier = 1;
+            gold_value = 300;
+            required_attributes.strength = 10;
+            required_attributes.dexterity = 10;
+        }
+        else
+        {
+            tier = 2;
+            gold_value = 500;
+            required_attributes.strength = 15;
+            required_attributes.dexterity = 15;
+        }
+        
+        weapon = new WeaponPrototype
+        {
+            sub_type = WeaponSubType.AXE,
+            equip_type = WeaponEquipType.ONEHANDED,
+            damage = { (DamageType.SLASH, 4 + 2*tier, 4 + 2*tier, 1) },
+            attack_time = 110,
+            attack_talents =
+            {
+                new TalentWeaponAttackStandard(){icon = "images/talents/axe_standard"},
+                new TalentAxePickaxeAttackHeavy(),
+            }
+        };
+       
+        if (level % 4 == 1)
+            qualities_possible = new() { ItemQuality.Normal};
+        else if (level % 4 == 2)
+            qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1};
+        else if (level % 4 == 3)
+            qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1, ItemQuality.Magical2};
+        else
+           qualities_possible = new() { ItemQuality.Normal, ItemQuality.Magical1, ItemQuality.Magical2, ItemQuality.Unique };
+        
+        quality_effects_possible = new()
+        {
+            new ItemEffectData()
+            {
+                exclude_index = 1,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Strength",
+                effect = new EffectAddStrength() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 1,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Strength",
+                effect = new EffectAddStrength() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Quick",
+                effect = new EffectAddAttackTime() { amount = -10 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 2,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Dexterity",
+                effect = new EffectAddDexterity() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 2,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Dexterity",
+                effect = new EffectAddDexterity() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 3,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Vitality",
+                effect = new EffectAddVitality() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 3,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Vitality",
+                effect = new EffectAddVitality() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 4,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Intelligence",
+                effect = new EffectAddIntelligence() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 4,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Intelligence",
+                effect = new EffectAddIntelligence() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 5,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Willpower",
+                effect = new EffectAddWillpower() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 5,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Willpower",
+                effect = new EffectAddWillpower() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 6,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Constitution",
+                effect = new EffectAddConstitution() { amount = (tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 6,
+                type = ItemEffectType.Suffix,
+                name_presuffix = "of Constitution",
+                effect = new EffectAddConstitution() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Quality",
+                effect = new EffectAddMinWeaponDamage() { amount = 1 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Sharp",
+                effect = new EffectAddMaxWeaponDamage() { amount = 1 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Penetrating",
+                effect = new EffectAddWeaponPenetration() { amount = 1 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 7,
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Fire",
+                effect = new EffectAddWeaponFireDamage() { amount = 2 },
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 7,
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Ice",
+                effect = new EffectAddWeaponIceDamage() { amount = 2},
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },
+
+            new ItemEffectData()
+            {
+                exclude_index = 7,
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Lightning",
+                effect = new EffectAddWeaponLightningDamage() { amount = 2},
+                trigger = ItemEffectTrigger.Equipped,
+                target = ItemEffectTarget.Item,
+            },            
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Accurate",
+                effect = new EffectAddToHit() { amount = 2*(tier+1) },
+                trigger = ItemEffectTrigger.Equipped,
+            },
+
+            new ItemEffectData()
+            {
+                type = ItemEffectType.Prefix,
+                name_presuffix = "Agile",
+                effect = new EffectAddDodge() { amount = 2*(tier+1)},
+                trigger = ItemEffectTrigger.Equipped,
+            },
+        };
+    }
+}
+
+public class ItemBattleAxe2H : ItemPrototype
+{
+    public ItemBattleAxe2H(int level) : base(level)
+    {
+        name = "Battle Axe";
+        type = ItemType.WEAPON;
+        icon = "images/objects/weapon_axe_2H";
         weight = 10;
 
         if (level <= 4)
@@ -751,30 +759,33 @@ public class ItemWarHammer2H : ItemPrototype
             tier = 0;
             gold_value = 100;
             required_attributes.strength = 10;
+            required_attributes.dexterity = 10;
         }
         else if (level <= 8)
         {
             tier = 1;
             gold_value = 300;
-            required_attributes.strength = 20;
+            required_attributes.strength = 15;
+            required_attributes.dexterity = 15;
         }
         else
         {
             tier = 2;
             gold_value = 500;
-            required_attributes.strength = 30;
+            required_attributes.strength = 20;
+            required_attributes.dexterity = 20;
         }
-
+        
         weapon = new WeaponPrototype
         {
-            sub_type = WeaponSubType.BLUNT,
-            equip_type = WeaponEquipType.TWOHANDED,
-            damage = { (DamageType.CRUSH, 6 + 3*tier, 8 + 3*tier, 3) },
-            attack_time = 150,
+            sub_type = WeaponSubType.AXE,
+            equip_type = WeaponEquipType.ONEHANDED,
+            damage = { (DamageType.SLASH, 5 + 2*tier, 7 + 2*tier, 2) },
+            attack_time = 125,
             attack_talents =
             {
-                new TalentWeaponAttackStandard(),
-                new TalentBluntHammer2HAttackHeavy(),
+                new TalentWeaponAttackStandard(){icon = "images/talents/axe_standard"},
+                new TalentAxeBattleAxeAttackHeavy(),
             }
         };
        

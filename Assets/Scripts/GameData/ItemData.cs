@@ -361,7 +361,7 @@ public class ItemData
             //typeof(ItemHandsLight),
             //typeof(ItemSword2H),
             //typeof(ItemAxe2H),
-            typeof(ItemHammer2H),
+            typeof(ItemWarHammer2H),
             //typeof(ItemSpear1H),
             //typeof(ItemSpear2H),
             typeof(ItemHeadHeavy),
