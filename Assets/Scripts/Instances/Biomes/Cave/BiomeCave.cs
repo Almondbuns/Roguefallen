@@ -233,7 +233,7 @@ public class BiomeCave : BiomeData
 
         foreach (var tile in path.path)
         {
-            if (tile.cost < 1000000)
+            if (tile.cumulated_cost < 1000000)
                 circle_radius = UnityEngine.Random.Range(0,3);
             else
                 circle_radius = 2;

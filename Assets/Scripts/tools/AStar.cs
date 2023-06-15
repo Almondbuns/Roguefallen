@@ -18,7 +18,7 @@ class AStarNode
 
 public class Path
 {
-    public List<(int x, int y, int cost)> path;
+    public List<(int x, int y, int cumulated_cost)> path;
     int current_target;
 
     public Path()
@@ -37,6 +37,11 @@ public class Path
     public void SetNextTarget()
     {
         ++current_target;
+    }
+
+    public int GetCost()
+    {
+        return path[path.Count-1].cumulated_cost;
     }
 }
 

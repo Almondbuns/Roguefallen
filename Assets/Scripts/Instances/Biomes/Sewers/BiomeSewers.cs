@@ -29,7 +29,7 @@ public class BiomeSewers : BiomeData
         collection.Add(new MapObjectData("stone_mosaic_1"));
         collection.Add(new MapObjectData("stone_mosaic_2"));
         collection.Add(new MapObjectData("stone_mosaic_3"));
-        objects["stone"] = collection;
+        floors["stone"] = collection;
 
         collection = new();
         collection.Add(new MapObjectData("sewers_wall"));
@@ -69,6 +69,19 @@ public class BiomeSewers : BiomeData
 
             if (room_found == true)
             {
+                //Find nearest room already connected
+                int min_distance = -1;
+                (int,int,int,int) nearest_room = (0,0,0,0);
+                foreach (var v in room_list)
+                {
+                    int distance = (int) (Mathf.Pow(x+w-v.x-v.w,2) + Mathf.Pow(y+h-v.y-v.h,2));
+                    if (distance < min_distance || min_distance == -1)
+                    {
+                        min_distance = distance;
+                        nearest_room = v;
+                    }
+                }
+                CreateCorridor(map, (x,y,w,h), nearest_room, 0);
                 room_list.Add((x, y, w, h));
                 return (x, y, w, h);
             }
@@ -84,12 +97,30 @@ public class BiomeSewers : BiomeData
        
 
         for (int x = 0; x < map.tiles.GetLength(0); ++x)
+        {
             for (int y = 0; y < map.tiles.GetLength(1); ++y)
             {
                 map.tiles[x, y].floor = floors["floor"].Random();
                 map.tiles[x, y].objects.Add(objects["wall"].Random());
             }
+        }
 
+        //Start with sewer canal system
+        (int x,int y)[] random_positions = new (int,int)[6];
+        for (int i = 0; i < 6; ++ i)
+        {
+            random_positions[i] = (UnityEngine.Random.Range((i%3) * (max_x/3) + 10,((i%3)+1) * (max_x/3) - 10), UnityEngine.Random.Range((i/3) * (max_y/2) + 10,((i/3)+1) * (max_y/2) - 10));
+            Debug.Log(random_positions[i]);
+        }
+        CreateSewerSystem(map, (random_positions[0].x, random_positions[0].y,1,1),(random_positions[1].x, random_positions[1].y,1,1),2);
+        CreateSewerSystem(map, (random_positions[1].x, random_positions[1].y,1,1),(random_positions[2].x, random_positions[2].y,1,1),2);
+        CreateSewerSystem(map, (random_positions[2].x, random_positions[2].y,1,1),(random_positions[5].x, random_positions[5].y,1,1),2);
+        CreateSewerSystem(map, (random_positions[3].x, random_positions[3].y,1,1),(random_positions[0].x, random_positions[0].y,1,1),2);
+        CreateSewerSystem(map, (random_positions[4].x, random_positions[4].y,1,1),(random_positions[3].x, random_positions[3].y,1,1),2);
+        CreateSewerSystem(map, (random_positions[5].x, random_positions[5].y,1,1),(random_positions[4].x, random_positions[4].y,1,1),2);
+        CreateSewerSystem(map, (random_positions[1].x, random_positions[1].y,1,1),(random_positions[4].x, random_positions[4].y,1,1),2);
+
+        //Now grow map and attach every new room - connectivity guaranteed
         foreach (DungeonChangeData dcd in dungeon_change_data)
         {
             MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(dcd.dungeon_change_type, map, dcd);
@@ -99,7 +130,7 @@ public class BiomeSewers : BiomeData
             feature.position.x = position.Value.x + 1;
             feature.position.y = position.Value.y + 1;
 
-            map.features.Add(feature);            
+            map.features.Add(feature);        
         }
 
         foreach (var feature_data in map_features)
@@ -121,77 +152,21 @@ public class BiomeSewers : BiomeData
 
         for (int i = 0; i < number_of_rooms; ++i)
         {
-            int w = UnityEngine.Random.Range(10, 30);
-            int h = UnityEngine.Random.Range(10, 30);
-            // 10% big rooms
-            if (i <= number_of_rooms / 10)
-            {
-                w = UnityEngine.Random.Range(30, 60);
-                h = UnityEngine.Random.Range(30, 60);
-            }
-            
+            int w = UnityEngine.Random.Range(8, 16);
+            int h = UnityEngine.Random.Range(8, 16);
          
             (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, w, h);
         }
 
         //Create Corridors first
-        foreach (var room in room_list)
+        int[,] connectivity_matrix = new int[room_list.Count, room_list.Count];
+
+
+        for (int i = 14; i < room_list.Count; ++ i)
         {
-            (int x, int y, int w, int h)? closest_room = null;
-            double min_distance = -1;
-            //Connect with closest room
-            foreach (var room2 in room_list)
-            {
-                double room_distance = Mathf.Abs(room2.x + room2.w / 2 - (room.x + room.w / 2)) + Mathf.Abs(room2.y + room2.h / 2 - (room.y + room.h / 2));
-
-                if (room_distance == 0) continue; // same room!
-
-                if (closest_room.HasValue == false || room_distance < min_distance)
-                {
-                    closest_room = room2;
-                    min_distance = room_distance;
-                    continue;
-                }
-            }
-
-            CreateCorridor(map, room, closest_room.Value);
+            CreateRoom(map, room_list[i]);
         }
-
-        //Second Pass: Make sure the first room is connected to all other rooms
-        foreach (var room in room_list)
-        {
-            CreateCorridor(map, room_list[0], room);
-        }
-
-        //Third Pass: Create Corridor if path between two rooms is faaar longer than direct connection
-        double factor = 4;
-        int counter = 0;
-        foreach (var room1 in room_list)
-        {
-            if (counter == room_list.Count - 1)
-                break;
-
-            for (int i = counter + 1; i < room_list.Count; ++i)
-            {
-                if (room1.x == room_list[i].x && room1.y == room_list[i].y)
-                    continue;
-
-                double direct_distance = Mathf.Sqrt(Mathf.Pow(room1.x + room1.w/2 - room_list[i].x - room_list[i].w/2, 2) + Mathf.Pow(room1.y + room1.h/2 - room_list[i].y - room_list[i].h/2, 2));
-                Path path = Algorithms.AStar(map, (room1.x + room1.w / 2, room1.y + room1.h / 2), (room_list[i].x + room_list[i].w / 2, room_list[i].y + room_list[i].h / 2), false, false);
-                if (path == null || path.path.Count == 0)
-                    continue; //should not happen
-
-                if (factor * direct_distance < path.path.Count)
-                    CreateDirectCorridor(map, room1, room_list[i]);
-            }
-            ++counter;
-        }
-
-        foreach (var room in room_list)
-        {
-            CreateRoom(map, room);
-        }
-
+        
         foreach (var feature in map.features)
         {
             feature.Generate();
@@ -200,104 +175,168 @@ public class BiomeSewers : BiomeData
         return map;
     }
 
-    public void CreateDirectCorridor(MapData map, (int x, int y, int w, int h) room1, (int x, int y, int w, int h) room2)
+    /*public void CreateDirectCorridor(MapData map, (int x, int y, int w, int h) room1, (int x, int y, int w, int h) room2, Path path)
     {
-        List<(int x, int y)> path = Algorithms.LineofSight((room1.x + room1.w/2, room1.y + room1.h/2), (room2.x + room2.w/2, room2.y + room2.h/2));
-        int circle_radius = 2;
-
-        foreach ((int x, int y) tile in path)
+        //Debug.Log("test");
+        bool currently_connected = true;
+        int start_x = 0, start_y = 0;
+        int old_cost = 0;
+        foreach ((int x, int y, int cumulated_cost) tile in path.path)
         {
-            for (int x = Mathf.Max(tile.x - circle_radius, 0); x < Mathf.Min(tile.x + circle_radius + 1, map.tiles.GetLength(0)); ++x)
+            if (tile.cumulated_cost - old_cost> 999 && currently_connected == true)
             {
-                for (int y = Mathf.Max(tile.y - circle_radius, 0); y < Mathf.Min(tile.y + circle_radius + 1, map.tiles.GetLength(1)); ++y)
-                {
-                    if (Mathf.Pow(tile.x - x, 2) + Mathf.Pow(tile.y - y, 2) < circle_radius * circle_radius)
-                    {
-                        map.tiles[x, y].objects.Clear();
-                    }
-                }
+                currently_connected = false;
+                start_x = tile.x;
+                start_y = tile.y;                
             }
+            if (tile.cumulated_cost - old_cost <= 999 && currently_connected == false)
+            {                
+                currently_connected = true;
+                CreateCorridor(map, (start_x, start_y, 1, 1), (tile.x, tile.y, 1,1), 0);
+                //Debug.Log((start_x, start_y, 1, 1));
+                //Debug.Log((tile.x, tile.y, 1,1));
+            }
+            old_cost = tile.cumulated_cost;
+        }
+    }*/
+
+    public void CreateHorizontalCorridor(MapData map, int x1, int y, int x2, int size_water, bool sewer_textures = true)
+    {
+        int size_border = 1;
+        int size_all = size_border + size_water + size_border;
+        string texture = "";
+        if (sewer_textures == true)
+            texture = "stone";
+        else
+            texture = "floor";
+
+        for (int j = 0; j < size_all; ++ j)
+        {
+            if (map.tiles[Mathf.Min(x1,x2)-1, y + j - size_all/2].objects.Count > 0)
+            {
+                map.tiles[Mathf.Min(x1,x2)-1, y + j - size_all/2].floor = floors[texture].Random();
+                map.tiles[Mathf.Min(x1,x2)-1, y + j - size_all/2].objects.Clear();
+            }
+            if (map.tiles[Mathf.Max(x1,x2)+1, y + j - size_all/2].objects.Count > 0)
+            {
+                map.tiles[Mathf.Max(x1,x2)+1, y + j - size_all/2].floor = floors[texture].Random();
+                map.tiles[Mathf.Max(x1,x2)+1, y + j - size_all/2].objects.Clear();
+            }
+        }
+
+        for (int i = Mathf.Min(x1,x2); i <= Mathf.Max(x1,x2); ++i)
+        {
+            for (int j = 0; j < size_border; ++ j)
+            {
+                if (map.tiles[i, y + j - size_all/2].objects.Count > 0)
+                    map.tiles[i, y + j - size_all/2].floor = floors[texture].Random();
+            }
+            for (int j = size_border; j < size_border + size_water; ++ j)
+                map.tiles[i, y + j - size_all/2].floor = floors["water"].Random();
+            for (int j = size_border + size_water; j < size_all; ++ j)
+            {
+                if (map.tiles[i, y + j - size_all/2].objects.Count > 0)
+                map.tiles[i, y + j - size_all/2].floor = floors[texture].Random();
+            }
+            for (int j = 0; j < size_all; ++ j)
+                map.tiles[i, y + j - size_all/2].objects.Clear();
+        }
+
+    }
+
+    public void CreateVerticalCorridor(MapData map, int x, int y1, int y2, int size_water, bool sewer_textures = true)
+    {
+        int size_border = 1;
+        int size_all = size_border + size_water + size_border;
+        string texture = "";
+        if (sewer_textures == true)
+            texture = "stone";
+        else
+            texture = "floor";
+
+        for (int j = 0; j < size_all; ++ j)
+        {
+            if (map.tiles[x + j - size_all/2, Mathf.Min(y1,y2)-1].objects.Count > 0)
+            {
+                map.tiles[x + j - size_all/2, Mathf.Min(y1,y2)-1].floor = floors[texture].Random();
+                map.tiles[x + j - size_all/2, Mathf.Min(y1,y2)-1].objects.Clear();
+            }
+            if (map.tiles[x + j - size_all/2, Mathf.Max(y1,y2)+1].objects.Count > 0)
+            {
+                map.tiles[x + j - size_all/2, Mathf.Max(y1,y2)+1].floor = floors[texture].Random();
+                map.tiles[x + j - size_all/2, Mathf.Max(y1,y2)+1].objects.Clear();
+            }
+        }
+
+        for (int i = Mathf.Min(y1,y2); i <= Mathf.Max(y1,y2); ++i)
+        {
+            for (int j = 0; j < size_border; ++ j)
+            {
+                if (map.tiles[x + j - size_all/2, i].objects.Count > 0)
+                    map.tiles[x + j - size_all/2, i].floor = floors[texture].Random();
+            }
+            for (int j = size_border; j < size_border + size_water; ++ j)
+                map.tiles[x + j - size_all/2, i].floor = floors["water"].Random();
+            for (int j = size_border + size_water; j < size_all; ++ j)
+            {
+                if (map.tiles[x + j - size_all/2, i].objects.Count > 0)
+                    map.tiles[x + j - size_all/2, i].floor = floors[texture].Random();
+            }
+            for (int j = 0; j < size_all; ++ j)
+                map.tiles[x + j - size_all/2, i].objects.Clear();
         }
     }
 
-    public void CreateCorridor(MapData map, (int x, int y, int w, int h) room1, (int x, int y, int w, int h) room2)
+    public void CreateCorridor(MapData map, (int x, int y, int w, int h) room1, (int x, int y, int w, int h) room2, int size_water = 2)
     {
-        Path path = Algorithms.AStar(map, (room1.x + room1.w/2, room1.y + room1.h/2), (room2.x + room2.w/2, room2.y + room2.h/2), false, true);
-        int circle_radius = 2;
-
-        foreach (var tile in path.path)
+        //Only horizontal or vertical corridors allowed
+        int rand = UnityEngine.Random.Range(0,2);
+        if (rand == 0) //horizontal first
         {
-            if (tile.cost < 1000000)
-                circle_radius = UnityEngine.Random.Range(0,3);
-            else
-                circle_radius = 2;
-
-            for (int x = Mathf.Max(tile.x - circle_radius,0); x < Mathf.Min(tile.x + circle_radius + 1, map.tiles.GetLength(0)); ++x)
-            {
-                for (int y = Mathf.Max(tile.y - circle_radius, 0); y < Mathf.Min(tile.y + circle_radius + 1, map.tiles.GetLength(1)); ++y)
-                {
-                    if (Mathf.Pow(tile.x-x,2) + Mathf.Pow(tile.y - y, 2) < circle_radius * circle_radius)
-                    {
-                        map.tiles[x, y].objects.Clear();
-                    }
-                }
-            }
+            CreateHorizontalCorridor(map, room1.x + room1.w/2, room1.y + room1.h/2, room2.x + room2.w/2, size_water, false);
+            CreateVerticalCorridor(map, room2.x + room2.w/2, room1.y + room1.h/2, room2.y + room2.h/2, size_water, false);
         }
+        else
+        {
+            CreateVerticalCorridor(map, room1.x + room1.w/2, room1.y + room1.h/2, room2.y + room2.h/2, size_water, false);
+            CreateHorizontalCorridor(map, room1.x + room1.w/2, room2.y + room2.h/2, room2.x + room2.w/2, size_water, false);            
+        }       
+    }
+
+    public void CreateSewerSystem(MapData map, (int x, int y, int w, int h) room1, (int x, int y, int w, int h) room2, int size_water = 2)
+    {
+        //Only horizontal or vertical corridors allowed
+        int rand = UnityEngine.Random.Range(0,2);
+        if (rand == 0) //horizontal first
+        {
+            CreateHorizontalCorridor(map, room1.x + room1.w/2, room1.y + room1.h/2, room2.x + room2.w/2, size_water);
+            room_list.Add((Mathf.Min(room1.x + room1.w/2,room2.x + room2.w/2) , room1.y+ room1.h/2-2,
+                Mathf.Abs(room1.x + room1.w/2-(room2.x + room2.w/2)),4));
+            CreateVerticalCorridor(map, room2.x + room2.w/2, room1.y + room1.h/2, room2.y + room2.h/2, size_water);
+            room_list.Add((room2.x + room2.w/2 -2 , Mathf.Min(room1.y+ room1.h/2,room2.y+ room2.h/2),
+                4,Mathf.Abs(room1.y + room1.h/2-(room2.y + room2.h/2))));
+        }
+        else
+        {
+            CreateVerticalCorridor(map, room1.x + room1.w/2, room1.y + room1.h/2, room2.y + room2.h/2, size_water);
+            room_list.Add((room1.x + room1.w/2 -2 , Mathf.Min(room1.y+ room1.h/2,room2.y+ room2.h/2),
+                4,Mathf.Abs(room1.y + room1.h/2-(room2.y + room2.h/2))));
+            CreateHorizontalCorridor(map, room1.x + room1.w/2, room2.y + room2.h/2, room2.x + room2.w/2, size_water);
+            room_list.Add((Mathf.Min(room1.x + room1.w/2,room2.x + room2.w/2) , room2.y+ room2.h/2-2,
+                Mathf.Abs(room1.x + room1.w/2-(room2.x + room2.w/2)),4));            
+        }       
     }
 
     public void CreateRoom(MapData map, (int x, int y, int w, int h) position)
     {
-        List<(int x, int y)> accepted_start_positions = new();
-
-        for (int i = 0; i < UnityEngine.Random.Range(5, 11); ++i)
+        for (int x = position.x; x < position.x + position.w; ++x)
         {
-            int x_center = 0;
-            int y_center = 0;
-            if (i == 0)
+            for (int y = position.y; y < position.y + position.h; ++ y)
             {
-                x_center = position.x + position.w / 2;
-                y_center = position.y + position.h / 2;
+                if(map.tiles[x,y].floor.name.Contains("water") == false)
+                    map.tiles[x,y].floor = floors["floor"].Random();
+                map.tiles[x,y].objects.Clear();
             }
-            else 
-            {
-                int random_position = UnityEngine.Random.Range(0, accepted_start_positions.Count);
-                x_center = accepted_start_positions[random_position].x;
-                y_center = accepted_start_positions[random_position].y;
-            }
-
-            int radius = UnityEngine.Random.Range(3, Mathf.Max(position.w, position.h) / 4);
-
-            for (int x = position.x; x < position.x + position.w; ++x)
-                for (int y = position.y; y < position.y + position.h; ++y)
-                {
-                    float distance = Mathf.Sqrt((x - x_center) * (x - x_center) + (y - y_center) * (y - y_center));
-                    if (distance < radius)
-                    {
-                        map.tiles[x, y].objects.Clear();
-                        if (UnityEngine.Random.value < 0.9)
-                        {
-                            if (distance >= radius - 2)
-                            accepted_start_positions.Add((x, y));
-                        }
-                        else
-                        {
-                            map.tiles[x, y].objects.Add(objects["stone"].Random());
-                        }
-                    }
-                }
-        }
-
-        bool is_blue_room = UnityEngine.Random.value < 0.5f;
-
-        for (int z = 0; z < UnityEngine.Random.Range(2, accepted_start_positions.Count / 25); ++z)
-        {
-            (int x, int y) r_pos = accepted_start_positions[UnityEngine.Random.Range(0, accepted_start_positions.Count)];
-            map.tiles[r_pos.x, r_pos.y].objects.Clear();
-            
-            /*if (is_blue_room == true)
-                map.tiles[r_pos.x, r_pos.y].objects.Add(objects["light_blue"].Random());
-            else
-                map.tiles[r_pos.x, r_pos.y].objects.Add(objects["light_orange"].Random());*/
         }
     }
 }

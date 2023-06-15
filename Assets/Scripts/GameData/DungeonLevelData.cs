@@ -285,7 +285,7 @@ public class DungeonLevelData
         if (has_items == true)
             DistributeItems();
 
-        GuaranteeConnectivity();
+        //GuaranteeConnectivity();
 
         if (quest_actors != null)
             DistributeQuestActors(quest_actors);
@@ -369,7 +369,7 @@ public class DungeonLevelData
             Path path = Algorithms.AStar(map, tile, map.important_connect_tiles[0], false, true);
             foreach (var p in path.path)
             {
-                if (p.cost >= 99900)
+                if (p.cumulated_cost >= 99900)
                 {
                     map.tiles[p.x, p.y].objects.RemoveAll(x => x.movement_blocked == true);
                 }
