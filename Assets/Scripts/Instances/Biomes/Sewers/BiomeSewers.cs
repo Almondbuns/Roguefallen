@@ -34,6 +34,13 @@ public class BiomeSewers : BiomeData
         collection = new();
         collection.Add(new MapObjectData("sewers_wall"));
         objects["wall"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("barn_background_1"));
+        collection.Add(new MapObjectData("barn_background_2"));
+        collection.Add(new MapObjectData("barn_background_3"));
+        collection.Add(new MapObjectData("barn_background_4"));
+        floors["wooden_bridge"] = collection;
     }
 
     public (int x, int y, int w, int h)? AddRandomPositionRoom(MapData map, int w, int h)
@@ -200,12 +207,12 @@ public class BiomeSewers : BiomeData
         }
     }*/
 
-    public void CreateHorizontalCorridor(MapData map, int x1, int y, int x2, int size_water, bool sewer_textures = true)
+    public void CreateHorizontalCorridor(MapData map, int x1, int y, int x2, int size_water, bool canal_system = true)
     {
         int size_border = 1;
         int size_all = size_border + size_water + size_border;
         string texture = "";
-        if (sewer_textures == true)
+        if (canal_system == true)
             texture = "stone";
         else
             texture = "floor";
@@ -242,14 +249,21 @@ public class BiomeSewers : BiomeData
                 map.tiles[i, y + j - size_all/2].objects.Clear();
         }
 
+        if (canal_system == true && Mathf.Abs(x1-x2) > 6)
+        {
+            int random_position = UnityEngine.Random.Range(Mathf.Min(x1,x2) + 2, Mathf.Min(x1,x2) + Mathf.Abs(x1-x2) -2);
+            for (int j = size_border; j < size_border + size_water; ++ j)
+                map.tiles[random_position, y + j - size_all/2].floor = floors["wooden_bridge"].Random();
+        }
+
     }
 
-    public void CreateVerticalCorridor(MapData map, int x, int y1, int y2, int size_water, bool sewer_textures = true)
+    public void CreateVerticalCorridor(MapData map, int x, int y1, int y2, int size_water, bool canal_system = true)
     {
         int size_border = 1;
         int size_all = size_border + size_water + size_border;
         string texture = "";
-        if (sewer_textures == true)
+        if (canal_system == true)
             texture = "stone";
         else
             texture = "floor";
@@ -284,6 +298,12 @@ public class BiomeSewers : BiomeData
             }
             for (int j = 0; j < size_all; ++ j)
                 map.tiles[x + j - size_all/2, i].objects.Clear();
+        }
+
+        if (canal_system == true && Mathf.Abs(y1-y2) > 6)        {
+            int random_position = UnityEngine.Random.Range(Mathf.Min(y1,y2) + 2, Mathf.Min(y1,y2) + Mathf.Abs(y1-y2) -2);
+            for (int j = size_border; j < size_border + size_water; ++ j)
+                map.tiles[x + j - size_all/2, random_position].floor = floors["wooden_bridge"].Random();
         }
     }
 
