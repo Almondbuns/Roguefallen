@@ -244,7 +244,7 @@ public class GameData : MonoBehaviour
             {
                 level_data.dimensions = (128, 64);
                 level_data.difficulty_level = level + 1;
-                level_data.number_of_rooms = (10, 20);
+                level_data.number_of_rooms = (40, 50);
                 level_data.number_of_encounters = (10, 15);
                 level_data.number_of_gold_items = (5, 10);
 

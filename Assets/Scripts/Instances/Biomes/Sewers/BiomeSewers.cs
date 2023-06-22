@@ -10,7 +10,7 @@ public class BiomeSewers : BiomeData
     {
         name = "Sewers";
         connectivity_probability = 0.5f;
-        ambience_light = new Color(0.75f, 0.75f, 0.75f);
+        ambience_light = new Color(0.45f, 0.45f, 0.45f);
 
         MapObjectCollectionData collection = new();
         collection = new();
@@ -26,6 +26,12 @@ public class BiomeSewers : BiomeData
         floors["floor"] = collection;
 
         collection = new();
+        collection.Add(new MapObjectData("cellar_1"));
+        collection.Add(new MapObjectData("cellar_2"));
+        collection.Add(new MapObjectData("cellar_3"));
+        floors["cellar_1"] = collection;
+
+        collection = new();
         collection.Add(new MapObjectData("stone_mosaic_1"));
         collection.Add(new MapObjectData("stone_mosaic_2"));
         collection.Add(new MapObjectData("stone_mosaic_3"));
@@ -34,6 +40,10 @@ public class BiomeSewers : BiomeData
         collection = new();
         collection.Add(new MapObjectData("sewers_wall"));
         objects["wall"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("sewer_flower_1") { emits_light = true, light_color = new Color(0.0f,0.7f,0.9f), movement_blocked = false, sight_blocked = false });
+        objects["flower"] = collection;
 
         collection = new();
         collection.Add(new MapObjectData("barn_background_1"));
@@ -88,7 +98,7 @@ public class BiomeSewers : BiomeData
                         nearest_room = v;
                     }
                 }
-                CreateCorridor(map, (x,y,w,h), nearest_room, 0);
+                CreateCorridor(map, (x,y,w,h), nearest_room, 1);
                 room_list.Add((x, y, w, h));
                 return (x, y, w, h);
             }
@@ -159,15 +169,11 @@ public class BiomeSewers : BiomeData
 
         for (int i = 0; i < number_of_rooms; ++i)
         {
-            int w = UnityEngine.Random.Range(8, 16);
-            int h = UnityEngine.Random.Range(8, 16);
+            int w = UnityEngine.Random.Range(6, 10);
+            int h = UnityEngine.Random.Range(6, 10);
          
             (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, w, h);
         }
-
-        //Create Corridors first
-        int[,] connectivity_matrix = new int[room_list.Count, room_list.Count];
-
 
         for (int i = 14; i < room_list.Count; ++ i)
         {
@@ -349,14 +355,28 @@ public class BiomeSewers : BiomeData
 
     public void CreateRoom(MapData map, (int x, int y, int w, int h) position)
     {
+        int floor_style = UnityEngine.Random.Range(0,1);
+
         for (int x = position.x; x < position.x + position.w; ++x)
         {
             for (int y = position.y; y < position.y + position.h; ++ y)
             {
                 if(map.tiles[x,y].floor.name.Contains("water") == false)
-                    map.tiles[x,y].floor = floors["floor"].Random();
+                {
+                    if (floor_style == 0)
+                        map.tiles[x,y].floor = floors["cellar_1"].Random();
+                }
                 map.tiles[x,y].objects.Clear();
             }
+        }
+
+        for (int i = 0; i < UnityEngine.Random.Range(1,4); ++i)
+        {
+            int x = UnityEngine.Random.Range(position.x, position.x + position.w);
+            int y = UnityEngine.Random.Range(position.y, position.y + position.h);
+
+            map.tiles[x,y].objects.Clear();
+            map.tiles[x,y].objects.Add(objects["flower"].Random());
         }
     }
 }
