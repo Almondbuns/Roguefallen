@@ -184,7 +184,7 @@ public class GameData : MonoBehaviour
             DungeonLevelData level_data = new DungeonLevelData
             {
                 biome_index = 2,
-                is_always_visible = true,
+                //is_always_visible = true,
 
                 map_features =
                 {                    

@@ -10,7 +10,7 @@ public class BiomeSewers : BiomeData
     {
         name = "Sewers";
         connectivity_probability = 0.5f;
-        ambience_light = new Color(0.45f, 0.45f, 0.45f);
+        ambience_light = new Color(0.35f, 0.35f, 0.35f);
 
         MapObjectCollectionData collection = new();
         collection = new();
@@ -38,12 +38,22 @@ public class BiomeSewers : BiomeData
         floors["stone"] = collection;
 
         collection = new();
-        collection.Add(new MapObjectData("sewers_wall"));
+        collection.Add(new MapObjectData("temple_wall"));
         objects["wall"] = collection;
 
         collection = new();
-        collection.Add(new MapObjectData("sewer_flower_1") { emits_light = true, light_color = new Color(0.0f,0.7f,0.9f), movement_blocked = false, sight_blocked = false });
+        collection.Add(new MapObjectData("sewer_flower_1") { emits_light = true, light_color = new Color(0.0f,0.65f,0.8f), movement_blocked = false, sight_blocked = false });
         objects["flower"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("cupboard") {});
+        collection.Add(new MapObjectData("wine_shelf") {});
+        collection.Add(new MapObjectData("tavern_table") {sight_blocked = false,});
+        collection.Add(new MapObjectData("tavern_chair_L") {sight_blocked = false,});
+        collection.Add(new MapObjectData("tavern_chair_R") {sight_blocked = false,});
+        collection.Add(new MapObjectData("hay") {sight_blocked = false, movement_blocked = false});
+        collection.Add(new MapObjectData("bricks") {sight_blocked = false, movement_blocked = false});
+        objects["clutter"] = collection;
 
         collection = new();
         collection.Add(new MapObjectData("barn_background_1"));
@@ -370,13 +380,29 @@ public class BiomeSewers : BiomeData
             }
         }
 
+        int number_of_clutter = position.w * position.h / 10;
+        for (int i = 0; i < UnityEngine.Random.Range(number_of_clutter,2*number_of_clutter); ++i)
+        {
+            int x = UnityEngine.Random.Range(position.x, position.x + position.w);
+            int y = UnityEngine.Random.Range(position.y, position.y + position.h);
+
+            if(map.tiles[x,y].floor.name.Contains("water") == false)
+            {
+                map.tiles[x,y].objects.Clear();
+                map.tiles[x,y].objects.Add(objects["clutter"].Random());
+            }
+        }
+
         for (int i = 0; i < UnityEngine.Random.Range(1,4); ++i)
         {
             int x = UnityEngine.Random.Range(position.x, position.x + position.w);
             int y = UnityEngine.Random.Range(position.y, position.y + position.h);
 
-            map.tiles[x,y].objects.Clear();
-            map.tiles[x,y].objects.Add(objects["flower"].Random());
+            if(map.tiles[x,y].floor.name.Contains("water") == false)
+            {
+                map.tiles[x,y].objects.Clear();
+                map.tiles[x,y].objects.Add(objects["flower"].Random());
+            }
         }
     }
 }
