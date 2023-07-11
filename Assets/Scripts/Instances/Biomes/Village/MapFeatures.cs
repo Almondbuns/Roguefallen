@@ -665,47 +665,7 @@ public class MFVillageField : MapFeatureData
 
 }
 
-public class MFCaveEntrance : MFChangeDungeon
-{
-    public MFCaveEntrance(MapData map) : base(map)
-    {
-       
-    }
 
-    public MFCaveEntrance(MapData map, DungeonChangeData dcd) : base(map, dcd)
-    {
-        dimensions = (5,5);
-
-        MapObjectCollectionData collection = new();
-        collection.Add(new MapObjectData("cave_wall_1"));
-        collection.Add(new MapObjectData("cave_wall_2"));
-        collection.Add(new MapObjectData("cave_wall_3"));
-        collection.Add(new MapObjectData("cave_wall_4"));
-        objects["wall"] = collection;
-
-        collection = new();
-        collection.Add(new MapObjectData("cave_entrance_down"));
-        objects["entrance"] = collection;
-    }
-
-    public override void Generate()
-    {
-        for (int x = position.x; x < position.x + dimensions.x; ++x)
-        {
-            for (int y = position.y; y < position.y + dimensions.y; ++y)
-            {
-                map.tiles[x, y].objects.Clear();
-                if (y > position.y)
-                    map.tiles[x, y].objects.Add(objects["wall"].Random());
-            }
-        }
-
-        map.tiles[position.x + dimensions.x / 2, position.y + 1].objects.Add(objects["entrance"].Random());
-
-        enter_tiles.Add((position.x + dimensions.x / 2, position.y+ 1));
-        exit_tile = (position.x + dimensions.x / 2, position.y);
-    }
-}
 
 public class MFVillageSunflowers : MapFeatureData
 {

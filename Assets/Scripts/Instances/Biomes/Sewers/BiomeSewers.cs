@@ -10,7 +10,7 @@ public class BiomeSewers : BiomeData
     {
         name = "Sewers";
         connectivity_probability = 0.5f;
-        ambience_light = new Color(0.35f, 0.35f, 0.35f);
+        ambience_light = new Color(0.45f, 0.45f, 0.45f);
 
         MapObjectCollectionData collection = new();
         collection = new();
@@ -42,7 +42,7 @@ public class BiomeSewers : BiomeData
         objects["wall"] = collection;
 
         collection = new();
-        collection.Add(new MapObjectData("sewer_flower_1") { emits_light = true, light_color = new Color(0.0f,0.65f,0.8f), movement_blocked = false, sight_blocked = false });
+        collection.Add(new MapObjectData("sewer_flower_1") { emits_light = true, light_color = new Color(0.0f,0.8f,1.0f), movement_blocked = false, sight_blocked = false });
         objects["flower"] = collection;
 
         collection = new();

@@ -10,7 +10,7 @@ public class GameData : MonoBehaviour
     public static bool GODMODE = false;
     public int starting_level = 1;
 
-    public string game_version = "0.1 Alpha 5";
+    public string game_version = "0.2 Alpha 1";
     public int world_map_index;
     public long global_ticks = 0;
     
@@ -113,6 +113,7 @@ public class GameData : MonoBehaviour
     {
         biomes = new List<BiomeData>
         {
+            new BiomeWorldMap(),
             new BiomeVillage(),
             new BiomeCave(),
             new BiomeSewers(),
@@ -122,6 +123,59 @@ public class GameData : MonoBehaviour
 
         dungeons = new List<DungeonData>
         {
+            new DungeonData
+            {
+                name = "World Map",
+                is_persistent = true,
+
+                dungeon_levels =
+                {
+                    new DungeonLevelData
+                    {
+                        dimensions = (16, 16),
+                        number_of_rooms = (0,0),
+                        difficulty_level = 1,
+                        has_enemies = false,
+                        has_items = false,
+                        is_always_visible = true,
+
+                        biome_index = 0,
+
+                        dungeon_changes =
+                        {
+                            new DungeonChangeData
+                            {
+                                name = "Village Entrance",
+                                dungeon_change_type = typeof(MFStandardDungeonEntrance),
+                                dungeon_change_image = "barn_up",
+                                target_dungeon_name = "High Meadow",
+                                target_entrance_name = "World Map Exit",
+                            },
+                            new DungeonChangeData
+                            {
+                                name = "Cave Entrance",
+                                dungeon_change_type = typeof(MFStandardDungeonEntrance),
+                                dungeon_change_image = "barn_up",
+                                target_dungeon_name = "The Forgotten Cave",
+                                target_entrance_name = "World Map Exit",
+                            },
+                            new DungeonChangeData
+                            {
+                                name = "Sewers Entrance",
+                                dungeon_change_type = typeof(MFStandardDungeonEntrance),
+                                dungeon_change_image = "barn_up",
+                                target_dungeon_name = "The Sewers",
+                                target_entrance_name = "World Map Exit",
+                            }
+                        },
+
+                        map_features =
+                        {                       
+                        },
+                    }
+                },
+            },
+
             new DungeonData
             {
                 name = "High Meadow",
@@ -138,16 +192,17 @@ public class GameData : MonoBehaviour
                         has_items = false,
                         is_always_visible = true,
 
-                        biome_index = 0,
+                        biome_index = 1,
 
                         dungeon_changes =
                         {
                             new DungeonChangeData
                             {
-                                name = "Cave Entrance",
-                                dungeon_change_type = typeof(MFCaveEntrance),
-                                target_dungeon_name = "The Forgotten Cave",
-                                target_entrance_name = "Cave Exit",
+                                name = "World Map Exit",
+                                dungeon_change_type = typeof(MFStandardDungeonEntrance),
+                                dungeon_change_image = "barn_up",
+                                target_dungeon_name = "World Map",
+                                target_entrance_name = "Village Entrance",
                             }
                         },
 
@@ -169,16 +224,22 @@ public class GameData : MonoBehaviour
             new DungeonData
             {
                 name = "The Forgotten Cave",
+            },
+
+            new DungeonData
+            {
+                name = "The Sewers",
             }
 
         };
 
-        if (starting_level > 1)
+        /*if (starting_level > 1)
         {
             dungeons[0].dungeon_levels[0].dungeon_changes[0].target_entrance_name = "Level " + (starting_level) + " Exit";
 
-        }
+        }*/
 
+        //Cave
         for (int level = 0; level < 10; ++level)
         {
             DungeonLevelData level_data = new DungeonLevelData
@@ -368,9 +429,9 @@ public class GameData : MonoBehaviour
                 (
                     new DungeonChangeData
                     {
-                        name = "Cave Exit",
+                        name = "World Map Exit",
                         dungeon_change_type = typeof(MFCaveExit),
-                        target_dungeon_name = "High Meadow",
+                        target_dungeon_name = "World Map",
                         target_entrance_name = "Cave Entrance",
                         target_entrance_parameter = "Up",
                     }
@@ -403,19 +464,247 @@ public class GameData : MonoBehaviour
                      }
                 );
 
-            dungeons[1].dungeon_levels.Add(level_data);
+            dungeons[2].dungeon_levels.Add(level_data);
+        }
+
+        //Sewers
+        for (int level = 0; level < 10; ++level)
+        {
+            DungeonLevelData level_data = new DungeonLevelData
+            {
+                biome_index = 3,
+                //is_always_visible = true,
+
+                map_features =
+                {                    
+                    
+                    //(typeof(MFCaveTreasureRoom), 0, 1), 
+                    //(typeof(MFCaveOilRoom), 0, 2),                                           
+                },                
+
+                encounters =
+                {
+                    new EncounterData() { type_amounts = {(typeof(Roach),1,1)}, level_min = 2, level_max = 7,},
+                    new EncounterData() { type_amounts = {(typeof(Centipede),1,1)}, level_min = 3, level_max = 5,},
+                    new EncounterData() { type_amounts = {(typeof(Fly),1,2)}, level_min = 1, level_max = 4,},
+                    new EncounterData() { type_amounts = {(typeof(Worm),1,3)}, level_min = 1, level_max = 9,},
+                    new EncounterData() { type_amounts = {(typeof(Rat),1,3)}, level_min = 1, level_max = 6,},
+                    new EncounterData() { type_amounts = {(typeof(Ooz),1,1)}, level_min = 2, level_max = 10,},
+                    new EncounterData() { type_amounts = {(typeof(Bear),1,1)}, level_min = 6, level_max = 10,},
+                    new EncounterData() { type_amounts = {(typeof(Bat),3,5)}, level_min = 5, level_max = 10,},
+                    new EncounterData() { type_amounts = {(typeof(Mushroom),1,1)}, level_min = 1, level_max = 6,},
+                    new EncounterData() { type_amounts = {(typeof(Flytrap),2,4)}, level_min = 6, level_max = 10,},
+                    new EncounterData() { type_amounts = {(typeof(Spider),1,1)}, level_min = 1, level_max = 6,},
+                    new EncounterData() { type_amounts = {(typeof(Lemming),2,5)}, level_min = 1, level_max = 6,},
+                    new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2)}, level_min = 6, level_max = 6,},
+                    new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2),(typeof(OstrillThief),1,1)}, level_min = 7, level_max = 7,},
+                    new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2),(typeof(OstrillThief),1,2)}, level_min = 8, level_max = 8,},
+                    new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,3),(typeof(OstrillThief),1,3)}, level_min = 9, level_max = 9,},
+                    new EncounterData() { type_amounts = {(typeof(OstrillWarrior),2,3),(typeof(OstrillThief),1,3)}, level_min = 10, level_max = 10,},                                
+                }
+            };
+
+            if (level >= 2)
+                level_data.map_features.Add((typeof(MFCavePoisonFlowerRoom), 0, 1));
+
+            if (UnityEngine.Random.value < 0.1f)
+                level_data.map_features.Add((typeof(MFCaveStoreConsumables), 1,1));
+
+            if (UnityEngine.Random.value < 0.2f)
+                level_data.map_features.Add((typeof(MFCaveStorageRoom), 1, 1));
+
+            if (UnityEngine.Random.value < 0.1f)
+                level_data.map_features.Add((typeof(MFCaveStoreUsables), 1,1));
+
+            if (UnityEngine.Random.value < 0.1f)
+                level_data.map_features.Add((typeof(MFCaveSpiderRoom), 0, 1));
+
+
+            if (level > 0 && level <= 6 && UnityEngine.Random.value < 0.1f)
+                level_data.map_features.Add((typeof(MFCaveMonsterLair), 1, 1));
+
+            //Add bosses
+            if (level == 4)
+                level_data.map_features.Add((typeof(MFCaveIrchBossRoom),1,1));
+            if (level == 9)
+                level_data.map_features.Add((typeof(MFCaveTrollBossRoom),1,1));
+
+            if (level <= 4)
+            {
+                level_data.dimensions = (128, 64);
+                level_data.difficulty_level = level + 1;
+                level_data.number_of_rooms = (40, 50);
+                level_data.number_of_encounters = (10, 15);
+                level_data.number_of_gold_items = (5, 10);
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHealthPotion), prob_amount = {(1.0f, 1)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemAlmondBun), prob_amount = {(1.0f, 1)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemStaminaPotion), prob_amount = {(1.0f, 1)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemMeatHorn), prob_amount = {(1.0f, 1)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemRepairPowder), prob_amount = {(.8f, 0),(.2f, 1)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHammer1H), prob_amount = {(.2f, 0),(.3f, 1),(.2f, 2), (.2f, 3), (.1f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemMace1H), prob_amount = {(.2f, 0),(.3f, 1),(.2f, 2), (.2f, 3), (.1f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemFlail1H), prob_amount = {(.2f, 0),(.3f, 1),(.2f, 2), (.2f, 3), (.1f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemWarHammer2H), prob_amount = {(.2f, 0),(.3f, 1),(.2f, 2), (.2f, 3), (.1f, 4)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHandAxe1H), prob_amount = {(.2f, 0),(.3f, 1),(.2f, 2), (.2f, 3), (.1f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemDoubleAxe1H), prob_amount = {(.2f, 0),(.3f, 1),(.2f, 2), (.2f, 3), (.1f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPickaxe1H), prob_amount = {(.2f, 0),(.3f, 1),(.2f, 2), (.2f, 3), (.1f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemBattleAxe2H), prob_amount = {(.2f, 0),(.3f, 1),(.2f, 2), (.2f, 3), (.1f, 4)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemBootsHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemChestHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHandsHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+                
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHeadHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemShieldHeavy), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemShieldMedium), prob_amount = {(.1f, 0),(.2f, 1),(.3f, 2), (.2f, 3), (.2f, 4)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemRing), prob_amount = {(.70f, 0),(.25f, 1),(.05f, 2)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemAmulet), prob_amount = {(.70f, 0),(.25f, 1),(.05f, 2)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemFirebomb), prob_amount = {(.25f, 0), (.5f, 1), (.25f, 2)}});                
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemThrowingKnife), prob_amount = {(.25f, 0), (.5f, 1), (.25f, 2)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemAcidFlask), prob_amount = {(.25f, 0), (.5f, 1), (.25f, 2)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPoemOfReturn), prob_amount = {(.7f, 0), (.2f, 1), (.1f, 2)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPoemOfAWalk), prob_amount = {(.7f, 0), (.2f, 1), (.1f, 2)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPoemOfAJourney), prob_amount = {(.7f, 0), (.2f, 1), (.1f, 2)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemCamomileTea), prob_amount = {(.95f, 0), (.05f, 1)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPeppermintTea), prob_amount = {(.95f, 0), (.05f, 1)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemStrawberryTea), prob_amount = {(.95f, 0), (.05f, 1)}});
+
+                level_data.dynamic_objects = new()
+                {
+                    (typeof(Crate), 5, 10),
+                    (typeof(Jar), 5, 10),
+                    (typeof(BrokenCrate), 5, 10),
+                    (typeof(Chest), 0, 1),
+                    (typeof(BearTrap), 5, 10),
+                    (typeof(SpiderWebTrap), 10, 20),
+                };
+            }
+            else 
+            {
+                level_data.dimensions = (200, 100);
+                level_data.difficulty_level = level + 1;
+                level_data.number_of_rooms = (10, 15);
+                level_data.number_of_encounters = (20, 30);
+                level_data.number_of_gold_items = (10, 15);
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHealthPotion), prob_amount = {(0.3f, 1), (0.4f, 2), (0.3f, 3)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemAlmondBun), prob_amount = {(0.3f, 1), (0.4f, 2), (0.3f, 3)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemStaminaPotion), prob_amount = {(0.3f, 1), (0.4f, 2), (0.3f, 3)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemMeatHorn), prob_amount = {(0.3f, 1), (0.4f, 2), (0.3f, 3)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemRepairPowder), prob_amount = {(.8f, 0),(.2f, 1)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHammer1H), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemMace1H), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemFlail1H), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemWarHammer2H), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHandAxe1H), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemDoubleAxe1H), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPickaxe1H), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemBattleAxe2H), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemBootsHeavy), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemChestHeavy), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHandsHeavy), prob_amount ={(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHeadHeavy), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemShieldHeavy), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemShieldMedium), prob_amount = {(.1f, 0),(.1f, 1),(.2f, 2), (.3f, 3), (.3f, 4)}});
+
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemRing), prob_amount = {(.25f, 0),(.5f, 1),(.25f, 2)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemAmulet), prob_amount = {(.25f, 0),(.5f, 1),(.25f, 2)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemFirebomb), prob_amount = {(.1f, 0), (.2f, 1), (.5f, 2), (.2f, 3)}});                
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemThrowingKnife), prob_amount = {(.1f, 0), (.2f, 1), (.5f, 2), (.2f, 3)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemAcidFlask), prob_amount = {(.1f, 0), (.2f, 1), (.5f, 2), (.2f, 3)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPoemOfReturn), prob_amount = {(.5f, 0), (.4f, 1), (.1f, 2)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPoemOfAWalk), prob_amount = {(.5f, 0), (.4f, 1), (.1f, 2)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPoemOfAJourney), prob_amount = {(.5f, 0), (.4f, 1), (.1f, 2)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemFluteOfHealing), prob_amount = {(.9f, 0), (.1f, 1)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemFluteOfEndurance), prob_amount = {(.9f, 0), (.1f, 1)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemFluteOfBraveness), prob_amount = {(.9f, 0), (.1f, 1)}});
+
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemCamomileTea), prob_amount = {(.95f, 0), (.05f, 1)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemPeppermintTea), prob_amount = {(.95f, 0), (.05f, 1)}});
+                level_data.items.Add(new ItemPlacementData(){type = typeof(ItemStrawberryTea), prob_amount = {(.95f, 0), (.05f, 1)}});
+
+                level_data.dynamic_objects = new()
+                {
+                    (typeof(Crate), 10, 20),
+                    (typeof(Jar), 10, 20),
+                    (typeof(BrokenCrate), 10, 20),
+                    (typeof(Chest), 1, 2),
+                    (typeof(BearTrap), 10, 20),
+                    (typeof(SpiderWebTrap), 20, 40),
+                };
+            }
+
+            if (level == 0)
+            {
+                level_data.dungeon_changes.Add
+                (
+                    new DungeonChangeData
+                    {
+                        name = "World Map Exit",
+                        dungeon_change_type = typeof(MFCaveExit),
+                        target_dungeon_name = "World Map",
+                        target_entrance_name = "Sewers Entrance",
+                        target_entrance_parameter = "Up",
+                    }
+                );
+            }
+
+            if (level < 9)
+                level_data.dungeon_changes.Add
+                (
+                     new DungeonChangeData
+                     {
+                         name = "Level " + (level + 2) + " Enter",
+                         dungeon_change_type = typeof(MFCaveExit),
+                         target_dungeon_name = "The Forgotten Cave",
+                         target_entrance_name = "Level " + (level + 2) + " Exit",
+                         target_entrance_parameter = "Down",
+                     }
+                );
+
+            if (level > 0)
+                level_data.dungeon_changes.Add
+                (
+                     new DungeonChangeData
+                     {
+                         name = "Level " + (level + 1) + " Exit",
+                         dungeon_change_type = typeof(MFCaveExit),
+                         target_dungeon_name = "The Forgotten Cave",
+                         target_entrance_name = "Level " + (level + 1) + " Enter",
+                         target_entrance_parameter = "Up",
+                     }
+                );
+
+            dungeons[3].dungeon_levels.Add(level_data);
         }
     
         world_map_index = 0;
 
-        current_dungeon = dungeons[world_map_index];
+        current_dungeon = dungeons[1];
         current_dungeon.SetRegenerationNeeded();
-        current_map_level = dungeons[world_map_index].GetMapLevelData(0);
+        current_map_level = dungeons[1].GetMapLevelData(0);
         current_dungeon.RegenerateLevel(current_map_level);
 
-        current_map = dungeons[world_map_index].GetMapData(0);
+        current_map = dungeons[1].GetMapData(0);
 
-        current_map.actors.Insert(0,player_data);
+        current_map.actors.Insert(1,player_data);
         current_map.visited = true;
         current_map.tick_entered = true;
 
@@ -431,9 +720,6 @@ public class GameData : MonoBehaviour
                 }
             }
         }
-
-        //Save("test.dat");
-        //Load("test.dat");
     }
 }
 

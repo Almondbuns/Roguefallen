@@ -8,6 +8,7 @@ public class DungeonChangeData
 {
     public string name;
     public Type dungeon_change_type;    
+    public string dungeon_change_image;
     public string target_dungeon_name = "";
     public string target_entrance_name = "";
     public string target_entrance_parameter = "";
@@ -16,6 +17,7 @@ public class DungeonChangeData
     {
         save.Write(name);
         save.Write(dungeon_change_type.Name);
+        save.Write(dungeon_change_image);
         save.Write(target_dungeon_name);
         save.Write(target_entrance_name);
         save.Write(target_entrance_parameter);
@@ -25,6 +27,7 @@ public class DungeonChangeData
     {
         name = save.ReadString();
         dungeon_change_type = Type.GetType(save.ReadString());
+        dungeon_change_image = save.ReadString();
         target_dungeon_name = save.ReadString();
         target_entrance_name = save.ReadString();
         target_entrance_parameter = save.ReadString();
