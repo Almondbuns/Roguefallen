@@ -126,13 +126,13 @@ public class GameData : MonoBehaviour
             new DungeonData
             {
                 name = "World Map",
-                is_persistent = true,
+                is_persistent = false,
 
                 dungeon_levels =
                 {
                     new DungeonLevelData
                     {
-                        dimensions = (16, 16),
+                        dimensions = (32, 32),
                         number_of_rooms = (0,0),
                         difficulty_level = 1,
                         has_enemies = false,
