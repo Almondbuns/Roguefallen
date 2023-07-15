@@ -132,7 +132,7 @@ public class GameData : MonoBehaviour
                 {
                     new DungeonLevelData
                     {
-                        dimensions = (32, 32),
+                        dimensions = (64, 32),
                         number_of_rooms = (0,0),
                         difficulty_level = 1,
                         has_enemies = false,

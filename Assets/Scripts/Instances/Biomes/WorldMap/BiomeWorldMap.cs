@@ -10,28 +10,32 @@ public class BiomeWorldMap : BiomeData
     {
         name = "WorldMap";
         connectivity_probability = 0.67f;
-        ambience_light = new Color(1f,1f,1f);
+        ambience_light = new Color(.7f,.7f,.7f);
 
         MapObjectCollectionData collection = new();
-        collection.Add(new MapObjectData("cave_floor_1"));
-        collection.Add(new MapObjectData("cave_floor_2"));
-        collection.Add(new MapObjectData("cave_floor_3"));
+        collection.Add(new MapObjectData("grass_1"));
         floors["grass"] = collection;
         
         collection = new();
-        collection.Add(new MapObjectData("water_1"));
-        collection.Add(new MapObjectData("water_2"));
-        collection.Add(new MapObjectData("water_3"));
-        collection.Add(new MapObjectData("water_4"));
+        collection.Add(new MapObjectData("ocean_1"));
         floors["water"] = collection;
 
         collection = new();
-        collection.Add(new MapObjectData("woods_1"));
-        floors["woods"] = collection;
+        collection.Add(new MapObjectData("hill_1"));
+        floors["hill"] = collection;
 
         collection = new();
-        collection.Add(new MapObjectData("mountain_obstacle_1"));
+        collection.Add(new MapObjectData("mountain_1"){movement_blocked = true});
         floors["mountain"] = collection;
+        objects["mountain"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("beach_1"));
+        floors["beach"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("forest_1"){movement_blocked = false});
+        objects["forest"] = collection;
 
         room_list = new();
     }
@@ -121,7 +125,8 @@ public class BiomeWorldMap : BiomeData
 
         sorted_heights.Sort();
 
-        double min_land_height = sorted_heights[((map.tiles.GetLength(0) * map.tiles.GetLength(1)) * 3) / 10]; 
+        double min_beach_height = sorted_heights[((map.tiles.GetLength(0) * map.tiles.GetLength(1)) * 3) / 10]; 
+        double min_land_height = sorted_heights[((map.tiles.GetLength(0) * map.tiles.GetLength(1)) * 4) / 10]; 
         double min_woods_height = sorted_heights[((map.tiles.GetLength(0) * map.tiles.GetLength(1)) * 8) / 10]; 
         double min_mountain_height = sorted_heights[((map.tiles.GetLength(0) * map.tiles.GetLength(1)) * 9) / 10]; 
 
@@ -129,14 +134,75 @@ public class BiomeWorldMap : BiomeData
             for (int y = 0; y < map.tiles.GetLength(1); ++y)
             {
                 if (heights[x + map.tiles.GetLength(0) * y] >= min_mountain_height)
+                {
                     map.tiles[x, y].floor = floors["mountain"].Random();
+                    map.tiles[x, y].objects.Add(objects["mountain"].Random());
+                }
                 else if (heights[x + map.tiles.GetLength(0) * y] >= min_woods_height)
-                    map.tiles[x, y].floor = floors["woods"].Random();
+                    map.tiles[x, y].floor = floors["hill"].Random();
                 else if (heights[x + map.tiles.GetLength(0) * y] >= min_land_height)
                     map.tiles[x, y].floor = floors["grass"].Random();
+                else if (heights[x + map.tiles.GetLength(0) * y] >= min_beach_height)
+                    map.tiles[x, y].floor = floors["beach"].Random();
                 else
                     map.tiles[x, y].floor = floors["water"].Random();
             }
+
+        int number_of_forests = UnityEngine.Random.Range(10,20);
+        for (int i = 0; i < number_of_forests; ++i)
+        {
+            int size_of_forest = UnityEngine.Random.Range(7,25);
+
+            int number_of_tries = 0;
+            bool found = false;
+            int x = 0; int y = 0;
+            while (found == false && number_of_tries < 1000)
+            {
+                x = UnityEngine.Random.Range(0, map.tiles.GetLength(0));
+                y = UnityEngine.Random.Range(0, map.tiles.GetLength(1));
+
+                if (map.tiles[x,y].floor.name.Contains("grass") == true || map.tiles[x,y].floor.name.Contains("hill") == true)
+                {
+                    found = true;
+                }
+                ++number_of_tries;
+            }
+
+            if (found == false)
+                continue;
+
+            map.tiles[x,y].objects.Add(objects["forest"].Random());
+            List<(int x, int y)> forest_tiles = new();
+            forest_tiles.Add((x,y));
+
+            for (int j = 0; j < size_of_forest; ++ j)
+            {
+                number_of_tries = 0;
+                found = false;
+                x = 0; y = 0;
+                while (found == false && number_of_tries < 1000)
+                {
+                    x = UnityEngine.Random.Range(-1, 2);
+                    y = UnityEngine.Random.Range(-1, 2);
+                    (int x, int y) start_position = forest_tiles[UnityEngine.Random.Range(0, forest_tiles.Count)];
+
+                    if (start_position.x + x < 0 || start_position.x + x >= map.tiles.GetLength(0) 
+                    || start_position.y + y < 0 || start_position.y + y >= map.tiles.GetLength(1) )
+                        continue;
+
+                    if (map.tiles[start_position.x + x,start_position.y + y].objects.Count == 0
+                        && (map.tiles[start_position.x + x,start_position.y + y].floor.name.Contains("grass") == true 
+                            || map.tiles[start_position.x + x,start_position.y + y].floor.name.Contains("hill") == true))
+                    {
+                        found = true;
+                        map.tiles[start_position.x + x,start_position.y + y].objects.Add(objects["forest"].Random());
+                        forest_tiles.Add((start_position.x + x,start_position.y + y));
+                    }
+                    ++number_of_tries;
+                }
+            }
+            
+        }
 
         foreach (DungeonChangeData dcd in dungeon_change_data)
         {
