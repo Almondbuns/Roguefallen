@@ -147,7 +147,7 @@ public class GameData : MonoBehaviour
                             {
                                 name = "Village Entrance",
                                 dungeon_change_type = typeof(MFStandardDungeonEntrance),
-                                dungeon_change_image = "barn_up",
+                                dungeon_change_image = "images/objects/village_1",
                                 target_dungeon_name = "High Meadow",
                                 target_entrance_name = "World Map Exit",
                             },
@@ -155,7 +155,7 @@ public class GameData : MonoBehaviour
                             {
                                 name = "Cave Entrance",
                                 dungeon_change_type = typeof(MFStandardDungeonEntrance),
-                                dungeon_change_image = "barn_up",
+                                dungeon_change_image = "images/objects/village_1",
                                 target_dungeon_name = "The Forgotten Cave",
                                 target_entrance_name = "World Map Exit",
                             },
@@ -163,7 +163,7 @@ public class GameData : MonoBehaviour
                             {
                                 name = "Sewers Entrance",
                                 dungeon_change_type = typeof(MFStandardDungeonEntrance),
-                                dungeon_change_image = "barn_up",
+                                dungeon_change_image = "images/objects/village_1",
                                 target_dungeon_name = "The Sewers",
                                 target_entrance_name = "World Map Exit",
                             }
@@ -200,7 +200,7 @@ public class GameData : MonoBehaviour
                             {
                                 name = "World Map Exit",
                                 dungeon_change_type = typeof(MFStandardDungeonEntrance),
-                                dungeon_change_image = "barn_up",
+                                dungeon_change_image = "images/objects/village_1",
                                 target_dungeon_name = "World Map",
                                 target_entrance_name = "Village Entrance",
                             }

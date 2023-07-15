@@ -14,6 +14,9 @@ public class BiomeWorldMap : BiomeData
 
         MapObjectCollectionData collection = new();
         collection.Add(new MapObjectData("grass_1"));
+        collection.Add(new MapObjectData("grass_2"));
+        collection.Add(new MapObjectData("grass_3"));
+        collection.Add(new MapObjectData("grass_4"));
         floors["grass"] = collection;
         
         collection = new();
@@ -22,10 +25,16 @@ public class BiomeWorldMap : BiomeData
 
         collection = new();
         collection.Add(new MapObjectData("hill_1"));
+        collection.Add(new MapObjectData("hill_2"));
+        collection.Add(new MapObjectData("hill_3"));
+        collection.Add(new MapObjectData("hill_4"));
         floors["hill"] = collection;
 
         collection = new();
         collection.Add(new MapObjectData("mountain_1"){movement_blocked = true});
+        collection.Add(new MapObjectData("mountain_2"){movement_blocked = true});
+        collection.Add(new MapObjectData("mountain_3"){movement_blocked = true});
+        collection.Add(new MapObjectData("mountain_4"){movement_blocked = true});
         floors["mountain"] = collection;
         objects["mountain"] = collection;
 
@@ -35,6 +44,9 @@ public class BiomeWorldMap : BiomeData
 
         collection = new();
         collection.Add(new MapObjectData("forest_1"){movement_blocked = false});
+        collection.Add(new MapObjectData("forest_2"){movement_blocked = false});
+        collection.Add(new MapObjectData("forest_3"){movement_blocked = false});
+        collection.Add(new MapObjectData("forest_4"){movement_blocked = false});
         objects["forest"] = collection;
 
         room_list = new();
@@ -244,6 +256,7 @@ public class BiomeWorldMap : BiomeData
 
 public class MFStandardDungeonEntrance : MFChangeDungeon
 {
+    string icon = "";
     public MFStandardDungeonEntrance(MapData map) : base(map)
     {
        
@@ -252,10 +265,7 @@ public class MFStandardDungeonEntrance : MFChangeDungeon
     public MFStandardDungeonEntrance(MapData map, DungeonChangeData dcd) : base(map, dcd)
     {
         dimensions = (1,1);
-
-        MapObjectCollectionData collection = new();
-        collection.Add(new MapObjectData(dcd.dungeon_change_image));
-        objects["entrance"] = collection;
+        this.icon = dcd.dungeon_change_image;
     }
 
     internal override void Save(BinaryWriter save)
@@ -272,7 +282,7 @@ public class MFStandardDungeonEntrance : MFChangeDungeon
     public override void Generate()
     {
         map.tiles[position.x, position.y].objects.Clear();
-        map.tiles[position.x , position.y].objects.Add(objects["entrance"].Random());
+        map.Add(new DynamicObjectData(position.x, position.y, new DungeonEntrance(this.difficulty_level, icon)));
 
         enter_tiles.Add((position.x, position.y));
         exit_tile = (position.x + dimensions.x / 2, position.y);

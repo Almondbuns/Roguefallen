@@ -56,7 +56,9 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 100
   m_TargetDisplay: 0
@@ -131,7 +133,7 @@ Transform:
   m_GameObject: {fileID: 5520824916780720554}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.0315, y: -0.0272, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 3.3, y: 3.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8378215047810929659}
@@ -202,18 +204,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 898e138cd50cfaa44a2754db3810722a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prepare_time: {fileID: 0}
-  recover_time: {fileID: 0}
-  action_icon: {fileID: 0}
-  action_time_cache: 0
   prepare_action_panel: {fileID: 0}
   start_action_panel: {fileID: 0}
-  recover_action_panel: {fileID: 0}
   prepare_action_panel_prefab: {fileID: 8782064170075459252, guid: d4c48984a411a7740b773be89269eceb,
     type: 3}
   start_action_panel_prefab: {fileID: 8782064170075459252, guid: 6d588c1fdf93dc145b88418045eaf3fc,
-    type: 3}
-  recover_action_panel_prefab: {fileID: 8782064170075459252, guid: 4d52fbac1cfda024d989ba5f4ad281ab,
     type: 3}
   floating_number_prefab: {fileID: 8782064170075459252, guid: 1686e9bf015074249a12274f5d07aa89,
     type: 3}
@@ -221,7 +216,10 @@ MonoBehaviour:
     type: 3}
   floating_info_time: 0
   floating_info_queue: []
-  melee_attack_time: 0
+  is_visible: 1
+  visual_action_time: 0
+  shift_sprite_position_x: 0
+  shift_sprite_position_y: 0
   health_bar: {fileID: 0}
 --- !u!61 &4891677156738476947
 BoxCollider2D:
@@ -233,6 +231,25 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -266,7 +283,6 @@ MonoBehaviour:
   m_Bounds:
     m_Center: {x: -0.006810367, y: 0.0004736781, z: 0}
     m_Extent: {x: 0.31270108, y: 0.31244254, z: 0}
-  m_UseBatching: 1
   m_AlwaysUpdate: 1
   m_AutoRebind: 0
 --- !u!114 &2317469321570959718
@@ -286,7 +302,7 @@ MonoBehaviour:
   m_SolverEditorData: []
 --- !u!95 &4412149664132686778
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -303,4 +319,5 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

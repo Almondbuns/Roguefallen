@@ -337,3 +337,22 @@ public class OilPuddle : ActorPrototype
         }
     }
 }
+
+public class DungeonEntrance : ActorPrototype
+{
+    public DungeonEntrance(int level, string icon) : base(level)
+    {
+        name = "Dungeon Entrance";
+        this.icon = icon;
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
+        stats.health_max = 10;
+        stats.dodge = -100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Broken Crate", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+    }
+
+}
