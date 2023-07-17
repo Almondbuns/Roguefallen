@@ -34,6 +34,10 @@ public class BiomeWorldMap : BiomeData
         floors["water"] = collection;
 
         collection = new();
+        collection.Add(new MapObjectData("ocean_dark_1"));
+        floors["water_deep"] = collection;
+
+        collection = new();
         collection.Add(new MapObjectData("hill_1"));
         collection.Add(new MapObjectData("hill_2"));
         collection.Add(new MapObjectData("hill_3"));
@@ -50,6 +54,7 @@ public class BiomeWorldMap : BiomeData
 
         collection = new();
         collection.Add(new MapObjectData("beach_1"));
+        collection.Add(new MapObjectData("beach_2"));
         floors["beach"] = collection;
 
         collection = new();
@@ -98,6 +103,12 @@ public class BiomeWorldMap : BiomeData
                     x = rand.x;
                     y = rand.y;
                 }
+                else if (dungeon_type == typeof(BiomeCastle))
+                {
+                    (int x, int y) rand = mountain_tiles[UnityEngine.Random.Range(0, mountain_tiles.Count)];
+                    x = rand.x;
+                    y = rand.y;
+                }
 
             }
 
@@ -135,13 +146,14 @@ public class BiomeWorldMap : BiomeData
         grass_tiles = new();
         beach_tiles = new();
         ocean_tiles = new();
-        
+
+
         //Create a primitive height based island
-        int number_of_peaks = UnityEngine.Random.Range(5,20);
+        int number_of_peaks = UnityEngine.Random.Range(max_x*max_y / (5*32), max_x*max_y / (2*32));
         List<(int x, int y, int height, int radius)> peaks = new();
         for (int i = 0; i < number_of_peaks; ++ i)
         {
-            peaks.Add((UnityEngine.Random.Range(8, max_x - 8),UnityEngine.Random.Range(8, max_y - 8), UnityEngine.Random.Range(100, 500), UnityEngine.Random.Range(5, 20)));
+            peaks.Add((UnityEngine.Random.Range(8, max_x - 8),UnityEngine.Random.Range(8, max_y - 8), UnityEngine.Random.Range(-2500, 5000), UnityEngine.Random.Range(max_x*max_y / (10*32), max_x*max_y / (2*32))));
         }
 
         List<double> heights = new List<double>(max_x * max_y);
@@ -162,7 +174,7 @@ public class BiomeWorldMap : BiomeData
                     if (distance_sqr > peaks[i].radius * peaks[i].radius)
                         continue;
 
-                    heights[x + max_x * y] += peaks[i].height / (distance_sqr+1);
+                    heights[x + max_x * y] += peaks[i].height / (double)((distance_sqr+1));
                 }
             }
         }
@@ -174,6 +186,7 @@ public class BiomeWorldMap : BiomeData
 
         sorted_heights.Sort();
 
+        double min_ocean_light_height = sorted_heights[((max_x * max_y) / 2) / 10];
         double min_beach_height = sorted_heights[((max_x * max_y) * 3) / 10]; 
         double min_grass_height = sorted_heights[((max_x * max_y) * 4) / 10]; 
         double min_hill_height = sorted_heights[((max_x * max_y) * 8) / 10]; 
@@ -204,9 +217,14 @@ public class BiomeWorldMap : BiomeData
                     map.tiles[x, y].floor = floors["beach"].Random();
                     beach_tiles.Add((x,y));
                 }
-                else
+                else if (heights[x + max_x * y] >= min_ocean_light_height)
                 {
                     map.tiles[x, y].floor = floors["water"].Random();
+                    beach_tiles.Add((x,y));
+                }
+                else
+                {
+                    map.tiles[x, y].floor = floors["water_deep"].Random();
                     ocean_tiles.Add((x,y));
                 }
             }
@@ -215,10 +233,10 @@ public class BiomeWorldMap : BiomeData
 
     void CreateForests()
     {
-        int number_of_forests = UnityEngine.Random.Range(10,20);
+        int number_of_forests = UnityEngine.Random.Range(max_x*max_y / (5*32), max_x*max_y / (3*32));
         for (int i = 0; i < number_of_forests; ++i)
         {
-            int size_of_forest = UnityEngine.Random.Range(7,25);
+            int size_of_forest = UnityEngine.Random.Range(10,20);
 
             int number_of_tries = 0;
             bool found = false;
