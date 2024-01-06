@@ -505,3 +505,35 @@ public class UIStateSkills : UIState
         skills_panel.GetComponent<SkillPanel>().Refresh();
     }
 }
+
+public class UIStateQuestJournal : UIState
+{
+    public GameObject journal_panel;
+
+    public UIStateQuestJournal()
+    {
+        journal_panel = GameObject.Instantiate(GameObject.Find("UI").GetComponent<UI>().quest_panel_prefab,
+            GameObject.Find("WindowCanvas").transform, false);
+     
+        journal_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(DestroyState);
+    }
+
+    public override void Update()
+    {
+        if (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.kKey.wasPressedThisFrame)
+        {
+            DestroyState();
+        }
+    }
+
+    public override void DestroyState()
+    {
+        GameObject.Destroy(journal_panel);
+        GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
+    }
+
+    public override void Refresh()
+    {
+        journal_panel.GetComponent<SkillPanel>().Refresh();
+    }
+}

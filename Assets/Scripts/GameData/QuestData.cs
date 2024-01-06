@@ -49,10 +49,16 @@ public enum QuestComplexity
     Long
 }
 
+public enum QuestType
+{
+    MainQuest,
+    SideQuest
+}
 public abstract class QuestData 
 {
     public static long id_counter = 0;
     public long id;
+    public QuestType type;
 
     public int difficulty_level;
     public QuestComplexity complexity_level;
@@ -76,6 +82,7 @@ public abstract class QuestData
     internal void Save(BinaryWriter save)
     {
         save.Write(id);
+        save.Write((int)type);
         save.Write(name);
         save.Write(difficulty_level);
         save.Write((int) complexity_level);
@@ -96,6 +103,7 @@ public abstract class QuestData
     internal void Load(BinaryReader save)
     {
         id = save.ReadInt64();
+        type = (QuestType) save.ReadInt32();
         name = save.ReadString();
         difficulty_level = save.ReadInt32();
         complexity_level = (QuestComplexity) save.ReadInt32();

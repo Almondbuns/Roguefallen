@@ -8,6 +8,7 @@ public class QDFetchItem : QuestData
     public override void GenerateQuest(int difficulty, QuestComplexity complexity)
     {
         name = "Fetch the guinea pig";
+        type = QuestType.SideQuest;
         this.difficulty_level = difficulty;
         this.complexity_level = complexity;
 
@@ -42,6 +43,7 @@ public class QDKillMonster : QuestData
     public override void GenerateQuest(int difficulty, QuestComplexity complexity)
     {
         name = "Kill the Lost Explorer";
+        type = QuestType.SideQuest;
         this.difficulty_level = difficulty;
         this.complexity_level = complexity;
 
@@ -76,6 +78,7 @@ public class QDMain : QuestData
     public override void GenerateQuest(int difficulty, QuestComplexity complexity)
     {
         name = "Main Quest";
+        type = QuestType.MainQuest;
         this.difficulty_level = difficulty;
         this.complexity_level = complexity;
 
