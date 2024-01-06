@@ -186,7 +186,6 @@ public class BiomeWorldMap : BiomeData
 
         sorted_heights.Sort();
 
-        double min_ocean_light_height = sorted_heights[((max_x * max_y) / 2) / 10];
         double min_beach_height = sorted_heights[((max_x * max_y) * 3) / 10]; 
         double min_grass_height = sorted_heights[((max_x * max_y) * 4) / 10]; 
         double min_hill_height = sorted_heights[((max_x * max_y) * 8) / 10]; 
@@ -217,15 +216,10 @@ public class BiomeWorldMap : BiomeData
                     map.tiles[x, y].floor = floors["beach"].Random();
                     beach_tiles.Add((x,y));
                 }
-                else if (heights[x + max_x * y] >= min_ocean_light_height)
+                else 
                 {
                     map.tiles[x, y].floor = floors["water"].Random();
                     beach_tiles.Add((x,y));
-                }
-                else
-                {
-                    map.tiles[x, y].floor = floors["water_deep"].Random();
-                    ocean_tiles.Add((x,y));
                 }
             }
         }

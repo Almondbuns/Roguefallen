@@ -137,7 +137,6 @@ public class BiomeSewers : BiomeData
         for (int i = 0; i < 6; ++ i)
         {
             random_positions[i] = (UnityEngine.Random.Range((i%3) * (max_x/3) + 10,((i%3)+1) * (max_x/3) - 10), UnityEngine.Random.Range((i/3) * (max_y/2) + 10,((i/3)+1) * (max_y/2) - 10));
-            Debug.Log(random_positions[i]);
         }
         CreateSewerSystem(map, (random_positions[0].x, random_positions[0].y,1,1),(random_positions[1].x, random_positions[1].y,1,1),2);
         CreateSewerSystem(map, (random_positions[1].x, random_positions[1].y,1,1),(random_positions[2].x, random_positions[2].y,1,1),2);

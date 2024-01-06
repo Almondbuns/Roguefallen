@@ -24,7 +24,7 @@ public class MFTavern : MapFeatureData
     public MFTavern(MapData map) : base(map)
     {
         dimensions = (15, 10);
-        capacity = 0; // UnityEngine.Random.Range(2,7);
+        capacity = UnityEngine.Random.Range(2,7);
 
         questgivers = new();
       
@@ -188,24 +188,37 @@ public class MFTavern : MapFeatureData
         ActorData vendor = new MonsterData(position.x + 7, position.y + dimensions.y - 2, new Barkeeper(10));
         map.Add(vendor);
 
+        //Always generate main quest
+        int type = UnityEngine.Random.Range(0, questgiver_types.Count);
+        int Position = UnityEngine.Random.Range(0, questgiver_positions.Count);
+
+        ActorPrototype prototype = (ActorPrototype)Activator.CreateInstance(questgiver_types[type], 10);
+        ActorData actor = new MonsterData(questgiver_positions[Position].x, questgiver_positions[Position].y, prototype);
+        map.Add(actor);
+
+        QuestData quest = new QDMain();
+        quest.GenerateQuest(1, QuestComplexity.Long);
+
+        questgivers.Add((actor,questgiver_positions[Position],quest));
+
         for (int i = 0; i < capacity; ++ i)
         {
             int rand_type = UnityEngine.Random.Range(0, questgiver_types.Count);
             int rand_position = UnityEngine.Random.Range(0, questgiver_positions.Count);
 
-            ActorPrototype prototype = (ActorPrototype)Activator.CreateInstance(questgiver_types[rand_type], 10);
-            ActorData actor = new MonsterData(questgiver_positions[rand_position].x, questgiver_positions[rand_position].y, prototype);
-            map.Add(actor);
+            ActorPrototype random_prototype = (ActorPrototype)Activator.CreateInstance(questgiver_types[rand_type], 10);
+            ActorData random_actor = new MonsterData(questgiver_positions[rand_position].x, questgiver_positions[rand_position].y, random_prototype);
+            map.Add(random_actor);
 
-            QuestData quest;
+            QuestData random_quest;
             if (UnityEngine.Random.Range(0, 2) == 0)
-                quest = new QDKillMonster();
+                random_quest = new QDKillMonster();
             else
-                quest = new QDFetchItem();
+                random_quest = new QDFetchItem();
 
-            quest.GenerateQuest(1, QuestComplexity.Short);
+            random_quest.GenerateQuest(1, QuestComplexity.Short);
 
-            questgivers.Add((actor,questgiver_positions[rand_position],quest));
+            questgivers.Add((random_actor,questgiver_positions[rand_position],random_quest));
         }
     }
 

@@ -124,7 +124,7 @@ public class GameData : MonoBehaviour
 
         dungeons = new List<DungeonData>();
 
-        int number_of_dungeons_per_type = 10;
+        int number_of_dungeons_per_type = 4;
         
         dungeons.Add(new DungeonData()        
         {
@@ -135,7 +135,7 @@ public class GameData : MonoBehaviour
             {
                 new DungeonLevelData
                 {
-                    dimensions = (128, 64),
+                    dimensions = (64, 32),
                     number_of_rooms = (0,0),
                     difficulty_level = 1,
                     has_enemies = false,

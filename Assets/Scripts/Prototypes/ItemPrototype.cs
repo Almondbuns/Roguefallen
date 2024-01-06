@@ -74,6 +74,7 @@ public enum ItemType
     AMULET,
     RING,
     CONSUMABLE,
+    QUEST_ITEM,
     OTHER
 }
 
