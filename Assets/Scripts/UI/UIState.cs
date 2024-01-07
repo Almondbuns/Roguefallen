@@ -520,7 +520,7 @@ public class UIStateQuestJournal : UIState
 
     public override void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.kKey.wasPressedThisFrame)
+        if (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.jKey.wasPressedThisFrame)
         {
             DestroyState();
         }

@@ -155,6 +155,12 @@ public class InputManager : MonoBehaviour
                 return;
             }
 
+            if (Keyboard.current.jKey.wasPressedThisFrame) // Quest Journal
+            {
+                ui.ActivateQuestScreen();
+                return;
+            }
+
             if (Keyboard.current.pKey.wasPressedThisFrame) // Character
             {
                 ui.ActivateCharacterScreen();
