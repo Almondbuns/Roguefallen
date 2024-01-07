@@ -6,15 +6,18 @@ using System.IO;
 public abstract class QuestMissionData
 {
     public string location;
+    public string journal_description;
 
     internal virtual void Save(BinaryWriter save)
     {
         save.Write(location);
+        save.Write(journal_description);
     }
 
     internal virtual void Load(BinaryReader save)
     {
         location = save.ReadString();
+        journal_description = save.ReadString();
     }
 
     public virtual void OnItemPickup(ItemData item)

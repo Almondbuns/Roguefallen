@@ -7,6 +7,7 @@ public class QuestJournalPanel : MonoBehaviour
 {
     PlayerData player_data;
     public GameObject quest_summary_button_prefab;
+    public GameObject quest_mission_description_prefab;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +73,29 @@ public class QuestJournalPanel : MonoBehaviour
                 transform.Find("QuestType").GetComponent<TMPro.TextMeshProUGUI>().text = "Main Quest";
             else
                 transform.Find("QuestType").GetComponent<TMPro.TextMeshProUGUI>().text = "Side Quest, Level " + quest.difficulty_level;
+        
+        for (int i = 0; i < transform.Find("ActivatedMissions").childCount; ++ i)
+            GameObject.Destroy(transform.Find("ActivatedMissions").GetChild(i).gameObject);
+
+        int counter = 0;
+        bool hide_further_missions = false;
+        foreach(var mission in quest.missions)
+        {
+            if (hide_further_missions == false)
+            {
+                GameObject mission_description = GameObject.Instantiate(quest_mission_description_prefab, transform.Find("ActivatedMissions"), false);
+                mission_description.GetComponent<RectTransform>().localPosition = new Vector3(185, -85 - counter * 60);
+
+                mission_description.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().text = mission.journal_description;
+                if (mission.IsCompleted() == true)
+                    mission_description.transform.Find("Description").GetComponent<TMPro.TextMeshProUGUI>().color = Color.green;
+            }
+            
+            if (mission.IsCompleted() == false)
+                hide_further_missions = true;
+
+            ++counter;
+        }
 
     }
 }

@@ -24,7 +24,7 @@ public class MFTavern : MapFeatureData
     public MFTavern(MapData map) : base(map)
     {
         dimensions = (15, 10);
-        capacity = UnityEngine.Random.Range(2,7);
+        capacity = UnityEngine.Random.Range(2,4);
 
         questgivers = new();
       
@@ -103,6 +103,7 @@ public class MFTavern : MapFeatureData
         (position.x + 4, position.y + dimensions.y - 8),
         (position.x + 4, position.y + dimensions.y - 9),
         };
+        int quest_giver_position_index = 0;
 
 
         for (int x = position.x; x < position.x + dimensions.x; ++x)
@@ -190,16 +191,16 @@ public class MFTavern : MapFeatureData
 
         //Always generate main quest
         int type = UnityEngine.Random.Range(0, questgiver_types.Count);
-        int Position = UnityEngine.Random.Range(0, questgiver_positions.Count);
+        ++quest_giver_position_index;
 
         ActorPrototype prototype = (ActorPrototype)Activator.CreateInstance(questgiver_types[type], 10);
-        ActorData actor = new MonsterData(questgiver_positions[Position].x, questgiver_positions[Position].y, prototype);
+        ActorData actor = new MonsterData(questgiver_positions[quest_giver_position_index].x, questgiver_positions[quest_giver_position_index].y, prototype);
         map.Add(actor);
 
         QuestData quest = new QDMain();
         quest.GenerateQuest(1, QuestComplexity.Long);
 
-        questgivers.Add((actor,questgiver_positions[Position],quest));
+        questgivers.Add((actor,questgiver_positions[quest_giver_position_index],quest));
 
         for (int i = 0; i < capacity; ++ i)
         {

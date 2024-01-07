@@ -385,6 +385,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   quest_summary_button_prefab: {fileID: 6849880090544119155, guid: b3f68f4c0a9f9e649ae98d84b4452c22,
     type: 3}
+  quest_mission_description_prefab: {fileID: 8060250944248056058, guid: 8274f58168603146584230e99f533713,
+    type: 3}
 --- !u!1 &3753549399707838257
 GameObject:
   m_ObjectHideFlags: 0

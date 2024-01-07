@@ -22,6 +22,7 @@ public class QDFetchItem : QuestData
         };
 
         mission.items.Add((false, guinea_pig));
+        mission.journal_description = "Retrieve the guinea pig from the " + mission.location + ".";
 
         GameData game_data = GameObject.Find("GameData").GetComponent<GameData>();
         int random_dungeon_index = UnityEngine.Random.Range(0, game_data.dungeons.Count);
@@ -61,11 +62,15 @@ public class QDKillMonster : QuestData
         GameData game_data = GameObject.Find("GameData").GetComponent<GameData>();
         int random_dungeon_index = UnityEngine.Random.Range(0, game_data.dungeons.Count);
         mission.location = game_data.dungeons[random_dungeon_index].name;
+        mission.journal_description = "Kill the Lost Explorer in the " + mission.location + ".";
         missions.Add(mission);
+        
 
         QMDBeInLocation mission2 = new();
         mission2.location = game_data.dungeons[0].name;
+        mission2.journal_description = "Come back to " + mission2.location + ".";
         missions.Add(mission2);
+        
 
         start_quest_dialog = "I need a sword for hire.<br> <br>The evil creature <color=white>The Lost Explorer</color> wanders around in <color=red>" + mission.location + "</color>.<br> <br>It took a lot of lifes and needs to be killed.<br> <br>Are you going to help us?";
 
@@ -97,10 +102,12 @@ public class QDMain : QuestData
         GameData game_data = GameObject.Find("GameData").GetComponent<GameData>();
         int random_dungeon_index = 1; // UnityEngine.Random.Range(0, game_data.dungeons.Count);
         mission.location = game_data.dungeons[random_dungeon_index].name;
+        mission.journal_description = "Retrieve the family symbol from the " + mission.location + ".";
         missions.Add(mission);
 
         QMDBeInLocation mission2 = new();
         mission2.location = game_data.dungeons[0].name;
+        mission2.journal_description = "Come back to " + mission2.location + ".";
         missions.Add(mission2);
 
         start_quest_dialog = "You will find the family symbol in <color=red>" + mission.location + "</color>. Good Luck!";
