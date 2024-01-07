@@ -5,7 +5,7 @@ The repository of this game is officially hosted at https://github.com/Almondbun
 
 # Compile Instructions
 1. Clone this repository locally
-2. Install the latest stable version of Unity from unity.com. The currently used version in the project is 2022.2.17f1 but may change faster than this file.
+2. Install the latest stable version of Unity from unity.com. The currently used version in the project is 2022.3.16f1 but may change faster than this file.
 3. In Unity import the repository directory as a new existing project
 4. Unity should now automatically ask to import TextMesh Pro which is needed to render text in the game. If no automatic prompt is shown you can manually install TextMesh Pro in Unity (Window -> TextMeshPro -> Install TMP Essential Resources)
 5. Select the TextMesh Pro Essential Files import
