@@ -88,18 +88,9 @@ public class InputManager : MonoBehaviour
 
             if (move_destination_x.HasValue && move_destination_y.HasValue)
             {
-                //Check if map features catch movement (for example: store uses movement to buy things)
-                bool stop_movement = false;
-
-                foreach (MapFeatureData feature in game_data.current_map.features)
-                {
-                    if (feature.OnPlayerMovement(move_destination_x.Value, move_destination_y.Value) == false)
-                        stop_movement = true;
-                }
-                if (stop_movement == true)
-                    return;
-
-
+                if (game_data.current_map.StopPlayerMovement(move_destination_x.Value, move_destination_y.Value) == true)
+                return;
+                
                 if (game_data.current_map.IsTileBlockedByActor(move_destination_x.Value, move_destination_y.Value) == true)
                 {
                     ActorData actor_data = game_data.current_map.GetActorOnTile(move_destination_x.Value, move_destination_y.Value);
@@ -157,7 +148,7 @@ public class InputManager : MonoBehaviour
 
             if (Keyboard.current.jKey.wasPressedThisFrame) // Quest Journal
             {
-                ui.ActivateQuestScreen();
+                ui.ActivateQuestJournal();
                 return;
             }
 

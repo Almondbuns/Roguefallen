@@ -1255,6 +1255,8 @@ MonoBehaviour:
     type: 3}
   quest_panel_prefab: {fileID: 3753549399704259313, guid: 540b38d732e3b1b7bb208e0ebea5bcc2,
     type: 3}
+  dialog_panel_prefab: {fileID: 1942381006727159662, guid: 03b36dd7d22ae9c988eb70ba24895388,
+    type: 3}
   camera_mode: 0
   standard_camera_zoom_multiplier: 1
 --- !u!1 &445466812

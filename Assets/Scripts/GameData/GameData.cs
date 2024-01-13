@@ -962,6 +962,10 @@ public class GameData : MonoBehaviour
         }
     
         world_map_index = 0;
+        
+        QuestData main_quest = new QDMain();
+        main_quest.GenerateQuest(1, QuestComplexity.Long);
+        player_data.AddQuest(main_quest);
 
         current_dungeon = dungeons[1];
         current_dungeon.SetRegenerationNeeded();
@@ -986,6 +990,8 @@ public class GameData : MonoBehaviour
                 }
             }
         }
+
+
     }
 }
 

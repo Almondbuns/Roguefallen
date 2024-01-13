@@ -29,7 +29,7 @@ public class ItemActionPanel : MonoBehaviour
     public void Consume()
     {
         PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
-        ui_state.DestroyState();
+        ui_state.NextDialogueStep();
         player_data.PrepareConsume(item_data);
     }
 
@@ -51,7 +51,7 @@ public class ItemActionPanel : MonoBehaviour
     {
         PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
       
-        ui_state.DestroyState();
+        ui_state.NextDialogueStep();
         player_data.PrepareDrop(item_data, amount);
     }
 }

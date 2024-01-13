@@ -199,6 +199,28 @@ public abstract class QuestData
         }
 
         bool completed = IsCompleted();
+        if (completed == true)
+        {
+            GameLogger.Log("The Player completed the quest: " + name + "!");
+        }
+    }
+
+    internal bool OnStopPlayerMovement(ActorData actor)
+    {
+        bool stop = false;
+        foreach (QuestMissionData mission in missions)
+        {
+            stop = mission.OnStopPlayerMovement(actor);
+            if (stop == true)
+                break;
+        }
+
+        bool completed = IsCompleted();
+        if (completed == true)
+        {
+            GameLogger.Log("The Player completed the quest: " + name + "!");
+        }
+        return stop;
     }
 
     public bool IsCompleted()

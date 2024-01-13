@@ -76,9 +76,6 @@ public class DungeonData
 
     public void SetRegenerationNeeded()
     {
-        List<ItemData> quest_items = CheckQuestItemRequirements();
-        List<ActorData> quest_actors = CheckQuestActorRequirements();
-
         int counter = 0;
         foreach (DungeonLevelData level_data in dungeon_levels)
         {
@@ -95,7 +92,7 @@ public class DungeonData
     {
         List<ItemData> quest_items = null;
         List<ActorData> quest_actors = null;
-        if (level.regeneration_quest_items == true)
+        if (level.regeneration_quest_goals == true)
         {
             quest_items = CheckQuestItemRequirements();
             quest_actors = CheckQuestActorRequirements();

@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 public abstract class UIState
 {
     public abstract void Update();
-    public abstract void DestroyState();
+    public abstract void NextDialogueStep();
 
     public virtual void Refresh()
     { }
@@ -33,18 +33,18 @@ public class UIStateQuestStartDialog : UIState
         quest_panel.GetComponent<QuestStartPanel>().questgiver = this.questgiver;
 
         quest_panel.transform.Find("AcceptButton").GetComponent<Button>().onClick.AddListener(AcceptQuest);
-        quest_panel.transform.Find("RejectButton").GetComponent<Button>().onClick.AddListener(DestroyState);
+        quest_panel.transform.Find("RejectButton").GetComponent<Button>().onClick.AddListener(NextDialogueStep);
     }
 
     public override void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            DestroyState();
+            NextDialogueStep();
         }
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         GameObject.Destroy(quest_panel);
         GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
@@ -54,7 +54,7 @@ public class UIStateQuestStartDialog : UIState
     {
         GameObject.Find("GameData").GetComponent<GameData>().player_data.AddQuest(quest_data);
         tavern.RemoveQuestgiver(questgiver);   
-        DestroyState();
+        NextDialogueStep();
     }
 }
 
@@ -78,7 +78,7 @@ public class UIStateQuestEndDialog : UIState
     {
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         GameObject.Destroy(quest_panel);
         GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
@@ -101,7 +101,7 @@ public class UIStateQuestEndDialog : UIState
 
         game_data.player_data.active_quests.Remove(quest_data);
 
-        DestroyState();
+        NextDialogueStep();
     }
 }
 
@@ -121,18 +121,18 @@ public class UIStateShopBuy : UIState
         buy_panel.GetComponent<BuyPanel>().item_data = item_data;
 
         buy_panel.transform.Find("BuyButton").GetComponent<Button>().onClick.AddListener(BuyItem);
-        buy_panel.transform.Find("CancelButton").GetComponent<Button>().onClick.AddListener(DestroyState);
+        buy_panel.transform.Find("CancelButton").GetComponent<Button>().onClick.AddListener(NextDialogueStep);
     }
 
     public override void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            DestroyState();
+            NextDialogueStep();
         }
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         GameObject.Destroy(buy_panel);
         GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
@@ -153,7 +153,7 @@ public class UIStateShopBuy : UIState
             GameLogger.Log("The Player buys " + item_data.GetName() + ".");
             store.ReplaceItem(item_data);
         }
-        DestroyState();
+        NextDialogueStep();
     }
 }
 
@@ -168,7 +168,7 @@ public class UIStateInventory : UIState
         inventory_panel.GetComponent<InventoryPanel>().left_side = new PanelSidePlayerEquipment(inventory_panel);
         inventory_panel.GetComponent<InventoryPanel>().right_side = new PanelSidePlayerInventory(inventory_panel);
 
-        inventory_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(DestroyState);
+        inventory_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(NextDialogueStep);
         inventory_panel.GetComponent<InventoryPanel>().ui_state = this;
     }
 
@@ -176,11 +176,11 @@ public class UIStateInventory : UIState
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.iKey.wasPressedThisFrame)
         {
-            DestroyState();
+            NextDialogueStep();
         }
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         GameObject.Destroy(inventory_panel);
         GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
@@ -198,7 +198,7 @@ public class UIStateInventoryChest : UIState
         inventory_panel.GetComponent<InventoryPanel>().left_side = new PanelSideChestInventory(inventory_panel, chest);
         inventory_panel.GetComponent<InventoryPanel>().right_side = new PanelSidePlayerInventory(inventory_panel);
 
-        inventory_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(DestroyState);
+        inventory_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(NextDialogueStep);
         inventory_panel.GetComponent<InventoryPanel>().ui_state = this;
     }
 
@@ -206,11 +206,11 @@ public class UIStateInventoryChest : UIState
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.iKey.wasPressedThisFrame)
         {
-            DestroyState();
+            NextDialogueStep();
         }
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         GameObject.Destroy(inventory_panel);
         GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
@@ -226,18 +226,18 @@ public class UIStateCharacter : UIState
         character_panel = GameObject.Instantiate(GameObject.Find("UI").GetComponent<UI>().character_panel_prefab,
             GameObject.Find("WindowCanvas").transform, false);
 
-        character_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(DestroyState);
+        character_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(NextDialogueStep);
     }
 
     public override void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.pKey.wasPressedThisFrame)
         {
-            DestroyState();
+            NextDialogueStep();
         }
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         GameObject.Destroy(character_panel);
         GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
@@ -332,7 +332,7 @@ public class UIStateSelectTile : UIState
         }
         else if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            DestroyState();
+            NextDialogueStep();
         }
 
         if (x.HasValue && y.HasValue)
@@ -345,12 +345,12 @@ public class UIStateSelectTile : UIState
 
             PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
             player_data.ActivateTalent(talent_index, talent_input_data);
-            DestroyState();
+            NextDialogueStep();
             GameObject.Find("UI").GetComponent<UI>().StartCoroutine("ContinueTurns");
         }
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         foreach (GameObject go in tile_selectors)
             GameObject.Destroy(go);
@@ -379,7 +379,7 @@ public class UIStateSelectTile : UIState
         talent_input_data.local_data = GameObject.Find("GameData").GetComponent<GameData>().current_map;
 
         player_data.ActivateTalent(talent_index, talent_input_data);
-        DestroyState();
+        NextDialogueStep();
         GameObject.Find("UI").GetComponent<UI>().StartCoroutine("ContinueTurns");
     }
 }
@@ -410,11 +410,11 @@ public class UIStateEscapePanel : UIState
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            DestroyState();
+            NextDialogueStep();
         }
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         GameObject.Destroy(escape_panel); 
         if (controls_panel)
@@ -468,7 +468,7 @@ public class UIStateDeathPanel : UIState
     {
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         GameObject.Destroy(death_panel);
         GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
@@ -483,18 +483,18 @@ public class UIStateSkills : UIState
         skills_panel = GameObject.Instantiate(GameObject.Find("UI").GetComponent<UI>().skill_panel_prefab,
             GameObject.Find("WindowCanvas").transform, false);
      
-        skills_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(DestroyState);
+        skills_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(NextDialogueStep);
     }
 
     public override void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.kKey.wasPressedThisFrame)
         {
-            DestroyState();
+            NextDialogueStep();
         }
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         GameObject.Destroy(skills_panel);
         GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
@@ -515,18 +515,18 @@ public class UIStateQuestJournal : UIState
         journal_panel = GameObject.Instantiate(GameObject.Find("UI").GetComponent<UI>().quest_panel_prefab,
             GameObject.Find("WindowCanvas").transform, false);
      
-        journal_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(DestroyState);
+        journal_panel.transform.Find("CloseButton").GetComponent<Button>().onClick.AddListener(NextDialogueStep);
     }
 
     public override void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame || Keyboard.current.jKey.wasPressedThisFrame)
         {
-            DestroyState();
+            NextDialogueStep();
         }
     }
 
-    public override void DestroyState()
+    public override void NextDialogueStep()
     {
         GameObject.Destroy(journal_panel);
         GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
@@ -535,5 +535,46 @@ public class UIStateQuestJournal : UIState
     public override void Refresh()
     {
         journal_panel.GetComponent<SkillPanel>().Refresh();
+    }
+}
+
+public class UIStateQuestDialogue : UIState
+{
+    public GameObject dialogue_panel;
+    public DialogueData dialogue;
+    public int counter = -1;
+
+    public UIStateQuestDialogue(DialogueData dialogue)
+    {
+        dialogue_panel = GameObject.Instantiate(GameObject.Find("UI").GetComponent<UI>().dialog_panel_prefab,
+            GameObject.Find("WindowCanvas").transform, false);
+     
+        dialogue_panel.transform.Find("ContinueButton").GetComponent<Button>().onClick.AddListener(NextDialogueStep);
+
+        this.dialogue = dialogue;
+        NextDialogueStep();
+    }
+
+    public override void Update()
+    {
+    }
+
+    public override void NextDialogueStep()
+    {
+        ++counter;
+        if (counter == dialogue.dialogue.Count)
+        {
+            GameObject.Destroy(dialogue_panel);
+            GameObject.Find("UI").GetComponent<UI>().ClearUIState(this);
+            return;
+        }
+        dialogue_panel.transform.Find("NPCPanel").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = dialogue.dialogue[counter].npc;
+        dialogue_panel.transform.Find("PlayerPanel").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = dialogue.dialogue[counter].player;
+        dialogue_panel.transform.Find("ContinueButton").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = "Continue (" + (counter+1) +"/" + (dialogue.dialogue.Count) +")";
+    }
+
+    public override void Refresh()
+    {
+        dialogue_panel.GetComponent<SkillPanel>().Refresh();
     }
 }

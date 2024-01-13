@@ -36,6 +36,7 @@ public class UI : MonoBehaviour
     public GameObject controls_panel_prefab;
     public GameObject concepts_panel_prefab;
     public GameObject quest_panel_prefab;
+    public GameObject dialog_panel_prefab;
 
     public List<UIState> current_ui_states;
 
@@ -166,9 +167,15 @@ public class UI : MonoBehaviour
                 AddUIState(new UIStateEscapePanel());
     }
 
-    public void ActivateQuestScreen()
+    public void ActivateQuestJournal()
     {
         if (current_ui_states.Count > 0) return;
                 AddUIState(new UIStateQuestJournal());
+    }
+
+    public void ActivateQuestDialogue(DialogueData dialogue)
+    {
+        if (current_ui_states.Count > 0) return;
+                AddUIState(new UIStateQuestDialogue(dialogue));
     }
 }

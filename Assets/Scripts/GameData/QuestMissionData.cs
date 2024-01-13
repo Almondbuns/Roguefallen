@@ -24,12 +24,17 @@ public abstract class QuestMissionData
     {
     }
 
-    public virtual void OnActorKill(ActorData item)
+    public virtual void OnActorKill(ActorData actor)
     {
     }
 
     public virtual void OnLocationChange(string location)
     {
+    }
+
+    public virtual bool OnStopPlayerMovement(ActorData actor)
+    {
+        return false;
     }
 
     internal virtual List<ItemData> GetQuestItems()
@@ -203,5 +208,120 @@ public class QMDKillMonsters: QuestMissionData
         }
 
         return true;
+    }
+}
+
+public class DialogueData
+{
+    public List<(string npc, string player)> dialogue;
+
+    public DialogueData()
+    {
+        dialogue = new();
+    }
+
+    public void Save(BinaryWriter save)
+    {
+        save.Write(dialogue.Count);
+        foreach (var v in dialogue)
+        {
+            save.Write(v.npc);
+            save.Write(v.player);
+        }
+    }
+
+    public void Load(BinaryReader save)
+    {
+        int size = save.ReadInt32();
+        dialogue = new(size);
+        for (int i = 0; i < size; ++i)
+        {
+            string npc = save.ReadString();
+            string player = save.ReadString();
+            dialogue.Add((npc,player));
+        }
+    }
+}
+public class QMDTalkToNPCs: QuestMissionData
+{
+    public List<(bool is_talked_to, ActorData npc, DialogueData dialogue)> npc;
+
+    public QMDTalkToNPCs()
+    {
+        npc = new();
+    }
+
+    internal override void Save(BinaryWriter save)
+    {
+        base.Save(save);
+
+        save.Write(npc.Count);
+        foreach (var v in npc)
+        {
+            save.Write(v.is_talked_to);
+            //v.monster.Save(save);
+            v.dialogue.Save(save);
+        }
+    }
+
+    internal override void Load(BinaryReader save)
+    {
+        base.Load(save);
+
+        int size = save.ReadInt32();
+        npc = new(size);
+        for (int i = 0; i < size; ++i)
+        {
+            bool is_talked_to = save.ReadBoolean();
+            //ActorData v = new(null);
+            //v.Load(save);
+            //monsters.Add((is_killed, v));
+            DialogueData dialogue = new();
+            dialogue.Load(save);
+            npc.Add((is_talked_to,null,dialogue));
+        }
+    }
+
+    internal override bool IsCompleted()
+    {
+        foreach (var v in npc)
+        {
+            if (v.is_talked_to == false)
+                return false;
+        }
+
+        return true;
+    }
+
+    internal override List<ActorData> GetQuestActors()
+    {
+        List<ActorData> npcs = new();
+        foreach (var v in npc)
+            npcs.Add(v.npc);
+        return npcs;
+    }
+
+    public override bool OnStopPlayerMovement(ActorData actor)
+    {
+        for (int i = 0; i < npc.Count; ++i)
+        {
+            if (actor.id == npc[i].npc.id)
+            {
+                if (npc[i].is_talked_to == false)
+                {
+                    npc[i] = (true, npc[i].npc, npc[i].dialogue);
+                    GameObject.Find("UI").GetComponent<UI>().ActivateQuestDialogue(npc[i].dialogue);
+
+                    GameLogger.Log("You completed part of a quest.");
+                    return true;
+                }
+                else
+                {
+                    GameLogger.Log("You already spoke to that person.");
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

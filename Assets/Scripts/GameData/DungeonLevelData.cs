@@ -122,7 +122,7 @@ public class DungeonLevelData
     public MapData map;
 
     public bool regeneration_needed = true;
-    public bool regeneration_quest_items = false;
+    public bool regeneration_quest_goals = false;
 
     internal void Save(System.IO.BinaryWriter save)
     {
@@ -186,7 +186,7 @@ public class DungeonLevelData
         }
 
         save.Write(regeneration_needed);
-        save.Write(regeneration_quest_items);
+        save.Write(regeneration_quest_goals);
     }
     
     internal void Load(System.IO.BinaryReader save)
@@ -255,7 +255,7 @@ public class DungeonLevelData
         }
 
         regeneration_needed = save.ReadBoolean();
-        regeneration_quest_items = save.ReadBoolean();
+        regeneration_quest_goals = save.ReadBoolean();
         
     }
 
@@ -272,7 +272,7 @@ public class DungeonLevelData
     public void SetRegenerationNeeded(bool regeneration_quest_items)
     {
         regeneration_needed = true;
-        this.regeneration_quest_items = regeneration_quest_items;
+        this.regeneration_quest_goals = regeneration_quest_items;
     }
 
     public void CreateMapLevel(List<ItemData> quest_items, List<ActorData> quest_actors)
@@ -300,7 +300,7 @@ public class DungeonLevelData
         map.CalculateLight(GameObject.Find("GameData").GetComponent<GameData>().biomes[biome_index].ambience_light);
 
         regeneration_needed = false;
-        regeneration_quest_items = false;
+        regeneration_quest_goals = false;
     }
 
     public void DistributeObjects()
@@ -616,6 +616,7 @@ public class DungeonLevelData
                     monster.MoveTo(x,y);                    
                     map.actors.Add(monster);
                     found_position = true;
+                    Debug.Log("Placing quest actor " + monster.prototype.name + ".");
 
                 }
                 ++number_tries;

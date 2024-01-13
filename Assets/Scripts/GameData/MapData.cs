@@ -582,4 +582,34 @@ public class MapData
         return item;
     }
 
+    public bool StopPlayerMovement(int x, int y)
+    {
+        //Check if map catches movement (for example: stores use movement to buy things)
+
+        ActorData actor = GetActorOnTile(x,y);
+        if (actor != null)
+        {
+            if (actor.is_quest_actor == true)
+            {
+                PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
+                QuestData quest = player_data.active_quests.Find(x => x.id == actor.quest_id);
+                if (quest != null)
+                {
+                    if (quest.OnStopPlayerMovement(actor) == true)
+                    return true;
+                }
+            }
+        }
+
+        bool stop_movement = false;
+
+        foreach (MapFeatureData feature in features)
+        {
+            if (feature.OnPlayerMovement(x,y) == false)
+                stop_movement = true;
+        }
+        
+        return stop_movement;
+    }
+
 }
