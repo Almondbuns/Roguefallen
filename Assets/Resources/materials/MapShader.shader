@@ -70,10 +70,8 @@ Shader "Unlit/MapShader"
                 fixed4 col2 = tex2D(_DetailTex, i.uv2);
                 fixed4 col3 = tex2D(_LightTex, i.uv3);
                 fixed4 col4 = tex2D(_VisibilityTex, i.uv4);
-                if (col2.a == 1)
-                    return col2 * col3 * col4;
-                else
-                    return col1 * col3 * col4;
+               
+                return (col1 * (1-col2.a) + col2 * col2.a) * col3 * col4;
             }
             ENDCG
         }

@@ -19,11 +19,11 @@ public class BiomeCave : BiomeData
 
         collection = new();
         collection.Add(new MapObjectData("cave_mushroom_blue") { emits_light = true, light_color = new Color(0.0f,0.0f,0.9f), movement_blocked = false, sight_blocked = false });
-        objects["light_blue"] = collection;
+        objects["light_1"] = collection;
 
         collection = new();
         collection.Add(new MapObjectData("cave_mushroom_orange") { emits_light = true, light_color = new Color(0.9f,0.6f,0.3f), movement_blocked = false, sight_blocked = false }) ;
-        objects["light_orange"] = collection;
+        objects["light_2"] = collection;
 
         collection = new();
         collection.Add(new MapObjectData("cave_wall_1"));
@@ -37,7 +37,7 @@ public class BiomeCave : BiomeData
         collection.Add(new MapObjectData("cave_stones_2"));
         collection.Add(new MapObjectData("cave_stones_3") { sight_blocked = false });
         collection.Add(new MapObjectData("cave_stones_4") { sight_blocked = false });
-        objects["stone"] = collection;
+        objects["obstacle"] = collection;
 
         room_list = new();
     }
@@ -287,7 +287,7 @@ public class BiomeCave : BiomeData
                         }
                         else
                         {
-                            map.tiles[x, y].objects.Add(objects["stone"].Random());
+                            map.tiles[x, y].objects.Add(objects["obstacle"].Random());
                         }
                     }
                 }
@@ -301,9 +301,9 @@ public class BiomeCave : BiomeData
             map.tiles[r_pos.x, r_pos.y].objects.Clear();
             
             if (is_blue_room == true)
-                map.tiles[r_pos.x, r_pos.y].objects.Add(objects["light_blue"].Random());
+                map.tiles[r_pos.x, r_pos.y].objects.Add(objects["light_1"].Random());
             else
-                map.tiles[r_pos.x, r_pos.y].objects.Add(objects["light_orange"].Random());
+                map.tiles[r_pos.x, r_pos.y].objects.Add(objects["light_2"].Random());
         }
     }
 }

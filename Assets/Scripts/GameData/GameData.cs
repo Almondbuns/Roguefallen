@@ -118,6 +118,7 @@ public class GameData : MonoBehaviour
             new BiomeCave(),
             new BiomeSewers(),
             new BiomeCastle(),
+            new BiomeFrozenCave(),
         };
 
         player_data = new PlayerData(starting_level);
@@ -265,7 +266,7 @@ public class GameData : MonoBehaviour
             {
                 DungeonLevelData level_data = new DungeonLevelData
                 {
-                    biome_index = 2,
+                    biome_index = 5,
                     //is_always_visible = true,
 
                     map_features =
