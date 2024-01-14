@@ -110,6 +110,95 @@ public class EffectAddMovementTime : EffectData
     }
    
 }
+public class EffectAddSlashResistance : EffectData
+{
+    public EffectAddSlashResistance()
+    {
+        name = "Slash Resistance";
+        icon = "images/effects/effect_slowdown";
+    }
+   
+}
+
+public class EffectAddPierceResistance : EffectData
+{
+    public EffectAddPierceResistance()
+    {
+        name = "Pierce Resistance";
+        icon = "images/effects/effect_slowdown";
+    }
+   
+}
+
+public class EffectAddCrushResistance : EffectData
+{
+    public EffectAddCrushResistance()
+    {
+        name = "Crush Resistance";
+        icon = "images/effects/effect_slowdown";
+    }
+   
+}
+
+public class EffectAddFireResistance : EffectData
+{
+    public EffectAddFireResistance()
+    {
+        name = "Fire Resistance";
+        icon = "images/effects/effect_slowdown";
+    }
+   
+}
+
+public class EffectAddIceResistance : EffectData
+{
+    public EffectAddIceResistance()
+    {
+        name = "Ice Resistance";
+        icon = "images/effects/effect_slowdown";
+    }
+   
+}
+
+public class EffectAddLightningResistance : EffectData
+{
+    public EffectAddLightningResistance()
+    {
+        name = "Lightning Resistance";
+        icon = "images/effects/effect_slowdown";
+    }
+   
+}
+
+public class EffectAddMagicResistance : EffectData
+{
+    public EffectAddMagicResistance()
+    {
+        name = "Magic Resistance";
+        icon = "images/effects/effect_slowdown";
+    }
+   
+}
+
+public class EffectAddDivineResistance : EffectData
+{
+    public EffectAddDivineResistance()
+    {
+        name = "Divine Resistance";
+        icon = "images/effects/effect_slowdown";
+    }
+   
+}
+
+public class EffectAddDarkResistance : EffectData
+{
+    public EffectAddDarkResistance()
+    {
+        name = "Dark Resistance";
+        icon = "images/effects/effect_slowdown";
+    }
+   
+}
 
 public class EffectConfusion : EffectData
 {

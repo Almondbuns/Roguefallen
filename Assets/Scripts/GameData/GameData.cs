@@ -379,7 +379,8 @@ public class GameData : MonoBehaviour
                         (typeof(Chest), 0, 1),
                         //(typeof(BearTrap), 5, 10),
                         (typeof(IceSpikeTrap), 5, 10),
-                        (typeof(SpiderWebTrap), 10, 20),
+                        (typeof(IceWaterTrap), 50, 100),
+                        //(typeof(SpiderWebTrap), 10, 20),
                     };
                 }
                 else 

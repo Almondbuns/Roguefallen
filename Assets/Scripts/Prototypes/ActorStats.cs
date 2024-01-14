@@ -74,7 +74,7 @@ public class MeterResistances
 
 public class ProbabilityResistances
 {
-    List<DamageTypeResistances> resistances;
+    public List<DamageTypeResistances> resistances;
 
     public ProbabilityResistances()
     {
@@ -94,17 +94,7 @@ public class ProbabilityResistances
         resistances[(int)type] = resistance;
     }
 
-    public float GetDamageMultiplyer(DamageType type)
-    {
-        return GetDamageMultiplyer(resistances[(int)type]);
-    }
-
-    public float GetEffectProbability(DamageType type)
-    {
-        return GetEffectProbability(resistances[(int)type]);
-    }
-
-    static float GetDamageMultiplyer(DamageTypeResistances resistance_level)
+    public static float GetDamageMultiplyer(DamageTypeResistances resistance_level)
     {
         if (resistance_level <= DamageTypeResistances.EXTREMELY_WEAK)
             return 2;
@@ -122,7 +112,7 @@ public class ProbabilityResistances
             return 0.4f;
     }
 
-    static float GetEffectProbability(DamageTypeResistances resistance_level)
+    public static float GetEffectProbability(DamageTypeResistances resistance_level)
     {
         if (resistance_level <= DamageTypeResistances.EXTREMELY_WEAK)
             return .95f;

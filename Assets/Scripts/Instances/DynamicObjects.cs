@@ -283,6 +283,39 @@ public class IceSpikeTrap : ActorPrototype
     }
 }
 
+public class IceWaterTrap : ActorPrototype
+{
+    public IceWaterTrap(int level) : base(level)
+    {
+        name = "Water Trap";
+        icon = "images/objects/ice_cave_water_trap";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
+        blocks_tiles = false;
+        is_hidden = true;
+
+        stats.health_max = 10;
+        stats.to_hit = 10;
+        stats.dodge = -100;
+        stats.stealth = 5;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+    }
+
+    public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
+    {
+        if (this_actor.is_currently_hidden == true)
+            this_actor.SetHidden(false);
+        
+        GameLogger.Log("The ice breaks and reveals a " + name.ToLower() + ".");
+        target_actor.TryToHit(this_actor, stats.to_hit, new List<(DamageType type, int damage, int armor_penetration)>() { (DamageType.ICE, 2, 2)}, 
+        new List<EffectData> { new EffectAddIceResistance { damage_type = DamageType.ICE, amount = -1, duration = 2000 }});
+    }
+}
+
 public class SpiderWebTrap : ActorPrototype
 {
     public SpiderWebTrap(int level) : base(level)

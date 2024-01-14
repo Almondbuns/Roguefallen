@@ -670,7 +670,7 @@ public class ActorData
                 message += " and ";
 
             // First multiply damage with resistance
-            int damage_multiplied = (int) (damage_per_type.damage * prototype.stats.probability_resistances.GetDamageMultiplyer(damage_per_type.type));
+            int damage_multiplied = (int) (damage_per_type.damage * GetDamageMultiplyer(damage_per_type.type));
              //Increase damage if counter vulnerable
             if (GetCurrentAdditiveEffectAmount<EffectCounterStrikeVulnerable>() > 0)
             {
@@ -851,7 +851,7 @@ public class ActorData
                     continue;
                 }
 
-                float effect_probability = effect_damage_probability * prototype.stats.probability_resistances.GetEffectProbability(effect.damage_type);
+                float effect_probability = effect_damage_probability * GetEffectProbability(effect.damage_type);
                 float dice = UnityEngine.Random.Range(0, 1.0f);
                 if (dice > effect_probability)
                 {
@@ -1291,4 +1291,41 @@ public class ActorData
     {
         current_substained_talents_id.Clear();
     }
+
+    public float GetResistance(DamageType type)
+    {
+        int base_resistance = (int) prototype.stats.probability_resistances.resistances[(int)type];
+        int resistance = base_resistance;
+        if (type == DamageType.SLASH)
+            resistance += GetCurrentAdditiveEffectAmount<EffectAddSlashResistance>();
+        else if (type == DamageType.PIERCE)
+            resistance += GetCurrentAdditiveEffectAmount<EffectAddPierceResistance>();
+        else if (type == DamageType.CRUSH)
+            resistance += GetCurrentAdditiveEffectAmount<EffectAddCrushResistance>();
+        else if (type == DamageType.FIRE)
+            resistance += GetCurrentAdditiveEffectAmount<EffectAddFireResistance>();
+        else if (type == DamageType.ICE)
+            resistance += GetCurrentAdditiveEffectAmount<EffectAddIceResistance>();
+        else if (type == DamageType.LIGHTNING)
+            resistance += GetCurrentAdditiveEffectAmount<EffectAddLightningResistance>();
+        else if (type == DamageType.MAGIC)
+            resistance += GetCurrentAdditiveEffectAmount<EffectAddMagicResistance>();
+        else if (type == DamageType.DIVINE)
+            resistance += GetCurrentAdditiveEffectAmount<EffectAddDivineResistance>();
+        else if (type == DamageType.DARK)
+            resistance += GetCurrentAdditiveEffectAmount<EffectAddDarkResistance>();
+
+        return resistance;
+    }
+
+    public float GetDamageMultiplyer(DamageType type)
+    {
+        return ProbabilityResistances.GetDamageMultiplyer((DamageTypeResistances) GetResistance(type));
+    }
+
+    public float GetEffectProbability(DamageType type)
+    {
+        return ProbabilityResistances.GetEffectProbability((DamageTypeResistances) GetResistance(type));
+    }
+
 }
