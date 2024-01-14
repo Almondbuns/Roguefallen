@@ -109,35 +109,35 @@ public class ProbabilityResistances
         if (resistance_level <= DamageTypeResistances.EXTREMELY_WEAK)
             return 2;
         if (resistance_level <= DamageTypeResistances.VERY_WEAK)
-            return 1.5f;
+            return 1.50f;
         if (resistance_level <= DamageTypeResistances.WEAK)
-            return 1.25f;
+            return 1.20f;
         if (resistance_level <= DamageTypeResistances.NORMAL)
             return 1;
         if (resistance_level <= DamageTypeResistances.RESISTANT)
-            return 0.75f;
+            return 0.8f;
         if (resistance_level <= DamageTypeResistances.VERY_RESISTANT)
-            return 0.5f;
+            return 0.6f;
         else
-            return 0.25f;
+            return 0.4f;
     }
 
     static float GetEffectProbability(DamageTypeResistances resistance_level)
     {
         if (resistance_level <= DamageTypeResistances.EXTREMELY_WEAK)
-            return .99f;
-        if (resistance_level <= DamageTypeResistances.VERY_WEAK)
             return .95f;
-        if (resistance_level <= DamageTypeResistances.WEAK)
+        if (resistance_level <= DamageTypeResistances.VERY_WEAK)
             return .9f;
-        if (resistance_level <= DamageTypeResistances.NORMAL)
+        if (resistance_level <= DamageTypeResistances.WEAK)
             return .8f;
+        if (resistance_level <= DamageTypeResistances.NORMAL)
+            return .7f;
         if (resistance_level <= DamageTypeResistances.RESISTANT)
             return 0.5f;
         if (resistance_level <= DamageTypeResistances.VERY_RESISTANT)
-            return 0.25f;
+            return 0.3f;
         else
-            return 0.05f;
+            return 0.1f;
     }
 }
 
