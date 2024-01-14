@@ -81,6 +81,42 @@ public class CharacterPanel : MonoBehaviour
         transform.Find("Meter Resistances").Find("Disease").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = player_data.meter_resistances.resistances[DamageType.DISEASE] + "/" + player_data.GetMaxDiseaseResistance().ToString();
         transform.Find("Meter Resistances").Find("Poison").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = player_data.meter_resistances.resistances[DamageType.POISON] + "/" + player_data.GetMaxPoisonResistance().ToString();
         transform.Find("Meter Resistances").Find("Insanity").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = player_data.meter_resistances.resistances[DamageType.INSANITY] + "/" + player_data.GetMaxInsanityResistance().ToString();
+
+        transform.Find("General Resistances").Find("Slash").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = ((DamageTypeResistances) player_data.GetResistance(DamageType.SLASH)).ToString().Replace("_", " ").ToLower();
+        transform.Find("General Resistances").Find("Slash").Find("Damage").GetComponent<TMPro.TextMeshProUGUI>().text = ProbabilityResistances.GetDamageMultiplyer((DamageTypeResistances) player_data.GetResistance(DamageType.SLASH)).ToString().Replace(",",".");
+        transform.Find("General Resistances").Find("Slash").Find("Probability").GetComponent<TMPro.TextMeshProUGUI>().text = (100 * ProbabilityResistances.GetEffectProbability((DamageTypeResistances) player_data.GetResistance(DamageType.SLASH))).ToString() + "%";
+
+        transform.Find("General Resistances").Find("Pierce").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = ((DamageTypeResistances) player_data.GetResistance(DamageType.PIERCE)).ToString().Replace("_", " ").ToLower();
+        transform.Find("General Resistances").Find("Pierce").Find("Damage").GetComponent<TMPro.TextMeshProUGUI>().text = ProbabilityResistances.GetDamageMultiplyer((DamageTypeResistances) player_data.GetResistance(DamageType.PIERCE)).ToString().Replace(",",".");
+        transform.Find("General Resistances").Find("Pierce").Find("Probability").GetComponent<TMPro.TextMeshProUGUI>().text = (100 * ProbabilityResistances.GetEffectProbability((DamageTypeResistances) player_data.GetResistance(DamageType.PIERCE))).ToString() + "%";
+
+        transform.Find("General Resistances").Find("Crush").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = ((DamageTypeResistances) player_data.GetResistance(DamageType.CRUSH)).ToString().Replace("_", " ").ToLower();
+        transform.Find("General Resistances").Find("Crush").Find("Damage").GetComponent<TMPro.TextMeshProUGUI>().text = ProbabilityResistances.GetDamageMultiplyer((DamageTypeResistances) player_data.GetResistance(DamageType.CRUSH)).ToString().Replace(",",".");
+        transform.Find("General Resistances").Find("Crush").Find("Probability").GetComponent<TMPro.TextMeshProUGUI>().text = (100 * ProbabilityResistances.GetEffectProbability((DamageTypeResistances) player_data.GetResistance(DamageType.CRUSH))).ToString() + "%";
+
+        transform.Find("General Resistances").Find("Fire").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = ((DamageTypeResistances) player_data.GetResistance(DamageType.FIRE)).ToString().Replace("_", " ").ToLower();
+        transform.Find("General Resistances").Find("Fire").Find("Damage").GetComponent<TMPro.TextMeshProUGUI>().text = ProbabilityResistances.GetDamageMultiplyer((DamageTypeResistances) player_data.GetResistance(DamageType.FIRE)).ToString().Replace(",",".");
+        transform.Find("General Resistances").Find("Fire").Find("Probability").GetComponent<TMPro.TextMeshProUGUI>().text = (100 * ProbabilityResistances.GetEffectProbability((DamageTypeResistances) player_data.GetResistance(DamageType.FIRE))).ToString() + "%";
+
+        transform.Find("General Resistances").Find("Ice").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = ((DamageTypeResistances) player_data.GetResistance(DamageType.ICE)).ToString().Replace("_", " ").ToLower();
+        transform.Find("General Resistances").Find("Ice").Find("Damage").GetComponent<TMPro.TextMeshProUGUI>().text = ProbabilityResistances.GetDamageMultiplyer((DamageTypeResistances) player_data.GetResistance(DamageType.ICE)).ToString().Replace(",",".");
+        transform.Find("General Resistances").Find("Ice").Find("Probability").GetComponent<TMPro.TextMeshProUGUI>().text = (100 * ProbabilityResistances.GetEffectProbability((DamageTypeResistances) player_data.GetResistance(DamageType.ICE))).ToString() + "%";
+
+        transform.Find("General Resistances").Find("Lightning").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = ((DamageTypeResistances) player_data.GetResistance(DamageType.LIGHTNING)).ToString().Replace("_", " ").ToLower();
+        transform.Find("General Resistances").Find("Lightning").Find("Damage").GetComponent<TMPro.TextMeshProUGUI>().text = ProbabilityResistances.GetDamageMultiplyer((DamageTypeResistances) player_data.GetResistance(DamageType.LIGHTNING)).ToString().Replace(",",".");
+        transform.Find("General Resistances").Find("Lightning").Find("Probability").GetComponent<TMPro.TextMeshProUGUI>().text = (100 * ProbabilityResistances.GetEffectProbability((DamageTypeResistances) player_data.GetResistance(DamageType.LIGHTNING))).ToString() + "%";
+
+        transform.Find("General Resistances").Find("Magic").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = ((DamageTypeResistances) player_data.GetResistance(DamageType.MAGIC)).ToString().Replace("_", " ").ToLower();
+        transform.Find("General Resistances").Find("Magic").Find("Damage").GetComponent<TMPro.TextMeshProUGUI>().text = ProbabilityResistances.GetDamageMultiplyer((DamageTypeResistances) player_data.GetResistance(DamageType.MAGIC)).ToString().Replace(",",".");
+        transform.Find("General Resistances").Find("Magic").Find("Probability").GetComponent<TMPro.TextMeshProUGUI>().text = (100 * ProbabilityResistances.GetEffectProbability((DamageTypeResistances) player_data.GetResistance(DamageType.MAGIC))).ToString() + "%";
+
+        transform.Find("General Resistances").Find("Divine").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = ((DamageTypeResistances) player_data.GetResistance(DamageType.DIVINE)).ToString().Replace("_", " ").ToLower();
+        transform.Find("General Resistances").Find("Divine").Find("Damage").GetComponent<TMPro.TextMeshProUGUI>().text = ProbabilityResistances.GetDamageMultiplyer((DamageTypeResistances) player_data.GetResistance(DamageType.DIVINE)).ToString().Replace(",",".");
+        transform.Find("General Resistances").Find("Divine").Find("Probability").GetComponent<TMPro.TextMeshProUGUI>().text = (100 * ProbabilityResistances.GetEffectProbability((DamageTypeResistances) player_data.GetResistance(DamageType.DIVINE))).ToString() + "%";
+
+        transform.Find("General Resistances").Find("Dark").Find("Resistance").GetComponent<TMPro.TextMeshProUGUI>().text = ((DamageTypeResistances) player_data.GetResistance(DamageType.DARK)).ToString().Replace("_", " ").ToLower();
+        transform.Find("General Resistances").Find("Dark").Find("Damage").GetComponent<TMPro.TextMeshProUGUI>().text = ProbabilityResistances.GetDamageMultiplyer((DamageTypeResistances) player_data.GetResistance(DamageType.DARK)).ToString().Replace(",",".");
+        transform.Find("General Resistances").Find("Dark").Find("Probability").GetComponent<TMPro.TextMeshProUGUI>().text = (100 * ProbabilityResistances.GetEffectProbability((DamageTypeResistances) player_data.GetResistance(DamageType.DARK))).ToString() + "%";
     }
 
     public void AddStrength()

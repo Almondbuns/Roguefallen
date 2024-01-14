@@ -1292,7 +1292,7 @@ public class ActorData
         current_substained_talents_id.Clear();
     }
 
-    public float GetResistance(DamageType type)
+    public int GetResistance(DamageType type)
     {
         int base_resistance = (int) prototype.stats.probability_resistances.resistances[(int)type];
         int resistance = base_resistance;
