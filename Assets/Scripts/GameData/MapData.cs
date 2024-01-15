@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 public class MapObjectData
@@ -612,4 +613,23 @@ public class MapData
         return stop_movement;
     }
 
+    internal void DistributeEffect(int x1, int y1, int x2, int y2, EffectData effect)
+    {
+        for (int i = x1; i < x2; ++i)
+        {
+            for (int j = y1; j < y2; ++j)
+            {
+                DistributeEffect(i, j, effect);
+            }
+        }
+    }
+
+    internal void DistributeEffect(int i, int j, EffectData effect)
+    {
+        var list = actors.FindAll(x => x.X == i && x.Y == j);
+        foreach(ActorData actor in list)
+        {
+            actor.TryToGainEffect(effect);
+        }
+    }
 }

@@ -47,7 +47,9 @@ public class GameEngine : MonoBehaviour
             if (game_data.player_data.current_action.HasFinished() == true)
                 break;
 
+            game_data.current_dungeon.Tick();
             game_data.current_map.Tick();
+            
             float wait_time = game_data.player_data.Tick();
             if (wait_time > 0)
             {

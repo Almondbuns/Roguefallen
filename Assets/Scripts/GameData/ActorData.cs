@@ -619,6 +619,26 @@ public class ActorData
         return value;
     }
 
+    public void TryToGainEffect(EffectData effect)
+    {
+        if (effect.damage_type == DamageType.UNKNOWN)
+        {
+            Debug.Log("Error: Damage Type in Effect " + effect.name + " not set.");
+            return;
+        }
+
+        float effect_probability = GetEffectProbability(effect.damage_type);
+        float dice = UnityEngine.Random.Range(0, 1.0f);
+        if (dice > effect_probability)
+        {
+            GameLogger.Log("The " + prototype.name + " resists an effect.");
+            HandleResist?.Invoke();
+            return;
+        }
+
+        AddEffect(effect.Copy());
+    }
+
     public virtual void TryToHit(ActorData src_actor, int to_hit, List<(DamageType type , int damage, int armor_penetration)> damage, List<EffectData> effects, List<Type> diseases = null, List<Type> poisons = null)
     {
         //Parry
@@ -839,29 +859,11 @@ public class ActorData
 
         }
 
-        float effect_damage_probability = 1; // damage_sum / (damage_sum + absorb_sum);
-
         if (effects != null)
         {
             foreach (EffectData effect in effects)
             {
-                if (effect.damage_type == DamageType.UNKNOWN)
-                {
-                    Debug.Log("Error: Damage Type in Effect " + effect.name + " not set.");
-                    continue;
-                }
-
-                float effect_probability = effect_damage_probability * GetEffectProbability(effect.damage_type);
-                float dice = UnityEngine.Random.Range(0, 1.0f);
-                if (dice > effect_probability)
-                {
-                    GameLogger.Log("The " + prototype.name + " resists an effect.");
-                    HandleResist?.Invoke();
-                    continue;
-                }
-
-                AddEffect(effect.Copy());
-                
+                TryToGainEffect(effect);
             }
         }
 
@@ -1154,6 +1156,14 @@ public class ActorData
 
     public void AddEffect(EffectData effect)
     {
+        if (effect.execution_time == EffectDataExecutionTime.START || effect.execution_time == EffectDataExecutionTime.CONTINUOUS) 
+            DoEffectOnce(effect);
+
+        if (effect.duration > 0)
+        {
+            current_effects.Add(new ActorEffectData { current_tick = 0, effect = effect });
+        }
+
         string text = "The " + prototype.name + " gains the effect: " + effect.name.ToLower();
         if (effect.amount != 0 && effect.show_amount_info == true) 
             text += ": " + effect.amount;
@@ -1163,18 +1173,12 @@ public class ActorData
         GameLogger.Log(text);
         
         HandleEffect?.Invoke(true, effect);
-
-        if (effect.execution_time == EffectDataExecutionTime.START || effect.execution_time == EffectDataExecutionTime.CONTINUOUS) 
-            DoEffectOnce(effect);
-
-        if (effect.duration > 0)
-        {
-            current_effects.Add(new ActorEffectData { current_tick = 0, effect = effect });
-        }
     }
 
     public void RemoveEffect(ActorEffectData effect)
     {
+        current_effects.Remove(effect);
+
         string text = "The "+ prototype.name +"  loses the effect: " + effect.effect.name.ToLower();
         if (effect.effect.amount != 0 && effect.effect.show_amount_info == true) 
             text += ": " + effect.effect.amount;
@@ -1184,8 +1188,6 @@ public class ActorData
         GameLogger.Log(text);
 
         HandleEffect?.Invoke(false, effect.effect);
-
-        current_effects.Remove(effect);
     }
 
 

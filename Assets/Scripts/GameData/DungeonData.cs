@@ -38,6 +38,7 @@ public class DungeonData
 {
     public string name;
     public bool is_persistent = false;
+    public long tick_counter = 0;
 
     public List<DungeonLevelData> dungeon_levels;
 
@@ -49,6 +50,8 @@ public class DungeonData
         save.Write(dungeon_levels.Count);
         foreach (DungeonLevelData d in dungeon_levels)
             d.Save(save);
+
+        save.Write(tick_counter);
 
     }
 
@@ -65,6 +68,8 @@ public class DungeonData
             d.Load(save);
             dungeon_levels.Add(d);
         }
+
+        tick_counter = save.ReadInt64();
     }
 
 
@@ -164,5 +169,10 @@ public class DungeonData
         }
 
         return null;
+    }
+
+    public virtual void Tick()
+    {
+        //Dungeons may implement special time-based features
     }
 }
