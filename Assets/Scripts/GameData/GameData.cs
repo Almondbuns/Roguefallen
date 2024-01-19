@@ -7,7 +7,7 @@ using System.IO;
 
 public class GameData : MonoBehaviour
 {
-    public static bool GODMODE = false;
+    public static bool GODMODE = true;
     public int starting_level = 1;
 
     public string game_version = "0.2 Alpha 1";
@@ -169,7 +169,7 @@ public class GameData : MonoBehaviour
             });
         }
 
-        for (int i = 0; i < number_of_dungeons_per_type; ++ i)
+        for (int i = 0; i < number_of_dungeons_per_type / 2; ++ i)
         {
             dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
             {          
@@ -177,6 +177,15 @@ public class GameData : MonoBehaviour
                 dungeon_change_type = typeof(MFStandardDungeonEntrance),
                 dungeon_change_image = "images/objects/cave_1",
                 target_dungeon_name = "The Frosty Cave",
+                target_entrance_name = "World Map Exit",
+            });
+
+            dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
+            {          
+                name = "Cave Entrance " + i,
+                dungeon_change_type = typeof(MFStandardDungeonEntrance),
+                dungeon_change_image = "images/objects/cave_1",
+                target_dungeon_name = "The Mountain Cave",
                 target_entrance_name = "World Map Exit",
             });
         }
@@ -253,10 +262,13 @@ public class GameData : MonoBehaviour
             });
         }
 
-        for (int i = 0; i < number_of_dungeons_per_type; ++i)
+        for (int i = 0; i < number_of_dungeons_per_type / 2; ++i)
         {
 
             DungeonData cave = new FrostyCave();
+            dungeons.Add(cave);   
+
+            cave = new MountainCave();
             dungeons.Add(cave);            
         }
 
@@ -281,27 +293,6 @@ public class GameData : MonoBehaviour
                         //(typeof(MFCaveTreasureRoom), 0, 1), 
                         //(typeof(MFCaveOilRoom), 0, 2),                                           
                     },                
-
-                    encounters =
-                    {
-                        new EncounterData() { type_amounts = {(typeof(Roach),1,1)}, level_min = 2, level_max = 7,},
-                        new EncounterData() { type_amounts = {(typeof(Centipede),1,1)}, level_min = 3, level_max = 5,},
-                        new EncounterData() { type_amounts = {(typeof(Fly),1,2)}, level_min = 1, level_max = 4,},
-                        new EncounterData() { type_amounts = {(typeof(Worm),1,3)}, level_min = 1, level_max = 9,},
-                        new EncounterData() { type_amounts = {(typeof(Rat),1,3)}, level_min = 1, level_max = 6,},
-                        new EncounterData() { type_amounts = {(typeof(Ooz),1,1)}, level_min = 2, level_max = 10,},
-                        new EncounterData() { type_amounts = {(typeof(Bear),1,1)}, level_min = 6, level_max = 10,},
-                        new EncounterData() { type_amounts = {(typeof(Bat),3,5)}, level_min = 5, level_max = 10,},
-                        new EncounterData() { type_amounts = {(typeof(Mushroom),1,1)}, level_min = 1, level_max = 6,},
-                        new EncounterData() { type_amounts = {(typeof(Flytrap),2,4)}, level_min = 6, level_max = 10,},
-                        new EncounterData() { type_amounts = {(typeof(Spider),1,1)}, level_min = 1, level_max = 6,},
-                        new EncounterData() { type_amounts = {(typeof(Lemming),2,5)}, level_min = 1, level_max = 6,},
-                        new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2)}, level_min = 6, level_max = 6,},
-                        new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2),(typeof(OstrillThief),1,1)}, level_min = 7, level_max = 7,},
-                        new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2),(typeof(OstrillThief),1,2)}, level_min = 8, level_max = 8,},
-                        new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,3),(typeof(OstrillThief),1,3)}, level_min = 9, level_max = 9,},
-                        new EncounterData() { type_amounts = {(typeof(OstrillWarrior),2,3),(typeof(OstrillThief),1,3)}, level_min = 10, level_max = 10,},                                
-                    }
                 };
 
                 if (level >= 2)
@@ -517,27 +508,6 @@ public class GameData : MonoBehaviour
                         //(typeof(MFCaveTreasureRoom), 0, 1), 
                         //(typeof(MFCaveOilRoom), 0, 2),                                           
                     },                
-
-                    encounters =
-                    {
-                        new EncounterData() { type_amounts = {(typeof(Roach),1,1)}, level_min = 2, level_max = 7,},
-                        new EncounterData() { type_amounts = {(typeof(Centipede),1,1)}, level_min = 3, level_max = 5,},
-                        new EncounterData() { type_amounts = {(typeof(Fly),1,2)}, level_min = 1, level_max = 4,},
-                        new EncounterData() { type_amounts = {(typeof(Worm),1,3)}, level_min = 1, level_max = 9,},
-                        new EncounterData() { type_amounts = {(typeof(Rat),1,3)}, level_min = 1, level_max = 6,},
-                        new EncounterData() { type_amounts = {(typeof(Ooz),1,1)}, level_min = 2, level_max = 10,},
-                        new EncounterData() { type_amounts = {(typeof(Bear),1,1)}, level_min = 6, level_max = 10,},
-                        new EncounterData() { type_amounts = {(typeof(Bat),3,5)}, level_min = 5, level_max = 10,},
-                        new EncounterData() { type_amounts = {(typeof(Mushroom),1,1)}, level_min = 1, level_max = 6,},
-                        new EncounterData() { type_amounts = {(typeof(Flytrap),2,4)}, level_min = 6, level_max = 10,},
-                        new EncounterData() { type_amounts = {(typeof(Spider),1,1)}, level_min = 1, level_max = 6,},
-                        new EncounterData() { type_amounts = {(typeof(Lemming),2,5)}, level_min = 1, level_max = 6,},
-                        new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2)}, level_min = 6, level_max = 6,},
-                        new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2),(typeof(OstrillThief),1,1)}, level_min = 7, level_max = 7,},
-                        new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2),(typeof(OstrillThief),1,2)}, level_min = 8, level_max = 8,},
-                        new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,3),(typeof(OstrillThief),1,3)}, level_min = 9, level_max = 9,},
-                        new EncounterData() { type_amounts = {(typeof(OstrillWarrior),2,3),(typeof(OstrillThief),1,3)}, level_min = 10, level_max = 10,},                                
-                    }
                 };
 
                 if (level >= 2)

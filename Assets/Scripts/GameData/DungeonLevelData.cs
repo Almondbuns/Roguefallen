@@ -116,7 +116,7 @@ public class DungeonLevelData
 
     public List<(Type type, int count_min, int count_max)> map_features;
     public List<DungeonChangeData> dungeon_changes;
-    public List<EncounterData> encounters;
+    public List<(int weight, EncounterData encounter)> encounters;
     public List<(Type type, int min, int max)> dynamic_objects;
 
     public MapData map;
@@ -164,7 +164,8 @@ public class DungeonLevelData
         save.Write(encounters.Count);
         foreach (var v in encounters)
         {
-            v.Save(save);
+            save.Write(v.weight);
+            v.encounter.Save(save);
         }
 
         save.Write(dynamic_objects.Count);
@@ -231,9 +232,10 @@ public class DungeonLevelData
         encounters= new(size);
         for (int i = 0; i < size; ++i)
         {
+            int weight = save.ReadInt32();
             EncounterData v = new();
             v.Load(save);
-            encounters.Add(v);
+            encounters.Add((weight,v));
         }
 
         size = save.ReadInt32();
@@ -501,13 +503,29 @@ public class DungeonLevelData
 
     public void DistributeMonsters()
     {
-        List<EncounterData> possible_encounters = encounters.FindAll(x => x.level_min <= difficulty_level && x.level_max >= difficulty_level);
+        var possible_encounters = encounters.FindAll(x => x.encounter.level_min <= difficulty_level && x.encounter.level_max >= difficulty_level);
         
+        int sum_weight = 0;
+        foreach(var v in possible_encounters)
+            sum_weight += v.weight;
+
         int num_of_encounters = UnityEngine.Random.Range(number_of_encounters.min, number_of_encounters.max +1 );
 
         for (int n = 0; n < num_of_encounters; ++ n)
         {
-            EncounterData encounter = possible_encounters[UnityEngine.Random.Range(0, possible_encounters.Count)];
+            int encounter_index = UnityEngine.Random.Range(1, sum_weight+1);
+            EncounterData encounter = null;
+            int counter = 0;
+            foreach (var v in possible_encounters)
+            {
+                if (encounter_index <= counter + v.weight)
+                {
+                    encounter = v.encounter;
+                    break;
+                }
+                
+                counter += v.weight;
+            }
 
             //search for position of encounter
             int number_tries = 0;

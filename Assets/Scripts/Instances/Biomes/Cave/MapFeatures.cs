@@ -165,7 +165,7 @@ public class MFCaveSpiderRoom : MapFeatureData
             int y = UnityEngine.Random.Range(position.y, position.y + dimensions.y);
             (int x, int y)? tile = map.FindRandomEmptyNeighborTile(x, y);
             if (tile == null) continue;
-            map.Add(new MonsterData(tile.Value.x, tile.Value.y, new Spider(this.difficulty_level)));
+            map.Add(new MonsterData(tile.Value.x, tile.Value.y, new CaveSpider(this.difficulty_level)));
         }
     }
 }

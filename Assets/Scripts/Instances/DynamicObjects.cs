@@ -95,7 +95,7 @@ public class Crate : ActorPrototype
             if (rand <= 0.25f )
                 monster = new MonsterData(tile.Value.x, tile.Value.y, new Rat(stats.level));
             else if (rand <= 0.5f )
-                monster = new MonsterData(tile.Value.x, tile.Value.y, new Spider(stats.level));
+                monster = new MonsterData(tile.Value.x, tile.Value.y, new CaveSpider(stats.level));
             else if (rand <= 0.75f )
                 monster = new MonsterData(tile.Value.x, tile.Value.y, new Lemming(stats.level));
             else 
@@ -340,7 +340,7 @@ public class SpiderWebTrap : ActorPrototype
 
     public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
     {
-        if (target_actor.prototype is Spider) // Spiders are immune
+        if (target_actor.prototype is CommonSpider || target_actor.prototype is CaveSpider || target_actor.prototype is PoisonSpider) // Spiders are immune
             return;
 
         if (this_actor.is_currently_hidden == true)

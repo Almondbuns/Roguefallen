@@ -2,27 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FrostyCave : DungeonData
+public class MountainCave : DungeonData
 {
-    public FrostyCave()
+    public MountainCave()
     {
-        name = "The Frosty Cave";
+        name = "The Mountain Cave";
 
         for (int level = 0; level < 5; ++level)
         {
             DungeonLevelData level_data = new DungeonLevelData
             {
-                biome_index = 5,
+                biome_index = 2,
         
                 map_features =
                 {                    
                     
-                    //(typeof(MFCaveTreasureRoom), 0, 1), 
-                    //(typeof(MFCaveOilRoom), 0, 2),                                           
+                    (typeof(MFCaveTreasureRoom), 0, 1), 
+                    (typeof(MFCaveOilRoom), 0, 2),                                           
                 },                
 
                 encounters =
                 {
+                    (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),1,1)}, level_min = 1, level_max = 1,}),
+                    
+                    (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),1,2)}, level_min = 2, level_max = 2,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(CaveSpider),1,1)}, level_min = 2, level_max = 2,}),
+
+                    (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),2,3)}, level_min = 3, level_max = 3,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(CaveSpider),1,2)}, level_min = 3, level_max = 3,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(PoisonSpider),1,1)}, level_min = 3, level_max = 3,}),
+
+                    (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),1,3), (typeof(CaveSpider),1,2), 
+                        (typeof(PoisonSpider),1,1)}, level_min = 4, level_max = 4,}),
+
+                    (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),2,4), (typeof(CaveSpider),2,3), 
+                        (typeof(PoisonSpider),1,2)}, level_min = 5, level_max = 5,}),
+
                     /*(1, new EncounterData() { type_amounts = {(typeof(Roach),1,1)}, level_min = 2, level_max = 7,}),
                     (1, new EncounterData() { type_amounts = {(typeof(Centipede),1,1)}, level_min = 3, level_max = 5,}),
                     (1, new EncounterData() { type_amounts = {(typeof(Fly),1,2)}, level_min = 1, level_max = 4,}),
@@ -33,7 +48,7 @@ public class FrostyCave : DungeonData
                     (1, new EncounterData() { type_amounts = {(typeof(Bat),3,5)}, level_min = 5, level_max = 10,}),
                     (1, new EncounterData() { type_amounts = {(typeof(Mushroom),1,1)}, level_min = 1, level_max = 6,}),
                     (1, new EncounterData() { type_amounts = {(typeof(Flytrap),2,4)}, level_min = 6, level_max = 10,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Spider),1,1)}, level_min = 1, level_max = 6,}),
+                    (10, new EncounterData() { type_amounts = {(typeof(Spider),1,1)}, level_min = 1, level_max = 6,}),
                     (1, new EncounterData() { type_amounts = {(typeof(Lemming),2,5)}, level_min = 1, level_max = 6,}),
                     (1, new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2)}, level_min = 6, level_max = 6,}),
                     (1, new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2),(typeof(OstrillThief),1,1)}, level_min = 7, level_max = 7,}),
@@ -123,10 +138,8 @@ public class FrostyCave : DungeonData
                     (typeof(Jar), 5, 10),
                     (typeof(BrokenCrate), 5, 10),
                     (typeof(Chest), 0, 1),
-                    //(typeof(BearTrap), 5, 10),
-                    (typeof(IceSpikeTrap), 5, 10),
-                    (typeof(IceWaterTrap), 50, 100),
-                    //(typeof(SpiderWebTrap), 10, 20),
+                    (typeof(BearTrap), 5, 10),
+                    (typeof(SpiderWebTrap), 10, 20),
                 };
             }
           
@@ -152,7 +165,7 @@ public class FrostyCave : DungeonData
                     {
                         name = "Level " + (level + 2) + " Enter",
                         dungeon_change_type = typeof(MFCaveExit),
-                        target_dungeon_name = "The Frosty Cave",
+                        target_dungeon_name = name,
                         target_entrance_name = "Level " + (level + 2) + " Exit",
                         target_entrance_parameter = "Down",
                     }
@@ -165,7 +178,7 @@ public class FrostyCave : DungeonData
                     {
                         name = "Level " + (level + 1) + " Exit",
                         dungeon_change_type = typeof(MFCaveExit),
-                        target_dungeon_name = "The Frosty Cave",
+                        target_dungeon_name = name,
                         target_entrance_name = "Level " + (level + 1) + " Enter",
                         target_entrance_parameter = "Up",
                     }
@@ -177,15 +190,6 @@ public class FrostyCave : DungeonData
 
     public override void Tick()
     {
-        ++tick_counter;
-
-        if (tick_counter >= 5000)
-        {
-            tick_counter = 0;
-            GameLogger.Log("A chilly gust blows through the cave.");
-            GameObject.Find("GameData").GetComponent<GameData>().player_data.TryToGainEffect(
-                new EffectAddMovementTime() { damage_type = DamageType.ICE, amount = 50, duration = 2000});
-        }
     }
 
 }
