@@ -1,6 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+public class MFTombSarcophagusRoom : MapFeatureData
+{
+    public MFTombSarcophagusRoom(MapData map) : base(map)
+    {
+        dimensions = (8, 8);
+    }
+
+    public override void Generate()
+    {
+        for (int i = 0; i < UnityEngine.Random.Range(3,6); ++i)
+        {
+            int tries = 0;
+            bool found = false;
+            int x = 0;
+            int y = 0;
+            DynamicObjectData s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
+            while (found == false && tries < 1000)
+            {
+                x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
+                y = UnityEngine.Random.Range(position.y, position.y + dimensions.y);
+                
+                if (map.CanBeMovedInByActor(x,y, s) == true)
+                    found = true;
+                    
+                ++tries;
+            }
+
+            if (found == true)
+            {
+                s.MoveTo(x,y);
+                map.Add(s);
+            }
+        }
+    }
+}
+
 /*
 public class MFOctopusBoss : MapFeatureData
 {

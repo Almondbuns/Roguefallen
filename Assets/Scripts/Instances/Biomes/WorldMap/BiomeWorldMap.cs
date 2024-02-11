@@ -63,11 +63,9 @@ public class BiomeWorldMap : BiomeData
         collection.Add(new MapObjectData("forest_3"){movement_blocked = false});
         collection.Add(new MapObjectData("forest_4"){movement_blocked = false});
         objects["forest"] = collection;
-
-        room_list = new();
     }
 
-    public (int x, int y, int w, int h)? AddRandomPositionRoom(MapData map, int w, int h, Type dungeon_type = null)
+    public (int x, int y, int w, int h)? AddRandomPositionRoom(MapData map, List<(int x, int y, int w, int h)> room_list, int w, int h, Type dungeon_type = null)
     {
         bool room_found = false;
         int number_of_tries = 0;
@@ -284,7 +282,7 @@ public class BiomeWorldMap : BiomeData
         }
     }
 
-    void DistributeDungeons(List<DungeonChangeData> dungeon_change_data)
+    void DistributeDungeons(List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list)
     {
         foreach (DungeonChangeData dcd in dungeon_change_data)
         {
@@ -297,7 +295,7 @@ public class BiomeWorldMap : BiomeData
             }
 
             MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(dcd.dungeon_change_type, map, dcd);
-            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, feature.dimensions.x, feature.dimensions.y, game_data.biomes[dungeon.GetMapLevelData(0).biome_index].GetType());
+            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, feature.dimensions.x, feature.dimensions.y, game_data.biomes[dungeon.GetMapLevelData(0).biome_index].GetType());
             if (position == null)
                 continue;
             feature.position.x = position.Value.x;
@@ -307,20 +305,16 @@ public class BiomeWorldMap : BiomeData
         }
     }
 
-    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data)
+    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list)
     {
         map = new MapData(max_x, max_y);
         this.max_x = max_x;
         this.max_y = max_y;
 
-        room_list = new();
-
         CreateTerrain();
         CreateForests();
 
-        DistributeDungeons(dungeon_change_data);
-
-     
+        DistributeDungeons(dungeon_change_data, room_list);
 
         foreach (var feature_data in map_features)
         {
@@ -328,7 +322,7 @@ public class BiomeWorldMap : BiomeData
             for (int i = 0; i < amount; ++i)
             {
                 MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(feature_data.type, map);
-                (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, feature.dimensions.x + 2, feature.dimensions.y + 2);
+                (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, feature.dimensions.x + 2, feature.dimensions.y + 2);
                 if (position == null)
                     continue;
                 feature.position.x = position.Value.x + 1;

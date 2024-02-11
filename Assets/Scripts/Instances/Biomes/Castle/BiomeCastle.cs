@@ -63,7 +63,7 @@ public class BiomeCastle : BiomeData
         floors["wooden_bridge"] = collection;
     }
 
-    public (int x, int y, int w, int h)? AddRandomPositionRoom(MapData map, int w, int h)
+    public (int x, int y, int w, int h)? AddRandomPositionRoom(MapData map, List<(int x, int y, int w, int h)> room_list, int w, int h)
     {
         bool room_found = false;
         int number_of_tries = 0;
@@ -117,11 +117,9 @@ public class BiomeCastle : BiomeData
         return null;
     }
 
-    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data)
+    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list)
     {
         MapData map = new MapData(max_x, max_y);
-        room_list = new();
-       
 
         for (int x = 0; x < map.tiles.GetLength(0); ++x)
         {
@@ -138,19 +136,19 @@ public class BiomeCastle : BiomeData
         {
             random_positions[i] = (UnityEngine.Random.Range((i%3) * (max_x/3) + 10,((i%3)+1) * (max_x/3) - 10), UnityEngine.Random.Range((i/3) * (max_y/2) + 10,((i/3)+1) * (max_y/2) - 10));
         }
-        CreateSewerSystem(map, (random_positions[0].x, random_positions[0].y,1,1),(random_positions[1].x, random_positions[1].y,1,1),2);
-        CreateSewerSystem(map, (random_positions[1].x, random_positions[1].y,1,1),(random_positions[2].x, random_positions[2].y,1,1),2);
-        CreateSewerSystem(map, (random_positions[2].x, random_positions[2].y,1,1),(random_positions[5].x, random_positions[5].y,1,1),2);
-        CreateSewerSystem(map, (random_positions[3].x, random_positions[3].y,1,1),(random_positions[0].x, random_positions[0].y,1,1),2);
-        CreateSewerSystem(map, (random_positions[4].x, random_positions[4].y,1,1),(random_positions[3].x, random_positions[3].y,1,1),2);
-        CreateSewerSystem(map, (random_positions[5].x, random_positions[5].y,1,1),(random_positions[4].x, random_positions[4].y,1,1),2);
-        CreateSewerSystem(map, (random_positions[1].x, random_positions[1].y,1,1),(random_positions[4].x, random_positions[4].y,1,1),2);
+        CreateSewerSystem(map, room_list, (random_positions[0].x, random_positions[0].y,1,1),(random_positions[1].x, random_positions[1].y,1,1),2);
+        CreateSewerSystem(map, room_list, (random_positions[1].x, random_positions[1].y,1,1),(random_positions[2].x, random_positions[2].y,1,1),2);
+        CreateSewerSystem(map, room_list, (random_positions[2].x, random_positions[2].y,1,1),(random_positions[5].x, random_positions[5].y,1,1),2);
+        CreateSewerSystem(map, room_list, (random_positions[3].x, random_positions[3].y,1,1),(random_positions[0].x, random_positions[0].y,1,1),2);
+        CreateSewerSystem(map, room_list, (random_positions[4].x, random_positions[4].y,1,1),(random_positions[3].x, random_positions[3].y,1,1),2);
+        CreateSewerSystem(map, room_list, (random_positions[5].x, random_positions[5].y,1,1),(random_positions[4].x, random_positions[4].y,1,1),2);
+        CreateSewerSystem(map, room_list, (random_positions[1].x, random_positions[1].y,1,1),(random_positions[4].x, random_positions[4].y,1,1),2);
 
         //Now grow map and attach every new room - connectivity guaranteed
         foreach (DungeonChangeData dcd in dungeon_change_data)
         {
             MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(dcd.dungeon_change_type, map, dcd);
-            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, feature.dimensions.x + 2, feature.dimensions.y + 2);
+            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, feature.dimensions.x + 2, feature.dimensions.y + 2);
             if (position == null)
                 continue;
             feature.position.x = position.Value.x + 1;
@@ -165,7 +163,7 @@ public class BiomeCastle : BiomeData
             for (int i = 0; i < amount; ++i)
             {
                 MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(feature_data.type, map);
-                (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, feature.dimensions.x + 2, feature.dimensions.y + 2);
+                (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list,feature.dimensions.x + 2, feature.dimensions.y + 2);
                 if (position == null)
                     continue;
                 feature.position.x = position.Value.x + 1;
@@ -181,7 +179,7 @@ public class BiomeCastle : BiomeData
             int w = UnityEngine.Random.Range(6, 10);
             int h = UnityEngine.Random.Range(6, 10);
          
-            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, w, h);
+            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, w, h);
         }
 
         for (int i = 14; i < room_list.Count; ++ i)
@@ -338,7 +336,7 @@ public class BiomeCastle : BiomeData
         }       
     }
 
-    public void CreateSewerSystem(MapData map, (int x, int y, int w, int h) room1, (int x, int y, int w, int h) room2, int size_water = 2)
+    public void CreateSewerSystem(MapData map, List<(int x, int y, int w, int h)> room_list, (int x, int y, int w, int h) room1, (int x, int y, int w, int h) room2, int size_water = 2)
     {
         //Only horizontal or vertical corridors allowed
         int rand = UnityEngine.Random.Range(0,2);

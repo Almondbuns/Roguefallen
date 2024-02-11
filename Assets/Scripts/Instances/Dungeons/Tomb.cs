@@ -1,9 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Tomb : DungeonData
 {
+    public bool ball_needs_initialization = true;
+    public long ball_id = -1;
+
+    public int ball_corridor_index;
+    public int ball_corridor_direction_x;
+    public int ball_corridor_direction_y;
+    public bool ball_clockwise_rolling = true;
+
     public Tomb()
     {
         name = "The Tomb";
@@ -18,8 +27,8 @@ public class Tomb : DungeonData
                 map_features =
                 {                    
                     
-                    (typeof(MFCaveTreasureRoom), 0, 1), 
-                    (typeof(MFCaveOilRoom), 0, 2),                                           
+                    (typeof(MFCaveTreasureRoom), 1, 2), 
+                    (typeof(MFTombSarcophagusRoom), 2,4),                                     
                 },                
 
                 encounters =
@@ -187,6 +196,75 @@ public class Tomb : DungeonData
 
     public override void Tick()
     {
+        if (ball_needs_initialization == true && tick_counter == 0)
+        {
+            MapData current_map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
+            DungeonLevelData level = GameObject.Find("GameData").GetComponent<GameData>().current_map_level;
+            
+            
+            DynamicObjectData ball = new DynamicObjectData(0,0, new TombGiantBall(1));
+            current_map.Add(ball);
+            ball.MoveTo(level.room_list[0].x, level.room_list[0].y, true);
+            ball_needs_initialization = false;
+            ball_id = ball.id;
+            ball_corridor_index = 0;
+            ball_corridor_direction_x = 1;
+            ball_corridor_direction_y = 0;
+        }
+        ++this.tick_counter;
+
+        if (tick_counter >= 60)
+        {
+            tick_counter = 0;
+
+            MapData current_map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
+            DungeonLevelData level = GameObject.Find("GameData").GetComponent<GameData>().current_map_level;
+            ActorData ball = current_map.GetActor(ball_id);
+
+            //First move ball in the right direction
+
+            //If ball is a the edge of one of the corridors the corridor has to be switched
+            if (
+                (ball_corridor_direction_x == 1 && ball.X == level.room_list[ball_corridor_index].x + level.room_list[ball_corridor_index].w)
+                || (ball_corridor_direction_x == -1 && ball.X == level.room_list[ball_corridor_index].x)
+                || (ball_corridor_direction_y == 1 && ball.Y == level.room_list[ball_corridor_index].y + level.room_list[ball_corridor_index].h)
+                || (ball_corridor_direction_y == -1 && ball.Y == level.room_list[ball_corridor_index].y)
+               )
+            {
+                ++ball_corridor_index;
+                if (ball_corridor_index == 4)
+                    ball_corridor_index = 0;
+                
+                if (ball_corridor_index == 0)
+                {
+                    ball_corridor_direction_x = 1;
+                    ball_corridor_direction_y = 0;
+                }
+                else if (ball_corridor_index == 1)
+                {
+                    ball_corridor_direction_x = 0;
+                    ball_corridor_direction_y = 1;
+                }
+                else if (ball_corridor_index == 2)
+                {
+                    ball_corridor_direction_x = -1;
+                    ball_corridor_direction_y = 0;
+                }
+                else
+                {
+                    ball_corridor_direction_x = 0;
+                    ball_corridor_direction_y = -1;
+                }
+            }
+
+            ball.MoveTo(ball.X + ball_corridor_direction_x,ball.Y + ball_corridor_direction_y);
+
+            //After movement damage all ball tiles
+            current_map.DistributeDamage(ball, new AttackedTileData(){x = ball.X, y = ball.Y, damage_on_hit = {(DamageType.CRUSH,10,5)}}, true);
+            current_map.DistributeDamage(ball, new AttackedTileData(){x = ball.X + 1, y = ball.Y, damage_on_hit = {(DamageType.CRUSH,10,5)}}, true);
+            current_map.DistributeDamage(ball, new AttackedTileData(){x = ball.X, y = ball.Y + 1, damage_on_hit = {(DamageType.CRUSH,10,5)}}, true);
+            current_map.DistributeDamage(ball, new AttackedTileData(){x = ball.X + 1, y = ball.Y + 1, damage_on_hit = {(DamageType.CRUSH,10,5)}}, true);
+        }
     }
 
 }

@@ -39,6 +39,8 @@ public class EncounterData
 
         level_min = save.ReadInt32();
         level_max = save.ReadInt32();
+
+        size = save.ReadInt32();
     }
 }
 
@@ -124,6 +126,8 @@ public class DungeonLevelData
     public bool regeneration_needed = true;
     public bool regeneration_quest_goals = false;
 
+    public List<(int x, int y, int w, int h)> room_list;
+
     internal void Save(System.IO.BinaryWriter save)
     {
         save.Write(dungeon_level);
@@ -188,6 +192,15 @@ public class DungeonLevelData
 
         save.Write(regeneration_needed);
         save.Write(regeneration_quest_goals);
+
+        save.Write(room_list.Count);
+        foreach (var v in room_list)
+        {
+            save.Write(v.x);
+            save.Write(v.y);
+            save.Write(v.w);
+            save.Write(v.h);
+        }
     }
     
     internal void Load(System.IO.BinaryReader save)
@@ -258,7 +271,12 @@ public class DungeonLevelData
 
         regeneration_needed = save.ReadBoolean();
         regeneration_quest_goals = save.ReadBoolean();
-        
+
+        room_list = new(size);
+        for (int i = 0; i < size; ++i)
+        {
+            room_list.Add((save.ReadInt32(), save.ReadInt32(), save.ReadInt32(), save.ReadInt32()));
+        }
     }
 
     public DungeonLevelData()
@@ -280,7 +298,8 @@ public class DungeonLevelData
     public void CreateMapLevel(List<ItemData> quest_items, List<ActorData> quest_actors)
     {
         int n_rooms = UnityEngine.Random.Range(number_of_rooms.min, number_of_rooms.max + 1);
-        map = GameObject.Find("GameData").GetComponent<GameData>().biomes[biome_index].CreateMapLevel(dungeon_level, dimensions.x, dimensions.y, n_rooms, map_features, dungeon_changes);
+        room_list = new();
+        map = GameObject.Find("GameData").GetComponent<GameData>().biomes[biome_index].CreateMapLevel(dungeon_level, dimensions.x, dimensions.y, n_rooms, map_features, dungeon_changes, room_list);
 
         if (quest_items != null)
             DistributeQuestItems(quest_items);

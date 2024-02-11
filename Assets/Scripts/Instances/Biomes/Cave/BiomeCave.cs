@@ -38,11 +38,9 @@ public class BiomeCave : BiomeData
         collection.Add(new MapObjectData("cave_stones_3") { sight_blocked = false });
         collection.Add(new MapObjectData("cave_stones_4") { sight_blocked = false });
         objects["obstacle"] = collection;
-
-        room_list = new();
     }
 
-    public (int x, int y, int w, int h)? AddRandomPositionRoom(MapData map, int w, int h)
+    public (int x, int y, int w, int h)? AddRandomPositionRoom(MapData map, List<(int x, int y, int w, int h)> room_list, int w, int h)
     {
         bool room_found = false;
         int number_of_tries = 0;
@@ -83,11 +81,9 @@ public class BiomeCave : BiomeData
         return null;
     }
 
-    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data)
+    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list)
     {
         MapData map = new MapData(max_x, max_y);
-        room_list = new();
-       
 
         for (int x = 0; x < map.tiles.GetLength(0); ++x)
             for (int y = 0; y < map.tiles.GetLength(1); ++y)
@@ -99,7 +95,7 @@ public class BiomeCave : BiomeData
         foreach (DungeonChangeData dcd in dungeon_change_data)
         {
             MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(dcd.dungeon_change_type, map, dcd);
-            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, feature.dimensions.x + 2, feature.dimensions.y + 2);
+            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, feature.dimensions.x + 2, feature.dimensions.y + 2);
             if (position == null)
                 continue;
             feature.position.x = position.Value.x + 1;
@@ -114,7 +110,7 @@ public class BiomeCave : BiomeData
             for (int i = 0; i < amount; ++i)
             {
                 MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(feature_data.type, map);
-                (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, feature.dimensions.x + 2, feature.dimensions.y + 2);
+                (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, feature.dimensions.x + 2, feature.dimensions.y + 2);
                 if (position == null)
                     continue;
                 feature.position.x = position.Value.x + 1;
@@ -137,7 +133,7 @@ public class BiomeCave : BiomeData
             }
             
          
-            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, w, h);
+            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, w, h);
         }
 
         //Create Corridors first

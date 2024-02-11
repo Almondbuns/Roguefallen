@@ -24,14 +24,11 @@ public class BiomeVillage : BiomeData
         collection = new();
         collection.Add(new MapObjectData("grassland_obstacle_2"));
         objects["tree"] = collection;
-
-        room_list = new();
     }
 
-    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data)
+    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list)
     {
         MapData map = new MapData(max_x, max_y);
-        room_list = new();
 
         for (int x = 0; x < max_x; ++x)
         {
@@ -50,7 +47,7 @@ public class BiomeVillage : BiomeData
         foreach (var dcd in dungeon_change_data)
         {
             MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(dcd.dungeon_change_type, map, dcd);
-            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, feature.dimensions.x, feature.dimensions.y);
+            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, feature.dimensions.x, feature.dimensions.y);
             if (position == null)
                 continue;
             feature.position.x = position.Value.x;
@@ -67,7 +64,7 @@ public class BiomeVillage : BiomeData
             for (int i = 0; i < amount; ++i)
             {
                 MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(feature_type.type, map);
-                (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, feature.dimensions.x, feature.dimensions.y);
+                (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, feature.dimensions.x, feature.dimensions.y);
                 if (position == null)
                     continue;
                 feature.position.x = position.Value.x;
@@ -98,7 +95,7 @@ public class BiomeVillage : BiomeData
         }
     }
 
-    public (int x, int y, int w, int h)? AddRandomPositionRoom(MapData map, int w, int h)
+    public (int x, int y, int w, int h)? AddRandomPositionRoom(MapData map, List<(int x, int y, int w, int h)> room_list, int w, int h)
     {
         bool room_found = false;
         int number_of_tries = 0;

@@ -44,4 +44,19 @@ public class BiomeTomb : BiomeSewers
         objects["clutter"] = collection;
     }
 
+    public override void CreateRoom(MapData map, (int x, int y, int w, int h) position)
+    {
+        base.CreateRoom(map,position);
+
+        if (UnityEngine.Random.Range(0,3) == 0)
+        {
+            //Create pillars
+            map.Add(new DynamicObjectData(position.x + 1, position.y + 1 , new TombPillar(1)));
+            map.Add(new DynamicObjectData(position.x + position.w -2, position.y + 1, new TombPillar(1)));
+            map.Add(new DynamicObjectData(position.x + 1, position.y + position.h - 2, new TombPillar(1)));
+            map.Add(new DynamicObjectData(position.x + position.w -2, position.y + position.h - 2, new TombPillar(1)));
+        }
+        
+    }
+
 }

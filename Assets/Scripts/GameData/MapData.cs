@@ -525,7 +525,7 @@ public class MapData
         return true;
     }
 
-    public void DistributeDamage(ActorData src_actor, AttackedTileData tile)
+    public void DistributeDamage(ActorData src_actor, AttackedTileData tile, bool ignore_self = false)
     {
         GameObject.Find("Map").GetComponent<Map>().AddVisualEffectToTile(VisualEffect.Hit, (tile.x, tile.y));
         //Use copy because actors may spawn new actors on attack which changes the list while traversing => error
@@ -536,6 +536,8 @@ public class MapData
             if (tile.x >= actor.X && tile.y >= actor.Y
                 && tile.x <= actor.X + actor.prototype.tile_width - 1&& tile.y <= actor.Y + actor.prototype.tile_height - 1)
             {
+                if (src_actor.id == actor.id && ignore_self == true)
+                    continue;
                 actor.TryToHit(src_actor, src_actor.GetToHit(), tile.damage_on_hit, tile.effects_on_hit, tile.diseases_on_hit, tile.poisons_on_hit);
             }
         }

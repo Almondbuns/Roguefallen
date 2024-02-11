@@ -219,6 +219,68 @@ public class BrokenCrate : ActorPrototype
 
 }
 
+public class TombPillar : ActorPrototype
+{
+    public TombPillar(int level) : base(level)
+    {
+        name = "Pillar";
+        icon = "images/objects/tomb_pillar";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
+        stats.health_max = 30;
+        stats.dodge = -100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Pillar", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+    }
+
+}
+
+public class TombSarcophagus : ActorPrototype
+{
+    public TombSarcophagus(int level) : base(level)
+    {
+        name = "Sarcophagus";
+        icon = "images/objects/tomb_sarcophagus";
+        tile_width = 1;
+        tile_height = 1;
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
+        stats.health_max = 30;
+        stats.dodge = -100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Sarcophagus", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+    }
+
+}
+
+public class TombGiantBall : ActorPrototype
+{
+    public TombGiantBall(int level) : base(level)
+    {
+        name = "Giant Ball";
+        icon = "images/npc/tomb_giant_ball";
+        tile_width = 2;
+        tile_height = 2;
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
+        stats.health_max = 100;
+        stats.dodge = -100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Giant Ball", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+    }
+
+}
+
+
 public class BearTrap : ActorPrototype
 {
     public BearTrap(int level) : base(level)

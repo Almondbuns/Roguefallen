@@ -55,7 +55,7 @@ public abstract class BiomeData
     public Dictionary<string, MapObjectCollectionData> floors;
     public Dictionary<string, MapObjectCollectionData> objects;
 
-    public List<(int x, int y, int w, int h)> room_list;
+  
 
     internal virtual void Save(BinaryWriter save)
     {
@@ -80,14 +80,7 @@ public abstract class BiomeData
             v.Value.Save(save);
         }
 
-        save.Write(room_list.Count);
-        foreach (var v in room_list)
-        {
-            save.Write(v.x);
-            save.Write(v.y);
-            save.Write(v.w);
-            save.Write(v.h);
-        }
+        
     }
 
     internal virtual void Load(BinaryReader save)
@@ -116,12 +109,7 @@ public abstract class BiomeData
             objects.Add(key, v);
         }
 
-        size = save.ReadInt32();
-        room_list = new(size);
-        for (int i = 0; i < size; ++i)
-        {
-            room_list.Add((save.ReadInt32(), save.ReadInt32(), save.ReadInt32(), save.ReadInt32()));
-        }
+        
     }
 
     public BiomeData()
@@ -131,7 +119,7 @@ public abstract class BiomeData
     }
 
     //public abstract MapData CreateMap();
-    public abstract MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data);
+    public abstract MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list);
 
     /*protected void GuaranteeMapLevelConnectivity(MapData map)
     {
