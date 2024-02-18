@@ -33,14 +33,7 @@ public class Tomb : DungeonData
 
                 encounters =
                 {
-                    (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),1,1)}, level_min = 1, level_max = 1,}),
-                    
-                    (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),1,2)}, level_min = 2, level_max = 2,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(CaveSpider),1,1)}, level_min = 2, level_max = 2,}),
-
-                    (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),2,3)}, level_min = 3, level_max = 3,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(CaveSpider),1,2)}, level_min = 3, level_max = 3,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(PoisonSpider),1,1)}, level_min = 3, level_max = 3,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(SkeletonWarrior),1,1)}, level_min = 1, level_max = 5,}),                            
 
                     (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),1,3), (typeof(CaveSpider),1,2), 
                         (typeof(PoisonSpider),1,1)}, level_min = 4, level_max = 4,}),

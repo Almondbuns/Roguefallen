@@ -9,6 +9,7 @@ public class BiomeSewers : BiomeData
 {
     public bool has_water = true;
     public bool has_complex_corridors = true;
+    public bool has_clutter = true;
     public int size_large_corridors = 3;
     public int size_small_corridors = 2;
 
@@ -75,6 +76,7 @@ public class BiomeSewers : BiomeData
 
         save.Write(has_water);
         save.Write(has_complex_corridors);
+        save.Write(has_clutter);
         save.Write(size_large_corridors);
         save.Write(size_small_corridors);
     }
@@ -83,6 +85,7 @@ public class BiomeSewers : BiomeData
     {
         has_water = save.ReadBoolean();
         has_complex_corridors = save.ReadBoolean();
+        has_clutter = save.ReadBoolean();
         size_large_corridors = save.ReadInt32();
         size_small_corridors = save.ReadInt32();
     }
@@ -403,16 +406,19 @@ public class BiomeSewers : BiomeData
             }
         }
 
-        int number_of_clutter = position.w * position.h / 10;
-        for (int i = 0; i < UnityEngine.Random.Range(number_of_clutter,2*number_of_clutter); ++i)
+        if (has_clutter == true)
         {
-            int x = UnityEngine.Random.Range(position.x, position.x + position.w);
-            int y = UnityEngine.Random.Range(position.y, position.y + position.h);
-
-            if(map.tiles[x,y].floor.name.Contains("water") == false)
+            int number_of_clutter = position.w * position.h / 10;
+            for (int i = 0; i < UnityEngine.Random.Range(number_of_clutter,2*number_of_clutter); ++i)
             {
-                map.tiles[x,y].objects.Clear();
-                map.tiles[x,y].objects.Add(objects["clutter"].Random());
+                int x = UnityEngine.Random.Range(position.x, position.x + position.w);
+                int y = UnityEngine.Random.Range(position.y, position.y + position.h);
+
+                if(map.tiles[x,y].floor.name.Contains("water") == false)
+                {
+                    map.tiles[x,y].objects.Clear();
+                    map.tiles[x,y].objects.Add(objects["clutter"].Random());
+                }
             }
         }
 
