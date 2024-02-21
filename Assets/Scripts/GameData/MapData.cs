@@ -451,7 +451,7 @@ public class MapData
         RefreshVisibility?.Invoke();
     }
 
-    bool IsLineofSightBlocked(List<(int x, int y)> path)
+    public bool IsLineofSightBlocked(List<(int x, int y)> path)
     {
         bool blocked = false;
         int counter = 0;

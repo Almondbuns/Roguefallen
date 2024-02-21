@@ -75,7 +75,7 @@ public class DumbAI : AIData
         GameData game_data = GameObject.Find("GameData").GetComponent<GameData>();
 
         if (personality == AIPersonality.Passive)
-            return new WaitAction(100);
+            return new WaitAction(1000);
 
         int detection_range = 8;
         if (personality == AIPersonality.HitAndRun)
@@ -123,6 +123,10 @@ public class DumbAI : AIData
 
             if (talent.prototype.target == TalentTarget.Tile)
             {
+                //Player must be in line of sight
+                var test_line = Algorithms.LineofSight((actor_data.X, actor_data.Y), (game_data.player_data.X,game_data.player_data.Y));
+                if (game_data.current_map.IsLineofSightBlocked(test_line) == true) continue;
+
                 input.target_tiles = new List<(int, int)> {(game_data.player_data.X, game_data.player_data.Y)};
                 bool success = actor_data.ActivateTalent(talent, input);
                 return null;

@@ -1081,26 +1081,28 @@ public class CreateProjectileToPlayerCommand : CommandData
         PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
         ActorData actor = map_data.GetActor(actor_id);
 
-        Path path = Algorithms.AStar(map_data, (actor.X, actor.Y), (player_data.X, player_data.Y), true, true, actor);
+        //Path path = Algorithms.AStar(map_data, (actor.X, actor.Y), (player_data.X, player_data.Y), true, true, actor);
 
-        ProjectileData bomb = new ProjectileData( path.path[0].x, path.path[0].y, (ActorPrototype)Activator.CreateInstance(type, level));
-        List<(int x, int y)> bomb_path = new();
+        var path = Algorithms.LineofSight((actor.X, actor.Y), (player_data.X, player_data.Y));
+
+        ProjectileData projectile = new ProjectileData( path[0].x, path[0].y, (ActorPrototype)Activator.CreateInstance(type, level));
+        List<(int x, int y)> p_path = new();
         
         int counter = 0;
-        foreach(var tile in path.path)
+        foreach(var tile in path)
         {
             if (counter != 0)
-                bomb_path.Add((tile.x, tile.y));
+                p_path.Add((tile.x, tile.y));
 
             ++counter;
         }
 
-        bomb.path = bomb_path;
-        bool hit = !map_data.IsAccessableTile(bomb.X, bomb.Y, false, actor);
-        map_data.Add(bomb);
+        projectile.path = p_path;
+        bool hit = !map_data.IsAccessableTile(projectile.X, projectile.Y, false, actor);
+        map_data.Add(projectile);
 
         if (hit)
-            bomb.current_action = new ExplodeAction(bomb, bomb.prototype.projectile.damage_radius, bomb.prototype.projectile.damage, bomb.prototype.projectile.explosion_on_impact);
+            projectile.current_action = new ExplodeAction(projectile, projectile.prototype.projectile.damage_radius, projectile.prototype.projectile.damage, projectile.prototype.projectile.explosion_on_impact);
 
         return 0.0f;
     }

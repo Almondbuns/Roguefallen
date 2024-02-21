@@ -22,7 +22,7 @@ public class Tomb : DungeonData
             DungeonLevelData level_data = new DungeonLevelData
             {
                 biome_index = 6,
-                is_always_visible = true,
+                is_always_visible = false,
         
                 map_features =
                 {                    
@@ -33,7 +33,8 @@ public class Tomb : DungeonData
 
                 encounters =
                 {
-                    (1, new EncounterData() { type_amounts = {(typeof(SkeletonWarrior),1,1)}, level_min = 1, level_max = 5,}),                            
+                    (1, new EncounterData() { type_amounts = {(typeof(SkeletonWarrior),1,1)}, level_min = 1, level_max = 5,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(SkeletonArcher),1,1)}, level_min = 1, level_max = 5,}),                            
 
                     (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),1,3), (typeof(CaveSpider),1,2), 
                         (typeof(PoisonSpider),1,1)}, level_min = 4, level_max = 4,}),

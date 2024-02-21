@@ -70,6 +70,39 @@ public class ProjectileThrowingKnife: ActorPrototype
     }
 }
 
+public class ProjectileArrow: ActorPrototype
+{
+    public ProjectileArrow(int level) : base(level)
+    {
+        name = "Arrow";
+        icon = "images/objects/throwing_knife";
+
+        if (level <= 4)
+        {
+            projectile = new ProjectilePrototype
+            {
+                damage = new List<(DamageType type, int amount, int penetration)> { (DamageType.PIERCE, 5, 2) },
+                damage_radius = 0,
+            };
+        }
+        else
+        {
+            projectile = new ProjectilePrototype
+            {
+                damage = new List<(DamageType type, int amount, int penetration)> { (DamageType.PIERCE, 5, 2) },
+                damage_radius = 0,
+            };
+        }
+
+        stats.health_max = 5;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+
+        stats.movement_time = 10;
+        stats.to_hit = 20;
+    }
+}
+
 public class ProjectileAcidFlask : ActorPrototype
 {
     public ProjectileAcidFlask(int level) : base(level)
