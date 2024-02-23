@@ -11,9 +11,12 @@ public class CommonSpider : ActorPrototype
         icon = "images/npc/cave_spider";
         prefab_index = 6;
         monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Normal
-        };
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };
 
         stats.health_max = 10;
         stats.stamina_max = 5;
@@ -62,9 +65,12 @@ public class CaveSpider : ActorPrototype
         icon = "images/npc/spider";
         prefab_index = 7;
         monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Normal
-        };
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };
 
         stats.health_max = 15;
         stats.stamina_max = 5;
@@ -112,9 +118,12 @@ public class PoisonSpider : ActorPrototype
         icon = "images/npc/poison_spider";
         prefab_index = 8;
         monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Normal
-        };
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };
 
         stats.health_max = 15;
         stats.stamina_max = 5;

@@ -14,7 +14,10 @@ public class Lemming : ActorPrototype
 
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 5;
@@ -56,9 +59,12 @@ public class Lemming : ActorPrototype
             icon = "images/npc/lemming_tnt";
             prefab_index = 10;
 
-            monster = new MonsterPrototype
+           monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 10;

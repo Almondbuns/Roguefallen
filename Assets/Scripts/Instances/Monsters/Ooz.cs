@@ -12,9 +12,12 @@ public class Ooz : ActorPrototype
             icon = "images/npc/ooz_blob";
             prefab_index = 23;
 
-            monster = new MonsterPrototype
+           monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 10;
@@ -59,7 +62,10 @@ public class Ooz : ActorPrototype
 
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 20;
@@ -104,7 +110,10 @@ public class Ooz : ActorPrototype
 
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 30;

@@ -12,9 +12,12 @@ public class SkeletonWarrior : ActorPrototype
         prefab_index = 37;
 
         monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Normal
-        };
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };
 
         stats.health_max = 20;
         stats.stamina_max = 10;

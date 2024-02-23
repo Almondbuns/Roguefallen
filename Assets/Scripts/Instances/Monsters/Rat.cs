@@ -10,10 +10,13 @@ public class Rat : ActorPrototype
         int damage_min = 0;
         int damage_max = 0;
 
-        monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Normal
-        };        
+       monster = new MonsterPrototype
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };     
 
         if (level <= 2)
         {            

@@ -14,7 +14,10 @@ public class Bat : ActorPrototype
 
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
             prefab_index = 19;
 
@@ -79,7 +82,10 @@ public class Bat : ActorPrototype
 
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
             prefab_index = 20;
 

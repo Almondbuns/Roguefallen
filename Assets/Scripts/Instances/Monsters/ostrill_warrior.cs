@@ -14,7 +14,10 @@ public class OstrillWarrior : ActorPrototype
 
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 20;

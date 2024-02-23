@@ -13,7 +13,10 @@ public class Bear : ActorPrototype
             prefab_index = 26;
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 40;
@@ -56,7 +59,10 @@ public class Bear : ActorPrototype
             prefab_index = 27;
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 50;

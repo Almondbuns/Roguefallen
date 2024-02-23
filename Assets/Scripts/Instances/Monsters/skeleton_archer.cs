@@ -12,14 +12,18 @@ public class SkeletonArcher : ActorPrototype
         prefab_index = 38;
 
         monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Normal
-        };
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Distance,
+                    prefered_distance = 8,
+                }
+            };
 
-        stats.health_max = 20;
+        stats.health_max = 15;
         stats.stamina_max = 10;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (2, 1, 0), durability_max = 10 });
+        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 10 });
         stats.movement_time = 100;
         stats.to_hit = 10;
         stats.dodge = 10;

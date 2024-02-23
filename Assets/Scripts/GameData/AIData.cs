@@ -27,6 +27,7 @@ public enum AIPersonality
 {
     Normal,
     HitAndRun,
+    Distance,
     Passive,
 }
 
@@ -67,7 +68,7 @@ public class DumbAI : AIData
     public DumbAI(ActorData actor_data)
     {
         this.actor_data = actor_data;
-        personality = actor_data.prototype.monster.ai_personality;
+        personality = actor_data.prototype.monster.ai_prototype.personality;
     }
 
     public override ActionData SelectNextAction()
@@ -192,21 +193,22 @@ public class DumbAI : AIData
         }
 
         //Move to player
-
         Path path = Algorithms.AStar(game_data.current_map,(actor_data.X, actor_data.Y), 
-            (target_x, target_y), false, false, actor_data);
-        
+                (target_x, target_y), false, false, actor_data);
 
         if (path == null || path.path.Count < 1)
-            return new WaitAction(50);
-
-
-        if (actor_data.prototype.can_move == true && game_data.current_map.CanBeMovedInByActor(path.path[0].x, path.path[0].y,actor_data))
-        {
-            if (actor_data.current_effects.Find(x => x.effect is EffectStun) != null)
                 return new WaitAction(50);
+    
+        if (personality == AIPersonality.Normal
+        || (personality == AIPersonality.Distance && actor_data.prototype.monster.ai_prototype.prefered_distance < path.path.Count))
+        {
+            if (actor_data.prototype.can_move == true && game_data.current_map.CanBeMovedInByActor(path.path[0].x, path.path[0].y,actor_data))
+            {
+                if (actor_data.current_effects.Find(x => x.effect is EffectStun) != null)
+                    return new WaitAction(50);
 
-            return new MoveAction(actor_data, path.path[0].x, path.path[0].y, actor_data.GetMovementTime());
+                return new MoveAction(actor_data, path.path[0].x, path.path[0].y, actor_data.GetMovementTime());
+            }
         }
         
         return new WaitAction(50);

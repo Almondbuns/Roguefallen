@@ -12,9 +12,12 @@ public class Worm : ActorPrototype
             icon = "images/npc/worm_hatchling";
             prefab_index = 0;
 
-            monster = new MonsterPrototype
+         monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 2;
@@ -66,9 +69,12 @@ public class Worm : ActorPrototype
             icon = "images/npc/hammerworm";
             prefab_index = 1;
 
-            monster = new MonsterPrototype
+           monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 5;
@@ -124,7 +130,10 @@ public class Worm : ActorPrototype
 
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 10;

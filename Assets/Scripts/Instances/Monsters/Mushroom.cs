@@ -12,9 +12,12 @@ public class Mushroom : ActorPrototype
             icon = "images/npc/red_mushroom";
             prefab_index = 14;
 
-            monster = new MonsterPrototype
+           monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
             can_move = false;
 
@@ -53,9 +56,12 @@ public class Mushroom : ActorPrototype
             icon = "images/npc/purple_mushroom";
             prefab_index = 15;
             
-            monster = new MonsterPrototype
+           monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
             can_move = false;
 
@@ -121,9 +127,12 @@ public class Mushroom : ActorPrototype
             icon = "images/npc/yellow_mushroom";
             prefab_index = 16;
             
-            monster = new MonsterPrototype
+           monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
             can_move = false;
 

@@ -70,8 +70,9 @@ public class ProjectileData : ActorData
     {
         MapData map_data = GameObject.Find("GameData").GetComponent<GameData>().current_map;
         
-        //If currently on a occupied tile or last tile in path explode
-        if (path_index >= path.Count - 1 || map_data.IsAccessableTile(path[path_index].x, path[path_index].y, false, this) == false)
+        //If currently on a occupied tile or last tile in path explode (but not on first tile)
+        if (path_index > 0 &&
+            (path_index >= path.Count - 1 || map_data.IsAccessableTile(path[path_index].x, path[path_index].y, false, this) == false))
         {
             current_action = new ExplodeAction(this, prototype.projectile.damage_radius, GetDamage(), prototype.projectile.explosion_on_impact);
             return;

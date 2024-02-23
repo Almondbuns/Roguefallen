@@ -1086,18 +1086,8 @@ public class CreateProjectileToPlayerCommand : CommandData
         var path = Algorithms.LineofSight((actor.X, actor.Y), (player_data.X, player_data.Y));
 
         ProjectileData projectile = new ProjectileData( path[0].x, path[0].y, (ActorPrototype)Activator.CreateInstance(type, level));
-        List<(int x, int y)> p_path = new();
+        projectile.path = path;
         
-        int counter = 0;
-        foreach(var tile in path)
-        {
-            if (counter != 0)
-                p_path.Add((tile.x, tile.y));
-
-            ++counter;
-        }
-
-        projectile.path = p_path;
         bool hit = !map_data.IsAccessableTile(projectile.X, projectile.Y, false, actor);
         map_data.Add(projectile);
 

@@ -14,9 +14,12 @@ public class Troll : ActorPrototype
             tile_width = 2;
             tile_height = 2;
 
-            monster = new MonsterPrototype
+           monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.Normal
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
             };
 
             stats.health_max = 250;

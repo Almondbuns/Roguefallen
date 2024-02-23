@@ -10,9 +10,15 @@ public class ProjectilePrototype
     public bool explosion_on_impact = false;
 }
 
+public class AIPrototype
+{
+    public AIPersonality personality;
+    public int prefered_distance = 0;
+}
+
 public class MonsterPrototype
 {
-    public AIPersonality ai_personality;
+    public AIPrototype ai_prototype;
 }
 
 public class InventoryPrototype

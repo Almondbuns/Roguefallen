@@ -12,9 +12,12 @@ public class OctopusTentacle : ActorPrototype
         icon = "images/npc/octopus_tentacle";
 
         monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Normal
-        };
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };
 
         stats.health_max = 20;
         stats.stamina_max = 5;
@@ -35,10 +38,13 @@ public class Octopus : ActorPrototype
         name = "Octopus";
         icon = "images/npc/octopus_boss";
 
-        monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Normal
-        };
+       monster = new MonsterPrototype
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };
 
         stats.health_max = 100;
         stats.stamina_max = 50;
@@ -64,9 +70,12 @@ public class LostExplorer : ActorPrototype
         name = "The Lost Explorer";
         icon = "images/npc/lost_explorer";
         monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Normal
-        };
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };
 
         stats.health_max = 50;
         stats.stamina_max = 20;
@@ -110,9 +119,12 @@ public class Barkeeper : ActorPrototype
         name = "Barkeeper";
         icon = "images/npc/barkeeper";
         monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Passive
-        };
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };
 
         stats.health_max = 50;
         stats.stamina_max = 20;
@@ -131,9 +143,12 @@ public class Questgiver1 : ActorPrototype
         name = "Questgiver";
         icon = "images/npc/questgiver_1";
         monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Passive
-        };
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };
 
         stats.health_max = 50;
         stats.stamina_max = 20;
@@ -154,9 +169,12 @@ public class Shopkeeper : ActorPrototype
         prefab_index = 32;
         
         monster = new MonsterPrototype
-        {
-            ai_personality = AIPersonality.Passive
-        };
+            {
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.Normal,
+                }
+            };
 
         stats.health_max = 150;
         stats.stamina_max = 20;

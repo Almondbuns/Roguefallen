@@ -14,7 +14,10 @@ public class Fly : ActorPrototype
 
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.HitAndRun
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.HitAndRun,
+                }
             };
 
             stats.health_max = 5;
@@ -56,7 +59,10 @@ public class Fly : ActorPrototype
 
             monster = new MonsterPrototype
             {
-                ai_personality = AIPersonality.HitAndRun
+                ai_prototype = new AIPrototype
+                {
+                    personality = AIPersonality.HitAndRun,
+                }
             };
 
             stats.health_max = 10;
