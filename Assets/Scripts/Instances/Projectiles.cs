@@ -75,7 +75,7 @@ public class ProjectileArrow: ActorPrototype
     public ProjectileArrow(int level) : base(level)
     {
         name = "Arrow";
-        icon = "images/objects/throwing_knife";
+        icon = "images/objects/arrow";
 
         if (level <= 4)
         {
@@ -94,12 +94,12 @@ public class ProjectileArrow: ActorPrototype
             };
         }
 
-        stats.health_max = 5;
+        stats.health_max = 2;
 
         stats.body_armor.Add(new ArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
 
         stats.movement_time = 10;
-        stats.to_hit = 20;
+        stats.to_hit = 10;
     }
 }
 

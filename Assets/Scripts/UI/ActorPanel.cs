@@ -36,18 +36,19 @@ public class ActorPanel : MonoBehaviour
 
         //HP
         PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
+        
+        transform.Find("HPBar").GetComponent<CurrentMaxBar>().SetValues(actor_data.Health_current, actor_data.GetHealthMax());
 
         int monster_stats = player_data.GetCurrentAdditiveEffectAmount<EffectMonsterStats>();
 
         if (monster_stats > 0)
         {
-            transform.Find("HPBar").GetComponent<CurrentMaxBar>().SetValues(actor_data.Health_current, actor_data.GetHealthMax());
+            
             transform.Find("StaminaBar").GetComponent<CurrentMaxBar>().SetValues(actor_data.Stamina_current, actor_data.GetStaminaMax());
             transform.Find("ManaBar").GetComponent<CurrentMaxBar>().SetValues(actor_data.mana_current, actor_data.GetManaMax());
         }
         else
         {
-            transform.Find("HPBar").GetComponent<CurrentMaxBar>().SetValues(0,0);
             transform.Find("StaminaBar").GetComponent<CurrentMaxBar>().SetValues(0,0);
             transform.Find("ManaBar").GetComponent<CurrentMaxBar>().SetValues(0,0);
         }

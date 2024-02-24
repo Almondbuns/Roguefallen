@@ -319,14 +319,14 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         health = actor_data.Health_current;
 
-        //Only show health bar if damaged and skill aquired
+        //Only show health bar if damaged
         if (health_bar == null && health < actor_data.GetHealthMax())
         {
-            PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
+            /*PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
             int monster_stats = player_data.GetCurrentAdditiveEffectAmount<EffectMonsterStats>();
 
-            if (monster_stats > 0 || actor_data is PlayerData)
-                health_bar = GameObject.Instantiate(health_prefab, transform.Find("Canvas").transform, false);
+            if (monster_stats > 0 || actor_data is PlayerData)*/
+            health_bar = GameObject.Instantiate(health_prefab, transform.Find("Canvas").transform, false);
         }
         
         if (health_bar != null && health >= actor_data.GetHealthMax())

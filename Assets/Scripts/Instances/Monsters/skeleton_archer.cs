@@ -29,6 +29,10 @@ public class SkeletonArcher : ActorPrototype
         stats.dodge = 10;
         stats.kill_experience = 20;
 
+        stats.probability_resistances.SetResistance(DamageType.PIERCE, DamageTypeResistances.VERY_RESISTANT);
+        stats.probability_resistances.SetResistance(DamageType.CRUSH, DamageTypeResistances.VERY_WEAK);
+        stats.probability_resistances.SetResistance(DamageType.DIVINE, DamageTypeResistances.VERY_WEAK);
+
         talents.Add(
                 new TalentThrowAtPlayer
                 {
