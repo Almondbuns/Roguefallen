@@ -483,3 +483,39 @@ public class DungeonEntrance : ActorPrototype
     }
 
 }
+
+public class BallTrapTrigger : ActorPrototype
+{
+    public BallTrapTrigger(int level) : base(level)
+    {
+        name = "Trigger";
+        icon = "images/objects/tile_trigger";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
+        blocks_tiles = false;
+        is_hidden = true;
+
+        stats.health_max = 10;
+        stats.to_hit = 10;
+        stats.dodge = -100;
+        stats.stealth = 5;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (50, 0, 0), durability_max = 10000 });
+    }
+
+    public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
+    {
+        if (target_actor.prototype is TombGiantBall) // Do not trigger own triggers
+            return;
+
+        if (this_actor.is_currently_hidden == true)
+            this_actor.SetHidden(false);
+        
+        GameLogger.Log("Click.");
+
+        GameObject.Find("GameData").GetComponent<GameData>().current_dungeon.SendMessage("Trigger Ball");
+    }
+}

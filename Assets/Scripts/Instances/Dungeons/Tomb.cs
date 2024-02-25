@@ -3,22 +3,33 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+public class TombBallData
+{
+    public bool is_activated = false;
+    public bool needs_initialization = true;
+    public long id = -1;
+
+    public int corridor_index;
+    public int corridor_direction_x;
+    public int corridor_direction_y;
+    public bool clockwise_rolling = true;
+    
+}
+
 public class Tomb : DungeonData
 {
-    public bool ball_needs_initialization = true;
-    public long ball_id = -1;
-
-    public int ball_corridor_index;
-    public int ball_corridor_direction_x;
-    public int ball_corridor_direction_y;
-    public bool ball_clockwise_rolling = true;
+    public List<TombBallData> balls;
 
     public Tomb()
     {
         name = "The Tomb";
 
+        balls = new ();
+
         for (int level = 0; level < 5; ++level)
         {
+            balls.Add(new TombBallData());
+
             DungeonLevelData level_data = new DungeonLevelData
             {
                 biome_index = 6,
@@ -35,6 +46,7 @@ public class Tomb : DungeonData
                 {
                     (1, new EncounterData() { type_amounts = {(typeof(SkeletonWarrior),1,1)}, level_min = 1, level_max = 5,}),
                     (1, new EncounterData() { type_amounts = {(typeof(SkeletonArcher),1,1)}, level_min = 1, level_max = 5,}),                            
+                    (1, new EncounterData() { type_amounts = {(typeof(Zombie),1,1)}, level_min = 1, level_max = 5,}),                            
 
                     (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),1,3), (typeof(CaveSpider),1,2), 
                         (typeof(PoisonSpider),1,1)}, level_min = 4, level_max = 4,}),
@@ -140,6 +152,7 @@ public class Tomb : DungeonData
                 {
                     (typeof(Jar), 20, 30),
                     (typeof(Chest), 0, 1),
+                    (typeof(BallTrapTrigger),10,10),
                 };
             }
           
@@ -190,7 +203,12 @@ public class Tomb : DungeonData
 
     public override void Tick()
     {
-        if (ball_needs_initialization == true && tick_counter == 0)
+        //TODO: Currently only works for current level
+        int level_index = 0;
+        if (balls[level_index].is_activated == false)
+            return;
+
+        if (balls[level_index].needs_initialization == true && tick_counter == 0)
         {
             MapData current_map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
             DungeonLevelData level = GameObject.Find("GameData").GetComponent<GameData>().current_map_level;
@@ -199,11 +217,12 @@ public class Tomb : DungeonData
             DynamicObjectData ball = new DynamicObjectData(0,0, new TombGiantBall(1));
             current_map.Add(ball);
             ball.MoveTo(level.room_list[0].x, level.room_list[0].y, true);
-            ball_needs_initialization = false;
-            ball_id = ball.id;
-            ball_corridor_index = 0;
-            ball_corridor_direction_x = 1;
-            ball_corridor_direction_y = 0;
+            balls[level_index].needs_initialization = false;
+            balls[level_index].id = ball.id;
+            balls[level_index].corridor_index = 0;
+            balls[level_index].corridor_direction_x = 1;
+            balls[level_index].corridor_direction_y = 0;
+            balls[level_index].clockwise_rolling = false;
         }
         ++this.tick_counter;
 
@@ -213,45 +232,75 @@ public class Tomb : DungeonData
 
             MapData current_map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
             DungeonLevelData level = GameObject.Find("GameData").GetComponent<GameData>().current_map_level;
-            ActorData ball = current_map.GetActor(ball_id);
+            ActorData ball = current_map.GetActor(balls[level_index].id);
 
             //First move ball in the right direction
 
             //If ball is a the edge of one of the corridors the corridor has to be switched
             if (
-                (ball_corridor_direction_x == 1 && ball.X == level.room_list[ball_corridor_index].x + level.room_list[ball_corridor_index].w)
-                || (ball_corridor_direction_x == -1 && ball.X == level.room_list[ball_corridor_index].x)
-                || (ball_corridor_direction_y == 1 && ball.Y == level.room_list[ball_corridor_index].y + level.room_list[ball_corridor_index].h)
-                || (ball_corridor_direction_y == -1 && ball.Y == level.room_list[ball_corridor_index].y)
+                (balls[level_index].corridor_direction_x == 1 && ball.X == level.room_list[balls[level_index].corridor_index].x + level.room_list[balls[level_index].corridor_index].w)
+                || (balls[level_index].corridor_direction_x == -1 && ball.X == level.room_list[balls[level_index].corridor_index].x)
+                || (balls[level_index].corridor_direction_y == 1 && ball.Y == level.room_list[balls[level_index].corridor_index].y + level.room_list[balls[level_index].corridor_index].h)
+                || (balls[level_index].corridor_direction_y == -1 && ball.Y == level.room_list[balls[level_index].corridor_index].y)
                )
             {
-                ++ball_corridor_index;
-                if (ball_corridor_index == 4)
-                    ball_corridor_index = 0;
-                
-                if (ball_corridor_index == 0)
+                if (balls[level_index].clockwise_rolling == false)
                 {
-                    ball_corridor_direction_x = 1;
-                    ball_corridor_direction_y = 0;
-                }
-                else if (ball_corridor_index == 1)
-                {
-                    ball_corridor_direction_x = 0;
-                    ball_corridor_direction_y = 1;
-                }
-                else if (ball_corridor_index == 2)
-                {
-                    ball_corridor_direction_x = -1;
-                    ball_corridor_direction_y = 0;
+                    ++balls[level_index].corridor_index;
+                    if (balls[level_index].corridor_index == 4)
+                        balls[level_index].corridor_index = 0;
+                    
+                    if (balls[level_index].corridor_index == 0)
+                    {
+                        balls[level_index].corridor_direction_x = 1;
+                        balls[level_index].corridor_direction_y = 0;
+                    }
+                    else if (balls[level_index].corridor_index == 1)
+                    {
+                        balls[level_index].corridor_direction_x = 0;
+                        balls[level_index].corridor_direction_y = 1;
+                    }
+                    else if (balls[level_index].corridor_index == 2)
+                    {
+                        balls[level_index].corridor_direction_x = -1;
+                        balls[level_index].corridor_direction_y = 0;
+                    }
+                    else
+                    {
+                        balls[level_index].corridor_direction_x = 0;
+                        balls[level_index].corridor_direction_y = -1;
+                    }
                 }
                 else
                 {
-                    ball_corridor_direction_x = 0;
-                    ball_corridor_direction_y = -1;
+                     --balls[level_index].corridor_index;
+                    if (balls[level_index].corridor_index == -1)
+                        balls[level_index].corridor_index = 3;
+                    
+                    if (balls[level_index].corridor_index == 0)
+                    {
+                        balls[level_index].corridor_direction_x = -1;
+                        balls[level_index].corridor_direction_y = 0;
+                    }
+                    else if (balls[level_index].corridor_index == 1)
+                    {
+                        balls[level_index].corridor_direction_x = 0;
+                        balls[level_index].corridor_direction_y = -1;
+                    }
+                    else if (balls[level_index].corridor_index == 2)
+                    {
+                        balls[level_index].corridor_direction_x = 1;
+                        balls[level_index].corridor_direction_y = 0;
+                    }
+                    else
+                    {
+                        balls[level_index].corridor_direction_x = 0;
+                        balls[level_index].corridor_direction_y = 1;
+                    }
                 }
             }
 
-            ball.MoveTo(ball.X + ball_corridor_direction_x,ball.Y + ball_corridor_direction_y);
+            ball.MoveTo(ball.X + balls[level_index].corridor_direction_x,ball.Y + balls[level_index].corridor_direction_y);
 
             //After movement damage all ball tiles
             current_map.DistributeDamage(ball, new AttackedTileData(){x = ball.X, y = ball.Y, damage_on_hit = {(DamageType.CRUSH,10,5)}}, true);
@@ -259,6 +308,18 @@ public class Tomb : DungeonData
             current_map.DistributeDamage(ball, new AttackedTileData(){x = ball.X, y = ball.Y + 1, damage_on_hit = {(DamageType.CRUSH,10,5)}}, true);
             current_map.DistributeDamage(ball, new AttackedTileData(){x = ball.X + 1, y = ball.Y + 1, damage_on_hit = {(DamageType.CRUSH,10,5)}}, true);
         }
+    }
+
+    public override int SendMessage(string message)
+    {
+        if (message == "Trigger Ball")
+        {
+            balls[0].is_activated = true;
+            balls[0].clockwise_rolling = !balls[0].clockwise_rolling;
+            balls[0].corridor_direction_x *= -1;
+            balls[0].corridor_direction_y *= -1;
+        }
+        return -1;
     }
 
 }

@@ -175,4 +175,10 @@ public class DungeonData
     {
         //Dungeons may implement special time-based features
     }
+
+    public virtual int SendMessage(string message)
+    {
+        //Communication with actors and objects
+        return -1;
+    }
 }
