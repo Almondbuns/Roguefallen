@@ -7,7 +7,7 @@ using System.IO;
 
 public class GameData : MonoBehaviour
 {
-    public static bool GODMODE = true;
+    public static bool GODMODE = false;
     public int starting_level = 1;
 
     public string game_version = "0.2 Alpha 1";

@@ -6,7 +6,6 @@ public class SkeletonWarrior : ActorPrototype
 {
     public SkeletonWarrior(int level) : base(level)
     {
-      
         name = "Skeleton Warrior";
         icon = "images/npc/skeleton_warrior";
         prefab_index = 37;
@@ -19,7 +18,7 @@ public class SkeletonWarrior : ActorPrototype
                 }
             };
 
-        stats.health_max = 20;
+        stats.health_max = 15;
         stats.stamina_max = 10;
         stats.mana_max = 0;
         stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (2, 1, 0), durability_max = 10 });
@@ -38,7 +37,7 @@ public class SkeletonWarrior : ActorPrototype
                 name = "Sword Slash",
                 description = "Physical melee attack that deals slash damage",
 
-                damage = {(DamageType.SLASH, 2, 6, 0)},
+                damage = {(DamageType.SLASH, 1, 4, 0)},
 
                 cost_stamina = 0,
                 recover_time = 100,

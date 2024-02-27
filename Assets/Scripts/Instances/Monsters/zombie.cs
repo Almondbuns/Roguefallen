@@ -19,7 +19,7 @@ public class Zombie : ActorPrototype
                 }
             };
 
-        stats.health_max = 30;
+        stats.health_max = 20;
         stats.stamina_max = 10;
         stats.mana_max = 0;
         stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 2), durability_max = 10 });
@@ -31,10 +31,10 @@ public class Zombie : ActorPrototype
         talents.Add(
             new TalentStandardMeleeAttack
             {
-                name = "Sword Slash",
-                description = "Physical melee attack that deals slash damage",
+                name = "Grab",
+                description = "Physical melee attack that deals crush damage",
 
-                damage = {(DamageType.SLASH, 2, 6, 0)},
+                damage = {(DamageType.CRUSH, 1, 5, 0)},
 
                 cost_stamina = 0,
                 recover_time = 100,
@@ -42,7 +42,7 @@ public class Zombie : ActorPrototype
 
                 icon = "images/talents/bite",
 
-                action_message = "The <name> attacks with an sword.",
+                action_message = "The <name> tries to grab.",
             } 
         );
     }

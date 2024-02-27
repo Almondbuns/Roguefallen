@@ -34,6 +34,7 @@ public class Tomb : DungeonData
             {
                 biome_index = 6,
                 is_always_visible = false,
+                difficulty_level = level + 3,
         
                 map_features =
                 {                    

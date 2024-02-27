@@ -81,7 +81,7 @@ public class ProjectileArrow: ActorPrototype
         {
             projectile = new ProjectilePrototype
             {
-                damage = new List<(DamageType type, int amount, int penetration)> { (DamageType.PIERCE, 5, 2) },
+                damage = new List<(DamageType type, int amount, int penetration)> { (DamageType.PIERCE, 3, 2) },
                 damage_radius = 0,
             };
         }
@@ -89,7 +89,7 @@ public class ProjectileArrow: ActorPrototype
         {
             projectile = new ProjectilePrototype
             {
-                damage = new List<(DamageType type, int amount, int penetration)> { (DamageType.PIERCE, 5, 2) },
+                damage = new List<(DamageType type, int amount, int penetration)> { (DamageType.PIERCE, 3, 2) },
                 damage_radius = 0,
             };
         }

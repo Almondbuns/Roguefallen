@@ -20,7 +20,7 @@ public class SkeletonArcher : ActorPrototype
                 }
             };
 
-        stats.health_max = 15;
+        stats.health_max = 10;
         stats.stamina_max = 10;
         stats.mana_max = 0;
         stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 10 });
@@ -36,8 +36,8 @@ public class SkeletonArcher : ActorPrototype
         talents.Add(
                 new TalentThrowAtPlayer
                 {
-                    name = "Throw throwing knife",
-                    description = "Throw throwing knife",
+                    name = "Shoot Bow",
+                    description = "Shoot Bow",
 
                     object_type = typeof(ProjectileArrow),
 
@@ -46,10 +46,10 @@ public class SkeletonArcher : ActorPrototype
                     recover_time = 100,
                     cooldown = 200,
 
-                    icon = "images/objects/throwing_knife",
+                    icon = "images/objects/arrow",
 
                     prepare_message = "The <name> prepares an arrow.",
-                    action_message = "The <name> shoots with its bow.",
+                    action_message = "The <name> shoots its bow.",
                 } 
             );
     }
