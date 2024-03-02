@@ -5,6 +5,7 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.XR;
 using System.Drawing;
+using Unity.Collections;
 
 public abstract class CommandData
 {
@@ -1590,6 +1591,73 @@ public class CureInsanityCommand : CommandData
     {
         ActorData actor = GameObject.Find("GameData").GetComponent<GameData>().current_map.GetActor(source_actor_id);           
         actor.CureInsanity();
+        return 0.0f;
+    }
+}
+
+public class SummonCommand : CommandData
+{
+    public long actor_id;
+    public Type summon;
+    public bool dead_after_summon;
+    public List<(int x, int y)> attacked_tiles;
+
+    internal override void Save(BinaryWriter save)
+    {
+        base.Save(save);
+        save.Write(actor_id);
+        save.Write(summon.ToString());
+        save.Write(dead_after_summon);
+        save.Write(attacked_tiles.Count);
+        foreach (var v in attacked_tiles)
+        {
+            save.Write(v.x);
+            save.Write(v.y);
+        }
+    }
+
+    internal override void Load(BinaryReader save)
+    {
+        base.Load(save);
+        actor_id = save.ReadInt64();
+        summon = Type.GetType(save.ReadString());
+        dead_after_summon = save.ReadBoolean();
+
+        int size = save.ReadInt32();
+        attacked_tiles = new(size);
+        for (int i = 0; i < size; ++ i)
+        {
+            attacked_tiles.Add((save.ReadInt32(),save.ReadInt32()));
+        }
+    }
+
+    public SummonCommand()
+    {
+
+    }
+    public SummonCommand(long actor_id, List<(int x, int y)> attacked_tiles, Type type, bool dead_after_summon = false)
+    {
+        this.actor_id = actor_id;
+        this.attacked_tiles = attacked_tiles;
+        this.summon = type;
+        this.dead_after_summon = dead_after_summon;
+    }
+
+    public override float Execute()
+    {
+        MapData map_data = GameObject.Find("GameData").GetComponent<GameData>().current_map;
+        ActorData actor = map_data.GetActor(actor_id);
+
+        foreach (var tile in attacked_tiles)
+        {
+           MonsterData monster = new MonsterData(-1, -1, (ActorPrototype)Activator.CreateInstance(summon, actor.prototype.stats.level)); 
+           monster.MoveTo(tile.x, tile.y, true);       
+           map_data.Add(monster); 
+        }
+
+        if (dead_after_summon == true)
+            actor.OnKill();
+
         return 0.0f;
     }
 }

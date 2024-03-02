@@ -519,3 +519,28 @@ public class BallTrapTrigger : ActorPrototype
         GameObject.Find("GameData").GetComponent<GameData>().current_dungeon.SendMessage("Trigger Ball");
     }
 }
+
+public class SkeletonBones : ActorPrototype
+{
+    public SkeletonBones(int level) : base(level)
+    {
+        name = "Skeleton Bones";
+        icon = "images/objects/jar";
+
+        can_catch_disease = false;
+        can_catch_poison = false;
+        can_catch_insanity = false;
+
+        stats.health_max = 20;
+        stats.dodge = -100;
+
+        stats.body_armor.Add(new ArmorStats { body_part = "Bones", percentage = 100, armor = (10, 10, 10), durability_max = 100 });
+    }
+
+    public override void OnKill(ActorData actor_data)
+    {
+        MapData map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
+  
+       
+    }
+}

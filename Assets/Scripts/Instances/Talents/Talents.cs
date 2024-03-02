@@ -685,3 +685,45 @@ public class TalentBossTrollEarthquake : TalentPrototype
         return action;
     }
 }
+
+public class TalentSummon: TalentPrototype
+{
+    public Type summon_type;
+
+    public TalentSummon()
+    {
+        name = "Summon";
+        target = TalentTarget.Self;
+        icon = "images/talents/multiply";
+        
+        description = "Summons a creature";
+        prepare_message = "The <name> starts to summon something.";
+        action_message = "The <name> summons something.";
+
+        prepare_time = 1000;
+        recover_time = 100;
+
+        ai_data = new TalentAIInfo
+        {
+            type = TalentAIInfoType.Special,
+            player_range = 8,
+            use_probability = 0.9f,
+        };
+    }
+    public override ActionData CreateAction(TalentInputData input)
+    {
+        ActionData action = new ActionData(input.talent);
+        
+        action.commands.Add(
+            new SummonCommand(
+                input.source_actor.id, 
+                new List<(int x, int y)>
+                {
+                    (input.source_actor.X,input.source_actor.Y)
+                }, 
+                summon_type,
+                true));
+       
+        return action;
+    }
+}

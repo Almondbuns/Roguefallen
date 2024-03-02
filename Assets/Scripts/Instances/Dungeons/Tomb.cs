@@ -45,8 +45,9 @@ public class Tomb : DungeonData
 
                 encounters =
                 {
-                    (1, new EncounterData() { type_amounts = {(typeof(SkeletonWarrior),1,1)}, level_min = 1, level_max = 5,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(SkeletonWarrior),1,1)}, level_min = 1, level_max = 5,}),                    
                     (1, new EncounterData() { type_amounts = {(typeof(SkeletonArcher),1,1)}, level_min = 1, level_max = 5,}),                            
+                    (1, new EncounterData() { type_amounts = {(typeof(SkeletonChild),1,1)}, level_min = 1, level_max = 5,}), 
                     (1, new EncounterData() { type_amounts = {(typeof(Zombie),1,1)}, level_min = 1, level_max = 5,}),                            
 
                     (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),1,3), (typeof(CaveSpider),1,2), 
