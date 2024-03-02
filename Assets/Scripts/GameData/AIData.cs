@@ -200,6 +200,7 @@ public class DumbAI : AIData
                 return new WaitAction(50);
     
         if (personality == AIPersonality.Normal
+        || personality == AIPersonality.HitAndRun 
         || (personality == AIPersonality.Distance && actor_data.prototype.monster.ai_prototype.prefered_distance < path.path.Count))
         {
             if (actor_data.prototype.can_move == true && game_data.current_map.CanBeMovedInByActor(path.path[0].x, path.path[0].y,actor_data))
