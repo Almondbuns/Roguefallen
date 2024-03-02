@@ -373,7 +373,12 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                     if (current_visual_action.type == VisualActionType.MELEE_ATTACK)
                         visual_action_time = 0.5f;
                     else if (current_visual_action.type == VisualActionType.MOVEMENT)
-                        visual_action_time = 0.25f;
+                    {
+                        if (actor_data.prototype.projectile != null)
+                            visual_action_time = 0.10f;
+                        else
+                            visual_action_time = 0.25f;
+                    }
                     else
                         visual_action_time = 0.5f;
                 }
