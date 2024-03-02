@@ -70,6 +70,7 @@ public class SkeletonArcherPile : ActorPrototype
         icon = "images/npc/skeleton_archer_pile";
         prefab_index = 41;
         can_move = false;
+        can_dodge = false;
 
         monster = new MonsterPrototype
             {

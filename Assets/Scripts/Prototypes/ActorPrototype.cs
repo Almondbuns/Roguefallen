@@ -36,6 +36,8 @@ public class ActorPrototype
     public bool can_catch_disease = true;
     public bool can_catch_poison = true;
     public bool can_catch_insanity = true;
+    public bool can_dodge = true;
+    public bool can_take_damage = true;
 
     public int prefab_index = -1;
 

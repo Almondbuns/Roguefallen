@@ -641,6 +641,9 @@ public class ActorData
 
     public virtual void TryToHit(ActorData src_actor, int to_hit, List<(DamageType type , int damage, int armor_penetration)> damage, List<EffectData> effects, List<Type> diseases = null, List<Type> poisons = null)
     {
+        if (prototype.can_take_damage == false)
+            return;
+
         //Parry
         int parry_chance = GetCurrentAdditiveEffectAmount<EffectParryChance>();
         if (parry_chance > 0)
@@ -656,13 +659,16 @@ public class ActorData
             }
         }
 
-        //Only hit if not dodged
-        int rand = UnityEngine.Random.Range(0, 100);
-        if (rand < 20 + GetDodge() - to_hit) //dodged!
+        if (prototype.can_dodge == true)
         {
-            GameLogger.Log("The " + prototype.name + " dodges.");
-            HandleDodge?.Invoke();
-            return;
+            //Only hit if not dodged
+            int rand = UnityEngine.Random.Range(0, 100);
+            if (rand < 20 + GetDodge() - to_hit) //dodged!
+            {
+                GameLogger.Log("The " + prototype.name + " dodges.");
+                HandleDodge?.Invoke();
+                return;
+            }
         }
 
         int damage_sum = 0;

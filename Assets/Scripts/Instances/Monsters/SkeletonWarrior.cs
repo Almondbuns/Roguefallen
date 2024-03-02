@@ -67,6 +67,7 @@ public class SkeletonWarriorPile : ActorPrototype
         icon = "images/npc/skeleton_warrior_pile";
         prefab_index = 40;
         can_move = false;
+        can_dodge = false;
 
         monster = new MonsterPrototype
             {

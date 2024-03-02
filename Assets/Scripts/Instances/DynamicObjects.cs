@@ -12,6 +12,7 @@ public class Chest : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         stats.health_max = 100;
 
@@ -69,6 +70,7 @@ public class Crate : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         stats.health_max = 10;
         stats.dodge = -100;
@@ -130,6 +132,7 @@ public class Jar : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         stats.health_max = 5;
         stats.dodge = -100;
@@ -210,6 +213,7 @@ public class BrokenCrate : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         stats.health_max = 10;
         stats.dodge = -100;
@@ -229,6 +233,7 @@ public class TombPillar : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         stats.health_max = 30;
         stats.dodge = -100;
@@ -250,6 +255,7 @@ public class TombSarcophagus : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         stats.health_max = 30;
         stats.dodge = -100;
@@ -271,6 +277,8 @@ public class TombGiantBall : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
+        can_take_damage = false;
 
         stats.health_max = 100;
         stats.dodge = -100;
@@ -291,6 +299,7 @@ public class BearTrap : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         blocks_tiles = false;
         is_hidden = true;
@@ -323,6 +332,7 @@ public class IceSpikeTrap : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         blocks_tiles = false;
         is_hidden = true;
@@ -355,6 +365,7 @@ public class IceWaterTrap : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         blocks_tiles = false;
         is_hidden = true;
@@ -388,6 +399,7 @@ public class SpiderWebTrap : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         blocks_tiles = false;
         is_hidden = true;
@@ -428,6 +440,7 @@ public class OilPuddle : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
 
         blocks_tiles = false;
 
@@ -475,6 +488,8 @@ public class DungeonEntrance : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
+        can_take_damage = false;
 
         stats.health_max = 10;
         stats.dodge = -100;
@@ -494,6 +509,8 @@ public class BallTrapTrigger : ActorPrototype
         can_catch_disease = false;
         can_catch_poison = false;
         can_catch_insanity = false;
+        can_dodge = false;
+        can_take_damage = false;
 
         blocks_tiles = false;
         is_hidden = true;
@@ -517,30 +534,5 @@ public class BallTrapTrigger : ActorPrototype
         GameLogger.Log("Click.");
 
         GameObject.Find("GameData").GetComponent<GameData>().current_dungeon.SendMessage("Trigger Ball");
-    }
-}
-
-public class SkeletonBones : ActorPrototype
-{
-    public SkeletonBones(int level) : base(level)
-    {
-        name = "Skeleton Bones";
-        icon = "images/objects/jar";
-
-        can_catch_disease = false;
-        can_catch_poison = false;
-        can_catch_insanity = false;
-
-        stats.health_max = 20;
-        stats.dodge = -100;
-
-        stats.body_armor.Add(new ArmorStats { body_part = "Bones", percentage = 100, armor = (10, 10, 10), durability_max = 100 });
-    }
-
-    public override void OnKill(ActorData actor_data)
-    {
-        MapData map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
-  
-       
     }
 }
