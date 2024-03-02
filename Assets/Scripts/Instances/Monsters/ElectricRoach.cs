@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Roach : ActorPrototype
+public class ElectricRoach : ActorPrototype
 {
-    public Roach(int level) : base(level)
-    {
-       
-        name = "Roach";
-        icon = "images/npc/roach";
-        prefab_index = 11;
+    public ElectricRoach(int level) : base(level)
+    {   
+        name = "Electric Roach";
+        icon = "images/npc/electric_roach";
+        prefab_index = 13;
 
         monster = new MonsterPrototype
         {
@@ -19,7 +18,7 @@ public class Roach : ActorPrototype
             }
         };
 
-        stats.health_max = 15;
+        stats.health_max = 20;
         stats.stamina_max = 5;
         stats.mana_max = 0;
         stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 95, armor = (5, 5, 0), durability_max = 15 });
@@ -27,7 +26,10 @@ public class Roach : ActorPrototype
         stats.movement_time = 100;
         stats.to_hit = 5;
         stats.dodge = 5;
-        stats.kill_experience = 20;
+
+        stats.kill_experience = 30;
+
+        stats.probability_resistances.SetResistance(DamageType.LIGHTNING, DamageTypeResistances.VERY_RESISTANT);
 
         talents.Add(
             new TalentStandardMeleeAttack
@@ -35,7 +37,7 @@ public class Roach : ActorPrototype
                 name = "Bite",
                 description = "Physical melee attack that deals pierce damage",
 
-                damage = {(DamageType.PIERCE, 2, 4, 0)},
+                damage = {(DamageType.LIGHTNING, 2, 4, 0)},
 
                 cost_stamina = 0,
                 recover_time = 100,
@@ -43,8 +45,8 @@ public class Roach : ActorPrototype
 
                 icon = "images/talents/bite",
 
-                action_message = "The <name> bites.",
+                action_message = "The <name> sparks electricity.",
             } 
-            );
-    }    
+        );
+    }
 }

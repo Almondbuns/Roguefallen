@@ -50,30 +50,11 @@ public class Tomb : DungeonData
                     (1, new EncounterData() { type_amounts = {(typeof(SkeletonChild),1,1)}, level_min = 1, level_max = 5,}), 
                     (1, new EncounterData() { type_amounts = {(typeof(Zombie),1,1)}, level_min = 1, level_max = 5,}),                            
 
-                    (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),1,3), (typeof(CaveSpider),1,2), 
-                        (typeof(PoisonSpider),1,1)}, level_min = 4, level_max = 4,}),
-
-                    (1, new EncounterData() { type_amounts = {(typeof(CommonSpider),2,4), (typeof(CaveSpider),2,3), 
-                        (typeof(PoisonSpider),1,2)}, level_min = 5, level_max = 5,}),
-
-                    /*(1, new EncounterData() { type_amounts = {(typeof(Roach),1,1)}, level_min = 2, level_max = 7,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Centipede),1,1)}, level_min = 3, level_max = 5,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(Roach),1,1)}, level_min = 2, level_max = 7,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(FatRoach),1,1)}, level_min = 2, level_max = 7,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(ElectricRoach),1,1)}, level_min = 2, level_max = 7,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(Hammerworm),1,3)}, level_min = 1, level_max = 9,}),
                     (1, new EncounterData() { type_amounts = {(typeof(Fly),1,2)}, level_min = 1, level_max = 4,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Worm),1,3)}, level_min = 1, level_max = 9,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Rat),1,3)}, level_min = 1, level_max = 6,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Ooz),1,1)}, level_min = 2, level_max = 10,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Bear),1,1)}, level_min = 6, level_max = 10,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Bat),3,5)}, level_min = 5, level_max = 10,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Mushroom),1,1)}, level_min = 1, level_max = 6,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Flytrap),2,4)}, level_min = 6, level_max = 10,}),
-                    (10, new EncounterData() { type_amounts = {(typeof(Spider),1,1)}, level_min = 1, level_max = 6,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Lemming),2,5)}, level_min = 1, level_max = 6,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2)}, level_min = 6, level_max = 6,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2),(typeof(OstrillThief),1,1)}, level_min = 7, level_max = 7,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,2),(typeof(OstrillThief),1,2)}, level_min = 8, level_max = 8,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(OstrillWarrior),1,3),(typeof(OstrillThief),1,3)}, level_min = 9, level_max = 9,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(OstrillWarrior),2,3),(typeof(OstrillThief),1,3)}, level_min = 10, level_max = 10,}),                                
-                */
                 }
             };
 
