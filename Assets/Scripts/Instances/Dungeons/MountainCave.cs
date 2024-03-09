@@ -15,8 +15,7 @@ public class MountainCave : DungeonData
                 biome_index = 2,
         
                 map_features =
-                {                    
-                    
+                {                                        
                     (typeof(MFCaveTreasureRoom), 0, 1), 
                     (typeof(MFCaveOilRoom), 0, 2),                                           
                 },                

@@ -12,6 +12,10 @@ public class BiomeSewers : BiomeData
     public bool has_clutter = true;
     public int size_large_corridors = 3;
     public int size_small_corridors = 2;
+    public int room_w_min = 6;
+    public int room_w_max = 10;
+    public int room_h_min = 6;
+    public int room_h_max = 10;
 
     public BiomeSewers()
     {
@@ -101,8 +105,8 @@ public class BiomeSewers : BiomeData
         while (room_found == false && number_of_tries < 1000)
         {
             ++number_of_tries;
-            x = UnityEngine.Random.Range(0, map.tiles.GetLength(0) - w);
-            y = UnityEngine.Random.Range(0, map.tiles.GetLength(1) - h);
+            x = UnityEngine.Random.Range(1, map.tiles.GetLength(0) - w - 1);
+            y = UnityEngine.Random.Range(1, map.tiles.GetLength(1) - h - 1);
 
             room_found = true;
             foreach ((int x, int y, int w, int h) room in room_list)
@@ -224,22 +228,22 @@ public class BiomeSewers : BiomeData
             for (int i = 0; i < amount; ++i)
             {
                 MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(feature_data.type, map);
-                (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, feature.dimensions.x + 2, feature.dimensions.y + 2, room_list);
+                (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, feature.dimensions.x, feature.dimensions.y, room_list);
                 if (position == null)
                     continue;
-                feature.position.x = position.Value.x + 1;
-                feature.position.y = position.Value.y + 1;
+                feature.position.x = position.Value.x;
+                feature.position.y = position.Value.y;
 
                 feature.difficulty_level = level + 1;
                 map.features.Add(feature);
             }
         }
 
-        //First create and any room connections then draw the canal system on top
+        //First create any room connections then draw the canal system on top
         for (int i = 0; i < number_of_rooms; ++i)
         {
-            int w = UnityEngine.Random.Range(6, 10);
-            int h = UnityEngine.Random.Range(6, 10);
+            int w = UnityEngine.Random.Range(room_w_min, room_w_max + 1);
+            int h = UnityEngine.Random.Range(room_h_min, room_h_max + 1);
          
             (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, w, h, room_list);
         }

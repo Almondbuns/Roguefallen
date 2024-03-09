@@ -17,6 +17,10 @@ public class BiomeTomb : BiomeSewers
         has_clutter = false;
         size_large_corridors = 2;
         size_small_corridors = 1;
+        room_w_min = 5;
+        room_w_max = 11;
+        room_h_min = 5;
+        room_h_max = 11;
 
         MapObjectCollectionData collection = new();
         collection = new();
@@ -53,6 +57,10 @@ public class BiomeTomb : BiomeSewers
         collection.Add(new MapObjectData("tomb_candles_2") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
         objects["light"] = collection;
 
+        collection = new();
+        collection.Add(new MapObjectData("tomb_alt_wall_1"));
+        objects["alt_wall"] = collection;
+
         /*collection = new();
         collection.Add(new MapObjectData("hay") {sight_blocked = false, movement_blocked = false});
         collection.Add(new MapObjectData("bricks") {sight_blocked = false, movement_blocked = false});
@@ -65,11 +73,22 @@ public class BiomeTomb : BiomeSewers
 
         if (UnityEngine.Random.Range(0,3) == 0)
         {
-            //Create pillars
-            map.Add(new DynamicObjectData(position.x + 1, position.y + 1 , new TombPillar(1)));
-            map.Add(new DynamicObjectData(position.x + position.w -2, position.y + 1, new TombPillar(1)));
-            map.Add(new DynamicObjectData(position.x + 1, position.y + position.h - 2, new TombPillar(1)));
-            map.Add(new DynamicObjectData(position.x + position.w -2, position.y + position.h - 2, new TombPillar(1)));
+            map.tiles[position.x, position.y].objects.Add(objects["alt_wall"].Random());
+            map.tiles[position.x + position.w - 1, position.y].objects.Add(objects["alt_wall"].Random());
+            map.tiles[position.x, position.y + position.h - 1].objects.Add(objects["alt_wall"].Random());
+            map.tiles[position.x + position.w - 1, position.y + position.h - 1].objects.Add(objects["alt_wall"].Random());
+        }
+
+        if (UnityEngine.Random.Range(0,3) == 0)
+        {
+            for (int i = position.x+1; i < position.x + position.w - 1; ++i)
+                map.tiles[i, position.y + position.h / 2].objects.Add(objects["alt_wall"].Random());
+        }
+
+        if (UnityEngine.Random.Range(0,3) == 0)
+        {
+            for (int i = position.y+1; i < position.y + position.h - 1; ++i)
+                map.tiles[position.x + position.w/2, i].objects.Add(objects["alt_wall"].Random());
         }
         
     }

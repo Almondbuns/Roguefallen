@@ -2,39 +2,316 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MFTombSarcophagusRoom : MapFeatureData
+public class MFTombSarcophagusRoom4 : MapFeatureData
 {
-    public MFTombSarcophagusRoom(MapData map) : base(map)
+    public MFTombSarcophagusRoom4(MapData map) : base(map)
     {
-        dimensions = (8, 8);
+        dimensions = (9, 9);
+
+        MapObjectCollectionData collection = new();
+        collection.Add(new MapObjectData("tomb_alt_wall_1"));
+        objects["wall"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("tomb_candles_1") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        collection.Add(new MapObjectData("tomb_candles_2") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        objects["light"] = collection;
     }
 
     public override void Generate()
-    {
-        for (int i = 0; i < UnityEngine.Random.Range(3,6); ++i)
+    {        
+        for (int x = 0; x < dimensions.x; ++x)
         {
-            int tries = 0;
-            bool found = false;
-            int x = 0;
-            int y = 0;
-            DynamicObjectData s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
-            while (found == false && tries < 1000)
+            for (int y = 0; y < dimensions.y; ++y)
             {
-                x = UnityEngine.Random.Range(position.x, position.x + dimensions.x);
-                y = UnityEngine.Random.Range(position.y, position.y + dimensions.y);
-                
-                if (map.CanBeMovedInByActor(x,y, s) == true)
-                    found = true;
-                    
-                ++tries;
-            }
-
-            if (found == true)
-            {
-                s.MoveTo(x,y);
-                map.Add(s);
+                map.tiles[position.x + x, position.y + y].objects.Clear();
             }
         }
+
+        map.tiles[position.x + 1, position.y].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 7, position.y].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 2, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 6, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 7, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 2, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 5, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 6, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 7, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 2, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 5, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 6, position.y + 3].objects.Add(objects["wall"].Random());
+
+        map.tiles[position.x + 1, position.y + 8].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 7, position.y + 8].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 7].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 2, position.y + 7].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 6, position.y + 7].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 7, position.y + 7].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 6].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 2, position.y + 6].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 6].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 5, position.y + 6].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 6, position.y + 6].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 7, position.y + 6].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 2, position.y + 5].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 5].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 5, position.y + 5].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 6, position.y + 5].objects.Add(objects["wall"].Random());
+
+        DynamicObjectData s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
+        s.MoveTo(position.x, position.y + 4);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
+        s.MoveTo(position.x + 8, position.y + 4);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
+        s.MoveTo(position.x + 4,position.y);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
+        s.MoveTo(position.x + 4,position.y + 8);
+        map.Add(s);    
+
+        map.tiles[position.x + 4,position.y + 4].objects.Add(objects["light"].Random());
+    }
+}
+
+public class MFTombSarcophagusRoom2 : MapFeatureData
+{
+    public MFTombSarcophagusRoom2(MapData map) : base(map)
+    {
+        dimensions = (12, 6);
+
+        MapObjectCollectionData collection = new();
+        collection.Add(new MapObjectData("tomb_alt_wall_1"));
+        objects["wall"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("tomb_candles_1") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        collection.Add(new MapObjectData("tomb_candles_2") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        objects["light"] = collection;
+    }
+
+    public override void Generate()
+    {        
+        for (int x = 0; x < dimensions.x; ++x)
+        {
+            for (int y = 0; y < dimensions.y; ++y)
+            {
+                map.tiles[position.x + x, position.y + y].objects.Clear();
+            }
+        }
+
+        map.tiles[position.x + 1, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 10, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 2, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 9, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 10, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 2, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 4, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 7, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 8, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 9, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 4, position.y + 4].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 5, position.y + 4].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 6, position.y + 4].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 7, position.y + 4].objects.Add(objects["wall"].Random());
+
+        DynamicObjectData s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
+        s.MoveTo(position.x + 4, position.y + 2);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
+        s.MoveTo(position.x + 7, position.y + 2);
+        map.Add(s);
+
+        map.tiles[position.x + 5,position.y + 3].objects.Add(objects["light"].Random());
+        map.tiles[position.x + 6,position.y + 3].objects.Add(objects["light"].Random());
+    }
+}
+
+public class MFTombSarcophagusRoom2Small : MapFeatureData
+{
+    public MFTombSarcophagusRoom2Small(MapData map) : base(map)
+    {
+        dimensions = (5, 3);
+
+        MapObjectCollectionData collection = new();
+        collection.Add(new MapObjectData("tomb_alt_wall_1"));
+        objects["wall"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("tomb_candles_1") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        collection.Add(new MapObjectData("tomb_candles_2") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        objects["light"] = collection;
+    }
+
+    public override void Generate()
+    {        
+        for (int x = 0; x < dimensions.x; ++x)
+        {
+            for (int y = 0; y < dimensions.y; ++y)
+            {
+                map.tiles[position.x + x, position.y + y].objects.Clear();
+            }
+        }
+
+        map.tiles[position.x + 1, position.y + 0].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 0].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 2, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 2].objects.Add(objects["wall"].Random());
+       
+        DynamicObjectData s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
+        s.MoveTo(position.x + 0, position.y + 1);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
+        s.MoveTo(position.x + 4, position.y + 1);
+        map.Add(s);
+
+        map.tiles[position.x + 2,position.y + 2].objects.Add(objects["light"].Random());
+    }
+}
+
+public class MFTombSarcophagusRoom1 : MapFeatureData
+{
+    public MFTombSarcophagusRoom1(MapData map) : base(map)
+    {
+        dimensions = (7, 7);
+
+        MapObjectCollectionData collection = new();
+        collection.Add(new MapObjectData("tomb_alt_wall_1"));
+        objects["wall"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("tomb_candles_1") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        collection.Add(new MapObjectData("tomb_candles_2") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        objects["light"] = collection;
+    }
+
+    public override void Generate()
+    {        
+        for (int x = 0; x < dimensions.x; ++x)
+        {
+            for (int y = 0; y < dimensions.y; ++y)
+            {
+                map.tiles[position.x + x, position.y + y].objects.Clear();
+            }
+        }
+
+        map.tiles[position.x + 3, position.y + 0].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 0, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 5, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 6, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 5].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 6].objects.Add(objects["wall"].Random());
+       
+        DynamicObjectData s = new DynamicObjectData(0,0, new TombSarcophagus(difficulty_level));
+        s.MoveTo(position.x + 3, position.y + 3);
+        map.Add(s);
+
+        map.tiles[position.x + 2,position.y + 2].objects.Add(objects["light"].Random());
+        map.tiles[position.x + 4,position.y + 2].objects.Add(objects["light"].Random());
+        map.tiles[position.x + 2,position.y + 4].objects.Add(objects["light"].Random());
+        map.tiles[position.x + 4,position.y + 4].objects.Add(objects["light"].Random());
+    }
+}
+
+public class MFTombPillars : MapFeatureData
+{
+    public MFTombPillars(MapData map) : base(map)
+    {
+        dimensions = (Random.Range(5,11), Random.Range(5,11));
+
+        MapObjectCollectionData collection = new();
+        collection.Add(new MapObjectData("tomb_alt_wall_1"));
+        objects["wall"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("tomb_candles_1") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        collection.Add(new MapObjectData("tomb_candles_2") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        objects["light"] = collection;
+    }
+
+    public override void Generate()
+    {        
+        map.Add(new DynamicObjectData(position.x + 1, position.y + 1 , new TombPillar(1)));
+        map.Add(new DynamicObjectData(position.x + dimensions.x -2, position.y + 1, new TombPillar(1)));
+        map.Add(new DynamicObjectData(position.x + 1, position.y + dimensions.y - 2, new TombPillar(1)));
+        map.Add(new DynamicObjectData(position.x + dimensions.x -2, position.y + dimensions.y - 2, new TombPillar(1)));
+    }
+}
+
+public class MFTombJars : MapFeatureData
+{
+    public MFTombJars(MapData map) : base(map)
+    {
+        dimensions = (7, 7);
+
+        MapObjectCollectionData collection = new();
+        collection.Add(new MapObjectData("tomb_alt_wall_1"));
+        objects["wall"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("tomb_candles_1") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        collection.Add(new MapObjectData("tomb_candles_2") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        objects["light"] = collection;
+    }
+
+    public override void Generate()
+    {        
+        for (int x = 0; x < dimensions.x; ++x)
+        {
+            for (int y = 0; y < dimensions.y; ++y)
+            {
+                map.tiles[position.x + x, position.y + y].objects.Clear();
+            }
+        }
+
+        map.tiles[position.x + 3, position.y + 0].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 0, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 5, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 6, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 5].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 6].objects.Add(objects["wall"].Random());
+       
+        DynamicObjectData s = new DynamicObjectData(0,0, new TombPillar(difficulty_level));
+        s.MoveTo(position.x + 3, position.y + 3);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new Jar(difficulty_level));
+        s.MoveTo(position.x + 0, position.y + 0);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new Jar(difficulty_level));
+        s.MoveTo(position.x + 0, position.y + 6);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new Jar(difficulty_level));
+        s.MoveTo(position.x + 6, position.y + 0);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new Jar(difficulty_level));
+        s.MoveTo(position.x + 6, position.y + 6);
+        map.Add(s);
+
+        map.tiles[position.x + 2,position.y + 2].objects.Add(objects["light"].Random());
+        map.tiles[position.x + 4,position.y + 2].objects.Add(objects["light"].Random());
+        map.tiles[position.x + 2,position.y + 4].objects.Add(objects["light"].Random());
+        map.tiles[position.x + 4,position.y + 4].objects.Add(objects["light"].Random());
     }
 }
 
