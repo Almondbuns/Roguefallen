@@ -2,6 +2,51 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public class MFTombExit : MFChangeDungeon
+{
+    public MFTombExit(MapData map) : base(map)
+    {
+    }
+
+    public MFTombExit(MapData map, DungeonChangeData dcd) : base(map, dcd)
+    {
+        distribute_general_actors = false;
+        distribute_general_items = false;
+
+        dimensions = (3,3);
+
+        MapObjectCollectionData collection = new();
+
+        if (dcd.target_entrance_parameter == "Down")
+            collection.Add(new MapObjectData("tomb_entrance"));
+        else
+            collection.Add(new MapObjectData("tomb_entrance"));
+        
+        objects["entrance"] = collection;
+    }
+
+    public override void Generate()
+    {
+        for (int x = position.x; x < position.x + dimensions.x; ++x)
+        {
+            for (int y = position.y + 1; y < position.y + dimensions.y; ++y)
+            {
+                map.tiles[x, y].objects.Clear();                
+            }
+        }
+
+        DynamicObjectData s = new DynamicObjectData(0,0, 
+            new DungeonEntrance(difficulty_level, "images/objects/"+ objects["entrance"].Random().name));
+        s.MoveTo(position.x + dimensions.x / 2, position.y + dimensions.y / 2);
+        map.Add(s);     
+        
+        enter_tiles.Add((position.x + dimensions.x / 2, position.y + dimensions.y / 2));
+        exit_tile = (position.x + dimensions.x / 2, position.y + dimensions.y / 2 - 1);
+    }
+
+}
+
 public class MFTombSarcophagusRoom4 : MapFeatureData
 {
     public MFTombSarcophagusRoom4(MapData map) : base(map)

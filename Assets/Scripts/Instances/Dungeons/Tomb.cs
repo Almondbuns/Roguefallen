@@ -124,9 +124,9 @@ public class Tomb : DungeonData
                     new DungeonChangeData
                     {
                         name = "World Map Exit",
-                        dungeon_change_type = typeof(MFCaveExit),
+                        dungeon_change_type = typeof(MFTombExit),
                         target_dungeon_name = "World Map",
-                        target_entrance_name = "Cave Entrance",
+                        target_entrance_name = "Tomb Entrance",
                         target_entrance_parameter = "Up",
                     }
                 );
@@ -138,7 +138,7 @@ public class Tomb : DungeonData
                     new DungeonChangeData
                     {
                         name = "Level " + (level + 2) + " Enter",
-                        dungeon_change_type = typeof(MFCaveExit),
+                        dungeon_change_type = typeof(MFTombExit),
                         target_dungeon_name = name,
                         target_entrance_name = "Level " + (level + 2) + " Exit",
                         target_entrance_parameter = "Down",
@@ -151,7 +151,7 @@ public class Tomb : DungeonData
                     new DungeonChangeData
                     {
                         name = "Level " + (level + 1) + " Exit",
-                        dungeon_change_type = typeof(MFCaveExit),
+                        dungeon_change_type = typeof(MFTombExit),
                         target_dungeon_name = name,
                         target_entrance_name = "Level " + (level + 1) + " Enter",
                         target_entrance_parameter = "Up",

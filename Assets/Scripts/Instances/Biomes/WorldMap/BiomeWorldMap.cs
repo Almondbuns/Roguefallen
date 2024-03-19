@@ -89,13 +89,13 @@ public class BiomeWorldMap : BiomeData
                     x = rand.x;
                     y = rand.y;
                 }
-                else if (dungeon_type == typeof(BiomeCave))
+                else if (dungeon_type == typeof(BiomeCave) || dungeon_type == typeof(BiomeFrozenCave))
                 {
                     (int x, int y) rand = hill_tiles[UnityEngine.Random.Range(0, hill_tiles.Count)];
                     x = rand.x;
                     y = rand.y;
                 }
-                else if (dungeon_type == typeof(BiomeSewers))
+                else if (dungeon_type == typeof(BiomeSewers) || dungeon_type == typeof(BiomeTomb))
                 {
                     (int x, int y) rand = grass_tiles[UnityEngine.Random.Range(0, grass_tiles.Count)];
                     x = rand.x;

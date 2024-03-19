@@ -170,38 +170,33 @@ public class GameData : MonoBehaviour
             });
         }
 
-        for (int i = 0; i < number_of_dungeons_per_type / 2; ++ i)
-        {
-            /*dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
-            {          
-                name = "Cave Entrance " + i,
-                dungeon_change_type = typeof(MFStandardDungeonEntrance),
-                dungeon_change_image = "images/objects/cave_1",
-                target_dungeon_name = "The Frosty Cave",
-                target_entrance_name = "World Map Exit",
-            });
+        dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
+        {          
+            name = "Tomb Entrance",
+            dungeon_change_type = typeof(MFStandardDungeonEntrance),
+            dungeon_change_image = "images/objects/tomb_entrance",
+            target_dungeon_name = "The Tomb",
+            target_entrance_name = "World Map Exit",
+        });
 
-            dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
-            {          
-                name = "Cave Entrance " + i,
-                dungeon_change_type = typeof(MFStandardDungeonEntrance),
-                dungeon_change_image = "images/objects/cave_1",
-                target_dungeon_name = "The Mountain Cave",
-                target_entrance_name = "World Map Exit",
-            });*/
-        }
+        dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
+        {          
+            name = "Mountain Cave Entrance",
+            dungeon_change_type = typeof(MFStandardDungeonEntrance),
+            dungeon_change_image = "images/objects/sewers_1",
+            target_dungeon_name = "The Mountain Cave",
+            target_entrance_name = "World Map Exit",
+        });
 
-        for (int i = 0; i < number_of_dungeons_per_type; ++ i)
-        {
-            dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
-            {          
-                name = "Sewers Entrance " + i,
-                dungeon_change_type = typeof(MFStandardDungeonEntrance),
-                dungeon_change_image = "images/objects/sewers_1",
-                target_dungeon_name = "The Tomb",
-                target_entrance_name = "World Map Exit",
-            });
-        }
+        dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
+        {          
+            name = "Frozen Cave Entrance",
+            dungeon_change_type = typeof(MFStandardDungeonEntrance),
+            dungeon_change_image = "images/objects/sewers_1",
+            target_dungeon_name = "The Frosty Cave",
+            target_entrance_name = "World Map Exit",
+        });
+
 
         for (int i = 0; i < number_of_dungeons_per_type; ++ i)
         {
@@ -273,11 +268,8 @@ public class GameData : MonoBehaviour
             dungeons.Add(cave);            
         }
 
-        for (int i = 0; i < number_of_dungeons_per_type; ++i)
-        {
-            DungeonData tomb = new Tomb();
-            dungeons.Add(tomb); 
-        }
+        DungeonData tomb = new Tomb();
+        dungeons.Add(tomb); 
 
         for (int i = 0; i < number_of_dungeons_per_type; ++i)
         {
@@ -500,7 +492,7 @@ public class GameData : MonoBehaviour
         main_quest.GenerateQuest(1, QuestComplexity.Long);
         player_data.AddQuest(main_quest);
 
-        current_dungeon = dungeons[9];
+        current_dungeon = dungeons[1];
         current_dungeon.SetRegenerationNeeded();
         current_map_level = current_dungeon.GetMapLevelData(0);
         current_dungeon.RegenerateLevel(current_map_level);

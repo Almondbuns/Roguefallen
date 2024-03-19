@@ -139,7 +139,7 @@ public class FrostyCave : DungeonData
                         name = "World Map Exit",
                         dungeon_change_type = typeof(MFCaveExit),
                         target_dungeon_name = "World Map",
-                        target_entrance_name = "Cave Entrance ",
+                        target_entrance_name = "Frosty Cave Entrance",
                         target_entrance_parameter = "Up",
                     }
                 );
