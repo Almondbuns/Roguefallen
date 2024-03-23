@@ -38,6 +38,7 @@ public class Chest : ActorPrototype
                 item_level = stats.level + 1;
                 
             ItemData item = ItemData.GetRandomItem(-1,-1, stats.level);
+            Debug.Log("Creating item with level " + stats.level);
 
             int r = UnityEngine.Random.Range(1, 101);
             if (r <= 20)
@@ -73,7 +74,6 @@ public class Crate : ActorPrototype
         can_dodge = false;
 
         stats.health_max = 10;
-        stats.dodge = -100;
 
         stats.body_armor.Add(new ArmorStats { body_part = "Crate", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
     }
@@ -82,7 +82,6 @@ public class Crate : ActorPrototype
     {
         //Spawn a broken Crate
         MapData map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
-        //map.Add(new DynamicObjectData(actor_data.x, actor_data.y, new BrokenCrate(1)));
         
         //May spawn nothing, an item oder a monster
         int random = Random.Range(0, 100);
@@ -135,7 +134,6 @@ public class Jar : ActorPrototype
         can_dodge = false;
 
         stats.health_max = 5;
-        stats.dodge = -100;
 
         stats.body_armor.Add(new ArmorStats { body_part = "Jar", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
     }
@@ -216,7 +214,6 @@ public class BrokenCrate : ActorPrototype
         can_dodge = false;
 
         stats.health_max = 10;
-        stats.dodge = -100;
 
         stats.body_armor.Add(new ArmorStats { body_part = "Broken Crate", percentage = 100, armor = (0, 0, 0), durability_max = 0});
     }
@@ -236,7 +233,6 @@ public class TombPillar : ActorPrototype
         can_dodge = false;
 
         stats.health_max = 30;
-        stats.dodge = -100;
 
         stats.body_armor.Add(new ArmorStats { body_part = "Pillar", percentage = 100, armor = (0, 0, 0), durability_max = 0});
     }
@@ -257,10 +253,52 @@ public class TombSarcophagus : ActorPrototype
         can_catch_insanity = false;
         can_dodge = false;
 
-        stats.health_max = 30;
-        stats.dodge = -100;
+        stats.health_max = 10;
 
         stats.body_armor.Add(new ArmorStats { body_part = "Sarcophagus", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+    }
+
+    public override void OnKill(ActorData actor_data)
+    {        
+        MapData map = GameObject.Find("GameData").GetComponent<GameData>().current_map;        
+        
+        //May spawn nothing, an item oder a monster
+        int random = Random.Range(0, 100);
+        if (random < 20)
+        {
+            //Spawn monster
+            (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.X, actor_data.Y);
+            if (tile == null) return;
+
+            ActorData monster;
+            float rand = UnityEngine.Random.value;
+            if (rand <= 0.33f )
+                monster = new MonsterData(tile.Value.x, tile.Value.y, new Zombie(stats.level));
+            else if (rand <= 0.66f )
+                monster = new MonsterData(tile.Value.x, tile.Value.y, new SkeletonWarrior(stats.level));
+            else 
+                monster = new MonsterData(tile.Value.x, tile.Value.y, new SkeletonArcher(stats.level));
+            
+            map.Add(monster);
+            GameLogger.Log("The Sarcophagus contains a " + monster.prototype.name + ".");
+        }
+        else if (random < 60)
+        {
+            int random_number = Random.Range(1,4);
+            for (int i = 0; i < random_number; ++ i)
+            {
+                //Spawn item
+                (int x, int y)? tile = map.FindRandomEmptyNeighborTile(actor_data.X, actor_data.Y);
+                if (tile == null) return;
+                ItemData item = ItemData.GetRandomItem(tile.Value.x, tile.Value.y, stats.level + Random.Range(0,4));
+                map.Add(item);
+                GameLogger.Log("The Sarcophagus contains a " + item.GetName() + ".");
+            }
+        }
+        else
+        {
+            GameLogger.Log("The Sarcophagus is empty.");
+        }
     }
 
 }

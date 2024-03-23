@@ -377,7 +377,7 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                         if (actor_data.prototype.projectile != null)
                             visual_action_time = 0.10f;
                         else
-                            visual_action_time = 0.25f;
+                            visual_action_time = 0.15f;
                     }
                     else
                         visual_action_time = 0.5f;

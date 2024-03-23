@@ -360,6 +360,62 @@ public class MFTombJars : MapFeatureData
     }
 }
 
+
+public class MFTombChestroom : MapFeatureData
+{
+    public MFTombChestroom(MapData map) : base(map)
+    {
+        dimensions = (5, 6);
+
+        MapObjectCollectionData collection = new();
+        collection.Add(new MapObjectData("tomb_alt_wall_1"));
+        objects["wall"] = collection;
+
+        collection = new();
+        collection.Add(new MapObjectData("tomb_candles_1") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        collection.Add(new MapObjectData("tomb_candles_2") { emits_light = true, light_color = new Color(1.0f,1.0f,1.0f), movement_blocked = false, sight_blocked = false });
+        objects["light"] = collection;
+    }
+
+    public override void Generate()
+    {        
+        for (int x = 0; x < dimensions.x; ++x)
+        {
+            for (int y = 0; y < dimensions.y; ++y)
+            {
+                map.tiles[position.x + x, position.y + y].objects.Clear();
+            }
+        }
+
+        map.tiles[position.x + 1, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 1, position.y + 4].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 1].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 2].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 3].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 3, position.y + 4].objects.Add(objects["wall"].Random());
+        map.tiles[position.x + 2, position.y + 4].objects.Add(objects["wall"].Random());
+       
+        DynamicObjectData s = new DynamicObjectData(0,0, new Chest(difficulty_level));
+        s.MoveTo(position.x + 2, position.y + 3);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new BearTrap(difficulty_level));
+        s.MoveTo(position.x + 2, position.y + 2);
+        map.Add(s);
+
+        s = new DynamicObjectData(0,0, new BearTrap(difficulty_level));
+        s.MoveTo(position.x + 2, position.y + 1);
+        map.Add(s);
+
+        map.tiles[position.x + 0,position.y + 0].objects.Add(objects["light"].Random());
+        map.tiles[position.x + 0,position.y + 5].objects.Add(objects["light"].Random());
+        map.tiles[position.x + 4,position.y + 0].objects.Add(objects["light"].Random());
+        map.tiles[position.x + 4,position.y + 5].objects.Add(objects["light"].Random());
+    }
+}
+
 /*
 public class MFOctopusBoss : MapFeatureData
 {

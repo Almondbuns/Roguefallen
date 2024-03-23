@@ -299,7 +299,7 @@ public class DungeonLevelData
     {
         int n_rooms = UnityEngine.Random.Range(number_of_rooms.min, number_of_rooms.max + 1);
         room_list = new();
-        map = GameObject.Find("GameData").GetComponent<GameData>().biomes[biome_index].CreateMapLevel(dungeon_level, dimensions.x, dimensions.y, n_rooms, map_features, dungeon_changes, room_list);
+        map = GameObject.Find("GameData").GetComponent<GameData>().biomes[biome_index].CreateMapLevel(dungeon_level, dimensions.x, dimensions.y, n_rooms, map_features, dungeon_changes, room_list, difficulty_level);
 
         if (quest_items != null)
             DistributeQuestItems(quest_items);

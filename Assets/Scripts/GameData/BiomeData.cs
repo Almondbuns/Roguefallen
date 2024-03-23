@@ -119,7 +119,7 @@ public abstract class BiomeData
     }
 
     //public abstract MapData CreateMap();
-    public abstract MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list);
+    public abstract MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list, int difficulty_level);
 
     /*protected void GuaranteeMapLevelConnectivity(MapData map)
     {

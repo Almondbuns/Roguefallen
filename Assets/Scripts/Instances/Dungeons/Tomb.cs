@@ -33,13 +33,12 @@ public class Tomb : DungeonData
             DungeonLevelData level_data = new DungeonLevelData
             {
                 biome_index = 6,
-                is_always_visible = true,
+                is_always_visible = false,
                 difficulty_level = level + 3,
-               
-        
+                       
                 map_features =
-                {                    
-                    
+                {   
+                    (typeof(MFTombChestroom), 10, 20),                                      
                     (typeof(MFCaveTreasureRoom), 1, 2), 
                     (typeof(MFTombSarcophagusRoom4), 0,2),   
                     (typeof(MFTombSarcophagusRoom2), 0,3), 
@@ -114,7 +113,7 @@ public class Tomb : DungeonData
             {
                 (typeof(Jar), 20, 30),
                 (typeof(Chest), 0, 1),
-                (typeof(BallTrapTrigger),10,10),
+                (typeof(BallTrapTrigger),10,20),
             };
           
             if (level == 0)
@@ -164,16 +163,14 @@ public class Tomb : DungeonData
 
     public override void Tick()
     {
-        //TODO: Currently only works for current level
-        int level_index = 0;
+        DungeonLevelData level = GameObject.Find("GameData").GetComponent<GameData>().current_map_level;        
+        int level_index = level.dungeon_level;
         if (balls[level_index].is_activated == false)
             return;
 
-        if (balls[level_index].needs_initialization == true && tick_counter == 0)
+        if (balls[level_index].needs_initialization == true)
         {
-            MapData current_map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
-            DungeonLevelData level = GameObject.Find("GameData").GetComponent<GameData>().current_map_level;
-            
+            MapData current_map = GameObject.Find("GameData").GetComponent<GameData>().current_map;            
             
             DynamicObjectData ball = new DynamicObjectData(0,0, new TombGiantBall(1));
             current_map.Add(ball);
@@ -186,13 +183,11 @@ public class Tomb : DungeonData
             balls[level_index].clockwise_rolling = false;
         }
         ++this.tick_counter;
-
         if (tick_counter >= 60)
         {
             tick_counter = 0;
 
             MapData current_map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
-            DungeonLevelData level = GameObject.Find("GameData").GetComponent<GameData>().current_map_level;
             ActorData ball = current_map.GetActor(balls[level_index].id);
 
             //First move ball in the right direction
@@ -275,10 +270,12 @@ public class Tomb : DungeonData
     {
         if (message == "Trigger Ball")
         {
-            balls[0].is_activated = true;
-            balls[0].clockwise_rolling = !balls[0].clockwise_rolling;
-            balls[0].corridor_direction_x *= -1;
-            balls[0].corridor_direction_y *= -1;
+            DungeonLevelData level = GameObject.Find("GameData").GetComponent<GameData>().current_map_level;        
+            int level_index = level.dungeon_level;
+            balls[level_index].is_activated = true;
+            balls[level_index].clockwise_rolling = !balls[level_index].clockwise_rolling;
+            balls[level_index].corridor_direction_x *= -1;
+            balls[level_index].corridor_direction_y *= -1;
         }
         return -1;
     }
