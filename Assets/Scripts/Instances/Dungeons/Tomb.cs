@@ -26,19 +26,19 @@ public class Tomb : DungeonData
 
         balls = new ();
 
-        for (int level = 0; level < 5; ++level)
+        for (int level = 0; level < 3; ++level)
         {
             balls.Add(new TombBallData());
 
             DungeonLevelData level_data = new DungeonLevelData
             {
                 biome_index = 6,
-                is_always_visible = false,
+                is_always_visible = true,
                 difficulty_level = level + 3,
                        
                 map_features =
                 {   
-                    (typeof(MFTombChestroom), 10, 20),                                      
+                    (typeof(MFTombChestroom), 0, 2),                                      
                     (typeof(MFCaveTreasureRoom), 1, 2), 
                     (typeof(MFTombSarcophagusRoom4), 0,2),   
                     (typeof(MFTombSarcophagusRoom2), 0,3), 
@@ -67,6 +67,12 @@ public class Tomb : DungeonData
             level_data.number_of_rooms = (40, 50);
             level_data.number_of_encounters = (20, 30);
             level_data.number_of_gold_items = (5, 10);
+
+            // Boss Room
+            if (level == 2)
+            {
+                level_data.map_features.Insert(0, (typeof(MFTombThroneroom), 1,1));
+            }
 
 
             level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHealthPotion), prob_amount = {(1.0f, 1)}});
@@ -131,7 +137,7 @@ public class Tomb : DungeonData
                 );
             }
 
-            if (level < 9)
+            if (level < 2)
                 level_data.dungeon_changes.Add
                 (
                     new DungeonChangeData

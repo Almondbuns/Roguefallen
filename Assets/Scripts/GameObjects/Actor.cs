@@ -352,7 +352,10 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             CreateFloatingInfo(floating_info_queue[0]);
             floating_info_queue.Remove(floating_info_queue[0]);
-            floating_info_time = 0.5f;
+            if (floating_info_queue.Count >= 6)
+                floating_info_time = 0.15f;
+            else
+                floating_info_time = 0.5f;
         }
 
         //MeleeAttack Sorting
