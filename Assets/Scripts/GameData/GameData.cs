@@ -120,6 +120,7 @@ public class GameData : MonoBehaviour
             new BiomeCastle(),
             new BiomeFrozenCave(),
             new BiomeTomb(),
+            new BiomeForest(),
         };
 
         player_data = new PlayerData(starting_level);
@@ -179,7 +180,7 @@ public class GameData : MonoBehaviour
             target_entrance_name = "World Map Exit",
         });
 
-        dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
+        /*dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
         {          
             name = "Mountain Cave Entrance",
             dungeon_change_type = typeof(MFStandardDungeonEntrance),
@@ -194,6 +195,15 @@ public class GameData : MonoBehaviour
             dungeon_change_type = typeof(MFStandardDungeonEntrance),
             dungeon_change_image = "images/objects/sewers_1",
             target_dungeon_name = "The Frosty Cave",
+            target_entrance_name = "World Map Exit",
+        });*/
+
+        dungeons[0].dungeon_levels[0].dungeon_changes.Add(new DungeonChangeData
+        {          
+            name = "Rotten Forest Entrance",
+            dungeon_change_type = typeof(MFStandardDungeonEntrance),
+            dungeon_change_image = "images/objects/sewers_1",
+            target_dungeon_name = "The Rotten Forest",
             target_entrance_name = "World Map Exit",
         });
 
@@ -258,18 +268,18 @@ public class GameData : MonoBehaviour
             });
         }
 
-        for (int i = 0; i < number_of_dungeons_per_type / 2; ++i)
-        {
+        //DungeonData cave = new FrostyCave();
+        //dungeons.Add(cave);   
 
-            DungeonData cave = new FrostyCave();
-            dungeons.Add(cave);   
-
-            cave = new MountainCave();
-            dungeons.Add(cave);            
-        }
+        //cave = new MountainCave();
+        //dungeons.Add(cave);            
+        
 
         DungeonData tomb = new Tomb();
         dungeons.Add(tomb); 
+
+        DungeonData forest = new RottenForest();
+        dungeons.Add(forest); 
 
         for (int i = 0; i < number_of_dungeons_per_type; ++i)
         {
