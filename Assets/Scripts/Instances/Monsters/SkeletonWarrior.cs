@@ -22,7 +22,7 @@ public class SkeletonWarrior : ActorPrototype
         stats.health_max = 15;
         stats.stamina_max = 10;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (2, 1, 0), durability_max = 10 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (2, 1, 0)});
         stats.movement_time = 100;
         stats.to_hit = 10;
         stats.dodge = 10;
@@ -80,7 +80,7 @@ public class SkeletonWarriorPile : ActorPrototype
         stats.health_max = 5;
         stats.stamina_max = 10;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (5, 5, 5), durability_max = 20 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (5, 5, 5)});
         stats.movement_time = 100;
         stats.to_hit = 10;
         stats.dodge = 10;

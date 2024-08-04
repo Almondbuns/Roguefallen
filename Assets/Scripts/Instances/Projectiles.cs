@@ -30,7 +30,7 @@ public class ProjectileFirebomb : ActorPrototype
 
         stats.health_max = 5;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0)});
 
         stats.movement_time = 50;
         stats.to_hit = 20;
@@ -63,7 +63,7 @@ public class ProjectileThrowingKnife: ActorPrototype
 
         stats.health_max = 5;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0)});
 
         stats.movement_time = 25;
         stats.to_hit = 20;
@@ -96,7 +96,7 @@ public class ProjectileArrow: ActorPrototype
 
         stats.health_max = 2;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0)});
 
         stats.movement_time = 10;
         stats.to_hit = 10;
@@ -131,7 +131,7 @@ public class ProjectileAcidFlask : ActorPrototype
 
         stats.health_max = 5;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0)});
 
         stats.movement_time = 50;
         stats.to_hit = 20;
@@ -159,7 +159,7 @@ public class ItemProjectile : ActorPrototype
 
         stats.health_max = 100;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 0)});
 
         stats.movement_time = 50;
         stats.to_hit = 20;

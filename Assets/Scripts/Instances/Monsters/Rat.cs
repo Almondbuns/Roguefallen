@@ -27,8 +27,7 @@ public class Rat : ActorPrototype
             stats.health_max = 10;
             stats.stamina_max = 5;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 95, armor = (0, 0, 0), durability_max = 5 });
-            stats.body_armor.Add(new ArmorStats { body_part = "tail", percentage = 5, armor = (0, 0, 0), durability_max = 0 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0)});
             stats.movement_time = 50;
             stats.to_hit = 5;
             stats.dodge = 5;
@@ -48,8 +47,7 @@ public class Rat : ActorPrototype
             stats.health_max = 15;
             stats.stamina_max = 5;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 95, armor = (1, 1, 0), durability_max = 10 });
-            stats.body_armor.Add(new ArmorStats { body_part = "tail", percentage = 5, armor = (0, 0, 0), durability_max = 0 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (1, 1, 0)});
             stats.movement_time = 50;
             stats.to_hit = 10;
             stats.dodge = 10;
@@ -96,8 +94,7 @@ public class Rat : ActorPrototype
             stats.health_max = 20;
             stats.stamina_max = 5;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 95, armor = (2, 2, 0), durability_max = 10 });
-            stats.body_armor.Add(new ArmorStats { body_part = "tail", percentage = 5, armor = (0, 0, 0), durability_max = 0 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (2, 2, 0)});
             stats.movement_time = 50;
             stats.to_hit = 10;
             stats.dodge = 10;

@@ -112,10 +112,6 @@ public class PlayerData : ActorData
         Stamina_current = GetStaminaMax();
         mana_current = GetManaMax();
 
-
-        foreach(ArmorStats armor_stats in prototype.stats.body_armor)
-            body_armor.Add(new ArmorStatsData(armor_stats));
-
         foreach (DamageType type in prototype.stats.meter_resistances.resistances.Keys)
         {
             meter_resistances.resistances[type] = 0;
@@ -465,7 +461,7 @@ public class PlayerData : ActorData
 
     public override int GetArmor(string body_part, ArmorType armor_type)
     {
-        ArmorStats armor_stats = prototype.stats.body_armor.Find(x => x.body_part.ToLower().Equals(body_part.ToLower()));
+        ActorArmorStats armor_stats = prototype.stats.body_armor.Find(x => x.body_part.ToLower().Equals(body_part.ToLower()));
         int current_armor = 0;
         if (armor_stats != null)
         {
@@ -546,7 +542,7 @@ public class PlayerData : ActorData
 
     public override int GetMaxDurability(string body_part)
     {
-        int max_durability = prototype.stats.body_armor.Find(x => x.body_part.ToLower().Equals(body_part.ToLower())).durability_max;
+        int max_durability = 0;
         foreach (EquipmentSlotData equip in equipment)
         {
             if (equip.name.ToLower() != body_part.ToLower())

@@ -24,7 +24,7 @@ public class Flytrap : ActorPrototype
             stats.health_max = 30;
             stats.stamina_max = 10;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (1, 1, 1), durability_max = 10 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (1, 1, 1)});
             stats.movement_time = 100;
             stats.to_hit = 5;
             stats.dodge = 0;
@@ -113,7 +113,7 @@ public class Flytrap : ActorPrototype
             stats.health_max = 40;
             stats.stamina_max = 20;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (3, 3, 3), durability_max = 30 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (3, 3, 3)});
             stats.movement_time = 100;
             stats.to_hit = 10;
             stats.dodge = 0;

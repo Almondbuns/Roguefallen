@@ -24,7 +24,7 @@ public class Bat : ActorPrototype
             stats.health_max = 10;
             stats.stamina_max = 5;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0)});
             stats.movement_time = 30;
             stats.to_hit = 5;
             stats.dodge = 10;
@@ -92,7 +92,7 @@ public class Bat : ActorPrototype
             stats.health_max = 20;
             stats.stamina_max = 5;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0)});
             stats.movement_time = 30;
             stats.to_hit = 5;
             stats.dodge = 10;

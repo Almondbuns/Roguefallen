@@ -21,7 +21,7 @@ public class CommonSpider : ActorPrototype
         stats.health_max = 10;
         stats.stamina_max = 5;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (1, 1, 1), durability_max = 10 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (1, 1, 1)});
         stats.movement_time = 100;
         stats.to_hit = 5;
         stats.dodge = 5;
@@ -75,7 +75,7 @@ public class CaveSpider : ActorPrototype
         stats.health_max = 15;
         stats.stamina_max = 5;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (1, 1, 1), durability_max = 10 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (1, 1, 1)});
         stats.movement_time = 100;
         stats.to_hit = 5;
         stats.dodge = 5;
@@ -128,7 +128,7 @@ public class PoisonSpider : ActorPrototype
         stats.health_max = 15;
         stats.stamina_max = 5;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (1, 1, 1), durability_max = 10 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (1, 1, 1)});
         stats.movement_time = 100;
         stats.to_hit = 5;
         stats.dodge = 5;

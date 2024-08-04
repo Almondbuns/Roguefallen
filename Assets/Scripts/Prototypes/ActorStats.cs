@@ -131,12 +131,11 @@ public class ProbabilityResistances
     }
 }
 
-public class ArmorStats
+public class ActorArmorStats
 {
     public string body_part;
     public int percentage;
     public (int physical, int elemental, int magical) armor;
-    public int durability_max;
 }
 
 public class ActorStats 
@@ -148,7 +147,7 @@ public class ActorStats
     public int stamina_max;
     public int mana_max;
 
-    public List<ArmorStats> body_armor;
+    public List<ActorArmorStats> body_armor;
     public int movement_time = 100;
     public int attack_time = 100;
     public int usage_time = 100;

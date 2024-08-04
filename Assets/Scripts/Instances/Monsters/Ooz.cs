@@ -23,7 +23,7 @@ public class Ooz : ActorPrototype
             stats.health_max = 10;
             stats.stamina_max = 5;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (10,0,0), durability_max = 20 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (10,0,0)});
             stats.movement_time = 200;
             stats.to_hit = 5;
             stats.dodge = -20;
@@ -71,7 +71,7 @@ public class Ooz : ActorPrototype
             stats.health_max = 20;
             stats.stamina_max = 5;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (10,0,0), durability_max = 40 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (10,0,0)});
             stats.movement_time = 200;
             stats.to_hit = 5;
             stats.dodge = -20;
@@ -119,7 +119,7 @@ public class Ooz : ActorPrototype
             stats.health_max = 30;
             stats.stamina_max = 5;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (10,0,0), durability_max = 60 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (10,0,0)});
             stats.movement_time = 200;
             stats.to_hit = 5;
             stats.dodge = -20;

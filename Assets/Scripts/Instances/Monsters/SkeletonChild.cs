@@ -22,7 +22,7 @@ public class SkeletonChild : ActorPrototype
         stats.health_max = 10;
         stats.stamina_max = 10;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (1, 0, 0), durability_max = 10 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (1, 0, 0)});
         stats.movement_time = 50;
         stats.to_hit = 10;
         stats.dodge = 10;

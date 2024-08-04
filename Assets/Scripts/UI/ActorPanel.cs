@@ -32,8 +32,6 @@ public class ActorPanel : MonoBehaviour
 
         transform.Find("Name").GetComponent<TMPro.TextMeshProUGUI>().text = actor_data.prototype.name;
 
-        transform.Find("Level").GetComponent<TMPro.TextMeshProUGUI>().text = actor_data.prototype.stats.level.ToString();
-
         //HP
         PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
         
@@ -75,18 +73,11 @@ public class ActorPanel : MonoBehaviour
 
         if (monster_armor > 0)
         {
-            foreach(ArmorStats armor_stats in actor_data.prototype.stats.body_armor)
+            foreach(ActorArmorStats armor_stats in actor_data.prototype.stats.body_armor)
             {
-                GameObject go = GameObject.Instantiate(body_part_prefab, transform, false);
-                go.GetComponent<RectTransform>().localPosition = new Vector3(10, height, 0);
-                
-                go.GetComponent<TMPro.TextMeshProUGUI>().text = armor_stats.body_part;
-                go.transform.Find("Percentage").GetComponent<TMPro.TextMeshProUGUI>().text = armor_stats.percentage.ToString();
-                go.transform.Find("Physical").GetComponent<TMPro.TextMeshProUGUI>().text = armor_stats.armor.physical.ToString();
-                go.transform.Find("Elemental").GetComponent<TMPro.TextMeshProUGUI>().text = armor_stats.armor.elemental.ToString();
-                go.transform.Find("Magical").GetComponent<TMPro.TextMeshProUGUI>().text = armor_stats.armor.magical.ToString();
-                go.transform.Find("DurabilityBar").GetComponent<CurrentMaxBar>().SetValues(actor_data.body_armor.Find(x => x.body_part == armor_stats.body_part).durability_current, armor_stats.durability_max);
-                height -= 25;
+                transform.Find("ArmorPhysical").GetComponent<TMPro.TextMeshProUGUI>().text = armor_stats.percentage.ToString();
+                transform.Find("ArmorElemental").GetComponent<TMPro.TextMeshProUGUI>().text = armor_stats.armor.physical.ToString();
+                transform.Find("ArmorMagical").GetComponent<TMPro.TextMeshProUGUI>().text = armor_stats.armor.elemental.ToString();
             }
         }
         else

@@ -22,7 +22,7 @@ public class OctopusTentacle : ActorPrototype
         stats.health_max = 20;
         stats.stamina_max = 5;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0)});
         stats.movement_time = 100;
         stats.to_hit = 5;
         stats.dodge = 5;
@@ -49,7 +49,7 @@ public class Octopus : ActorPrototype
         stats.health_max = 100;
         stats.stamina_max = 50;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (100, 100, 100), durability_max = 1000 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (100, 100, 100)});
         stats.movement_time = 1000;
         stats.to_hit = 5;
         stats.dodge = 0;
@@ -80,8 +80,7 @@ public class LostExplorer : ActorPrototype
         stats.health_max = 50;
         stats.stamina_max = 20;
         stats.mana_max = 20;
-        stats.body_armor.Add(new ArmorStats { body_part = "Explorer", percentage = 50, armor = (2, 2, 0), durability_max = 20 });
-        stats.body_armor.Add(new ArmorStats { body_part = "Yntor", percentage = 50, armor = (0, 0, 2), durability_max = 20 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Explorer", percentage = 50, armor = (2, 2, 0)});
         stats.movement_time = 100;
         stats.to_hit = 15;
         stats.dodge = 10;
@@ -129,7 +128,7 @@ public class Barkeeper : ActorPrototype
         stats.health_max = 50;
         stats.stamina_max = 20;
         stats.mana_max = 20;
-        stats.body_armor.Add(new ArmorStats { body_part = "Body", percentage = 100, armor = (1, 1, 1), durability_max = 20 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Body", percentage = 100, armor = (1, 1, 1)});
         stats.movement_time = 100;
         stats.to_hit = 15;
         stats.dodge = 10;
@@ -153,7 +152,7 @@ public class Questgiver1 : ActorPrototype
         stats.health_max = 50;
         stats.stamina_max = 20;
         stats.mana_max = 20;
-        stats.body_armor.Add(new ArmorStats { body_part = "Body", percentage = 100, armor = (1, 1, 1), durability_max = 20 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Body", percentage = 100, armor = (1, 1, 1)});
         stats.movement_time = 100;
         stats.to_hit = 15;
         stats.dodge = 10;
@@ -179,7 +178,7 @@ public class Shopkeeper : ActorPrototype
         stats.health_max = 150;
         stats.stamina_max = 20;
         stats.mana_max = 20;
-        stats.body_armor.Add(new ArmorStats { body_part = "Body", percentage = 100, armor = (1, 1, 1), durability_max = 20 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Body", percentage = 100, armor = (1, 1, 1)});
         stats.movement_time = 100;
         stats.to_hit = 15;
         stats.dodge = 10;

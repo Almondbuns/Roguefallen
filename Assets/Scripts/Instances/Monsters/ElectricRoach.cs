@@ -21,8 +21,7 @@ public class ElectricRoach : ActorPrototype
         stats.health_max = 20;
         stats.stamina_max = 5;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 95, armor = (5, 5, 0), durability_max = 15 });
-        stats.body_armor.Add(new ArmorStats { body_part = "antennae", percentage = 5, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (5, 5, 0)});
         stats.movement_time = 100;
         stats.to_hit = 5;
         stats.dodge = 5;

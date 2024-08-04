@@ -23,7 +23,7 @@ public class Bear : ActorPrototype
             stats.stamina_max = 20;
             stats.mana_max = 0;
             stats.kill_experience = 40;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (2, 5, 0), durability_max = 30 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (2, 5, 0)});
             stats.movement_time = 100;
             stats.to_hit = 10;
             stats.dodge = 10;
@@ -69,7 +69,7 @@ public class Bear : ActorPrototype
             stats.stamina_max = 20;
             stats.mana_max = 0;
             stats.kill_experience = 50;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (2, 5, 0), durability_max = 50 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (2, 5, 0)});
             stats.movement_time = 100;
             stats.to_hit = 10;
             stats.dodge = 10;

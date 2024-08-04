@@ -25,10 +25,7 @@ public class Troll : ActorPrototype
             stats.health_max = 250;
             stats.stamina_max = 100;
             stats.mana_max = 0;
-            stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 70, armor = (6, 4, 0), durability_max = 100 });
-            stats.body_armor.Add(new ArmorStats { body_part = "head", percentage = 10, armor = (2, 2, 0), durability_max = 25 });
-            stats.body_armor.Add(new ArmorStats { body_part = "feet", percentage = 10, armor = (2, 2, 0), durability_max = 25 });
-            stats.body_armor.Add(new ArmorStats { body_part = "hands", percentage = 10, armor = (2, 2, 0), durability_max = 25 });
+            stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (6, 4, 0)});
             stats.movement_time = 150;
             stats.to_hit = 15;
             stats.dodge = 15;

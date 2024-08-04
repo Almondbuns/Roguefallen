@@ -26,45 +26,6 @@ public class ActorEffectData
     }
 }
 
-public class ArmorStatsData
-{
-    public string body_part;
-    public int durability_current;
-
-    internal void Save(BinaryWriter save)
-    {
-        save.Write(body_part);
-        save.Write(durability_current);
-    }
-
-    internal void Load(BinaryReader save)
-    {
-        body_part = save.ReadString();
-        durability_current = save.ReadInt32();
-    }
-
-    public ArmorStatsData(ArmorStats stats = null)
-    {
-        if (stats != null)
-        {
-            this.body_part = stats.body_part;
-            this.durability_current = stats.durability_max;
-        }
-    }
-
-    public int SubstractDamage(int value)
-    {
-        durability_current -= value;
-        if (durability_current < 0)
-        {
-            int output = -durability_current;
-            durability_current = 0;
-            return output;
-        }
-        return 0;
-    }
-}
-
 public class ActorMeterResistanceData
 {
     public Dictionary<DamageType, int> resistances;
@@ -147,8 +108,6 @@ public class ActorData
 
     public List<DiseaseData> current_diseases;
     public List<PoisonData> current_poisons;
-    
-    public List<ArmorStatsData> body_armor;
 
     public ActionData current_action = null;
 
@@ -236,12 +195,6 @@ public class ActorData
 
         save.Write(current_poisons.Count);
         foreach (var v in current_poisons)
-        {
-            v.Save(save);
-        }
-
-        save.Write(body_armor.Count);
-        foreach (var v in body_armor)
         {
             v.Save(save);
         }
@@ -347,15 +300,6 @@ public class ActorData
             current_poisons.Add(v);
         }
 
-        size = save.ReadInt32();
-        body_armor = new(size);
-        for (int i = 0; i < size; ++i)
-        {
-            ArmorStatsData a = new ArmorStatsData();
-            a.Load(save);
-            body_armor.Add(a);
-        }
-
         bool b = save.ReadBoolean();
         if (b == true)
         {
@@ -394,7 +338,6 @@ public class ActorData
         current_passive_talents_id = new();
         current_diseases = new();
         current_poisons = new();
-        body_armor = new();
 
         meter_resistances = new();
 
@@ -413,11 +356,6 @@ public class ActorData
             Health_current = GetHealthMax();
             Stamina_current = GetStaminaMax();
             mana_current = GetManaMax();
-
-            foreach (ArmorStats armor_stats in prototype.stats.body_armor)
-            {
-                body_armor.Add(new ArmorStatsData(armor_stats));
-            }
 
             foreach (DamageType type in prototype.stats.meter_resistances.resistances.Keys)
             {
@@ -562,7 +500,7 @@ public class ActorData
     public virtual int GetArmor(string body_part, ArmorType armor_type)
     {
         int current_armor = 0;
-        ArmorStats armor_stats = prototype.stats.body_armor.Find(x => x.body_part.ToLower().Equals(body_part.ToLower()));
+        ActorArmorStats armor_stats = prototype.stats.body_armor.Find(x => x.body_part.ToLower().Equals(body_part.ToLower()));
 
         if (armor_stats != null)
         {
@@ -587,7 +525,7 @@ public class ActorData
 
     public virtual int GetMaxDurability(string body_part)
     {
-        return prototype.stats.body_armor.Find(x => x.body_part == body_part).durability_max;
+        return 0;
     }
 
     public virtual void SelectNextAction()
@@ -612,10 +550,6 @@ public class ActorData
 
     public virtual int ReduceDurability(string body_part, int value)
     {
-        ArmorStatsData armor_stats = body_armor.Find(x => x.body_part == body_part);
-        if (armor_stats != null)
-            return armor_stats.SubstractDamage(value);
-        
         return value;
     }
 
@@ -681,7 +615,7 @@ public class ActorData
         int random = UnityEngine.Random.Range(1, 101);
         int body_part_sum = 0;
         string body_part = "";
-        foreach (ArmorStats armor_stats in prototype.stats.body_armor)
+        foreach (ActorArmorStats armor_stats in prototype.stats.body_armor)
         {
             if (body_part_sum < random)
             {

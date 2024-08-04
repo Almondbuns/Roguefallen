@@ -16,7 +16,7 @@ public class Chest : ActorPrototype
 
         stats.health_max = 100;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Chest", percentage = 100, armor = (2, 3, 1), durability_max = 50 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Chest", percentage = 100, armor = (2, 3, 1)});
 
         inventory = new InventoryPrototype(){size = 8};
     }
@@ -75,7 +75,7 @@ public class Crate : ActorPrototype
 
         stats.health_max = 10;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Crate", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Crate", percentage = 100, armor = (0, 0, 0)});
     }
 
     public override void OnKill(ActorData actor_data)
@@ -135,7 +135,7 @@ public class Jar : ActorPrototype
 
         stats.health_max = 5;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Jar", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Jar", percentage = 100, armor = (0, 0, 0)});
     }
 
     public override void OnKill(ActorData actor_data)
@@ -215,7 +215,7 @@ public class BrokenCrate : ActorPrototype
 
         stats.health_max = 10;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Broken Crate", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Broken Crate", percentage = 100, armor = (0, 0, 0)});
     }
 
 }
@@ -234,7 +234,7 @@ public class TombPillar : ActorPrototype
 
         stats.health_max = 30;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Pillar", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Pillar", percentage = 100, armor = (0, 0, 0)});
     }
 
 }
@@ -255,7 +255,7 @@ public class TombSarcophagus : ActorPrototype
 
         stats.health_max = 10;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Sarcophagus", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Sarcophagus", percentage = 100, armor = (0, 0, 0)});
     }
 
     public override void OnKill(ActorData actor_data)
@@ -321,7 +321,7 @@ public class TombGiantBall : ActorPrototype
         stats.health_max = 100;
         stats.dodge = -100;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Giant Ball", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Giant Ball", percentage = 100, armor = (0, 0, 0)});
     }
 
 }
@@ -347,7 +347,7 @@ public class BearTrap : ActorPrototype
         stats.dodge = -100;
         stats.stealth = 5;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0)});
     }
 
     public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
@@ -380,7 +380,7 @@ public class IceSpikeTrap : ActorPrototype
         stats.dodge = -100;
         stats.stealth = 5;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0)});
     }
 
     public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
@@ -413,7 +413,7 @@ public class IceWaterTrap : ActorPrototype
         stats.dodge = -100;
         stats.stealth = 5;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0)});
     }
 
     public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
@@ -447,7 +447,7 @@ public class SpiderWebTrap : ActorPrototype
         stats.dodge = -100;
         stats.stealth = 1;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0), durability_max = 0 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 0, 0)});
     }
 
     public override void OnEnterTile(ActorData this_actor, ActorData target_actor)
@@ -485,7 +485,7 @@ public class OilPuddle : ActorPrototype
         stats.health_max = 20;
         stats.dodge = -100;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Oil Puddle", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Oil Puddle", percentage = 100, armor = (0, 0, 0)});
     }
 
     public override void OnDamage(ActorData this_actor, DamageType damage_type, int damage_amount)
@@ -532,7 +532,7 @@ public class DungeonEntrance : ActorPrototype
         stats.health_max = 10;
         stats.dodge = -100;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "Broken Crate", percentage = 100, armor = (0, 0, 0), durability_max = 0});
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Broken Crate", percentage = 100, armor = (0, 0, 0)});
     }
 
 }
@@ -558,7 +558,7 @@ public class BallTrapTrigger : ActorPrototype
         stats.dodge = -100;
         stats.stealth = 5;
 
-        stats.body_armor.Add(new ArmorStats { body_part = "body", percentage = 100, armor = (50, 0, 0), durability_max = 10000 });
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (50, 0, 0)});
     }
 
     public override void OnEnterTile(ActorData this_actor, ActorData target_actor)

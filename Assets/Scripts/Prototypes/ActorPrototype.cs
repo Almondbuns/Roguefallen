@@ -113,16 +113,16 @@ public class PlayerPrototype : ActorPrototype
             stats.mana_max = 10000;
         }
 
-        ArmorStats armor_stats = new ArmorStats { body_part = "Chest", percentage = 70 };
+        ActorArmorStats armor_stats = new ActorArmorStats { body_part = "Chest", percentage = 70 };
         stats.body_armor.Add(armor_stats);
       
-        armor_stats = new ArmorStats { body_part = "Head", percentage = 10 };
+        armor_stats = new ActorArmorStats { body_part = "Head", percentage = 10 };
         stats.body_armor.Add(armor_stats);
       
-        armor_stats = new ArmorStats { body_part = "Hands", percentage = 10 };
+        armor_stats = new ActorArmorStats { body_part = "Hands", percentage = 10 };
         stats.body_armor.Add(armor_stats);
       
-        armor_stats = new ArmorStats { body_part = "Feet", percentage = 10 };
+        armor_stats = new ActorArmorStats { body_part = "Feet", percentage = 10 };
         stats.body_armor.Add(armor_stats);
      
         stats.movement_time = 50;
