@@ -13,6 +13,7 @@ public class MapObjectData
     public bool sight_blocked = true;
     public bool emits_light = false;
     public Color light_color;
+    public int light_distance = 12;
 
     internal void Save(BinaryWriter save)
     {
@@ -25,6 +26,7 @@ public class MapObjectData
         save.Write(light_color.g);
         save.Write(light_color.b);
         save.Write(light_color.a);
+        save.Write(light_distance);
     }
 
     internal void Load(BinaryReader save)
@@ -35,6 +37,7 @@ public class MapObjectData
         sight_blocked = save.ReadBoolean();
         emits_light = save.ReadBoolean();
         light_color = new Color(save.ReadSingle(), save.ReadSingle(), save.ReadSingle(), save.ReadSingle());
+        light_distance = save.ReadInt32();
     }
 
     public MapObjectData(string name, bool path_blocked = true, bool sight_blocked = true)
@@ -355,7 +358,7 @@ public class MapData
 
     internal void CalculateLight(Color ambient_light)
     {
-        List<(int x, int y, Color color)> lights = new();
+        List<(int x, int y, Color color, int light_distance)> lights = new();
 
         //Find all light sources
         for (int x = 0; x < tiles.GetLength(0); ++x)
@@ -364,20 +367,19 @@ public class MapData
                 foreach (MapObjectData mo in tiles[x, y].objects)
                 {
                     if (mo.emits_light == true)
-                        lights.Add((x, y, mo.light_color));
+                        lights.Add((x, y, mo.light_color, mo.light_distance));
                 }
             }
 
-        int light_max_distance = 12;
         //Calculate light
         for (int x = 0; x < tiles.GetLength(0); ++x)
             for (int y = 0; y < tiles.GetLength(1); ++y)
             {
                 tiles[x, y].light = ambient_light;
-                foreach((int x, int y, Color color) light in lights)
+                foreach((int x, int y, Color color, int light_distance) light in lights)
                 {
                     float distance = Mathf.Sqrt(Mathf.Pow(x - light.x,2) + Mathf.Pow(y - light.y, 2));
-                    if (distance >= light_max_distance) continue;
+                    if (distance >= light.light_distance) continue;
 
                     List<(int x, int y)> light_path = Algorithms.LineofSight((light.x, light.y), (x, y));
                     int number_of_light_barriers = 0;
@@ -393,7 +395,7 @@ public class MapData
                     }
 
 
-                    float light_factor = Mathf.Max(0, (light_max_distance * light_max_distance - distance * distance)) / (float) (light_max_distance* light_max_distance);
+                    float light_factor = Mathf.Max(0, (light.light_distance * light.light_distance - distance * distance)) / (float) (light.light_distance*light.light_distance);
 
                     if (number_of_light_barriers > 0)
                         light_factor *= 1/ (float) ((number_of_light_barriers + 1));
