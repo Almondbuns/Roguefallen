@@ -83,9 +83,9 @@ public class RottenForest : DungeonData
                 level_data.map_features.Add((typeof(MFCaveIrchBossRoom),1,1));
         
            
-            level_data.dimensions = (128, 64);
+            level_data.dimensions = (200, 100);
             level_data.difficulty_level = level + 1;
-            level_data.number_of_rooms = (10, 15);
+            level_data.number_of_rooms = (100, 100);
             level_data.number_of_encounters = (10, 15);
             level_data.number_of_gold_items = (5, 10);
 

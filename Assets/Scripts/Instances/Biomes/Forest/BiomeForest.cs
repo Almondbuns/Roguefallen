@@ -9,10 +9,10 @@ public class BiomeForest : BiomeData
     {
         name = "Forest";
         connectivity_probability = 0.67f;
-        ambience_light = new Color(0.75f,0.75f, 0.75f);
+        ambience_light = new Color(0.05f,0.05f, 0.15f);
 
         MapObjectCollectionData collection = new();
-        collection.Add(new MapObjectData("forest_floor_1"));
+        collection.Add(new MapObjectData("mystic_forest_floor_1"));
         floors["floor"] = collection;
 
         collection = new();
@@ -24,12 +24,15 @@ public class BiomeForest : BiomeData
         objects["light_2"] = collection;
 
         collection = new();
-        collection.Add(new MapObjectData("forest_tree_1"));
+        collection.Add(new MapObjectData("mystic_forest_dead_tree_1"){sight_blocked = false });
         objects["wall"] = collection;
 
         collection = new();
-        collection.Add(new MapObjectData("grassland_obstacle_1"));
-        collection.Add(new MapObjectData("grassland_obstacle_3"));
+        collection.Add(new MapObjectData("mystic_forest_mushroom_lamp_1"){ emits_light = true, light_color = new Color((float)(255/255.0),(float)(188/255.0),(float)(78/255.0)), movement_blocked = true, sight_blocked = false});
+        collection.Add(new MapObjectData("mystic_forest_living_tree_1"){ emits_light = true, light_color = new Color((float)(184/255.0),(float)(55/255.0),(float)(234/255.0)), movement_blocked = true, sight_blocked = false });
+        
+        collection.Add(new MapObjectData("mystic_forest_flower_1"){ emits_light = true, light_color = new Color((float)(255/255.0),(float)(188/255.0),(float)(78/255.0)), movement_blocked = false, sight_blocked = false });
+        collection.Add(new MapObjectData("mystic_forest_flower_2"){ emits_light = true, light_color = new Color((float)(255/255.0),(float)(255/255.0),(float)(255/255.0)), movement_blocked = false, sight_blocked = false });
         objects["obstacle"] = collection;
     }
 
@@ -50,6 +53,10 @@ public class BiomeForest : BiomeData
             if (room_list.Count >= 1)
             {
                 int start_room_index = UnityEngine.Random.Range(0, room_list.Count);
+                //Prefer newly created rooms (should lead to more deep construction)
+                if (UnityEngine.Random.value <= 0.75)
+                    start_room_index = UnityEngine.Random.Range(1 * (room_list.Count / 2), room_list.Count);
+                
 
                 // The new room has to be near enough to be connected
                 // Select one of four borders
@@ -58,41 +65,41 @@ public class BiomeForest : BiomeData
                 if (border == 0)
                 {
                     //Left Border
-                    x = room_list[start_room_index].x - w - 2;
-                    y = UnityEngine.Random.Range(room_list[start_room_index].y - h - 2, room_list[start_room_index].y + 2);
+                    x = room_list[start_room_index].x - w - 1;
+                    y = room_list[start_room_index].y + room_list[start_room_index].h / 2 - h/2;  
                 }
                 else if (border == 1)
                 {
                     //Right Border
-                    x = room_list[start_room_index].x + room_list[start_room_index].w + 2;
-                    y = UnityEngine.Random.Range(room_list[start_room_index].y - h - 2, room_list[start_room_index].y + 2);
+                    x = room_list[start_room_index].x + room_list[start_room_index].w + 1;
+                    y = room_list[start_room_index].y + room_list[start_room_index].h / 2 - h/2;  
                 }
                 else if (border == 2)
                 {
                     //Upper Border
-                    x = UnityEngine.Random.Range(room_list[start_room_index].x - w - 2, room_list[start_room_index].x + 2);                    
-                    y = room_list[start_room_index].y + room_list[start_room_index].w + 2;
+                    x = room_list[start_room_index].x + room_list[start_room_index].w / 2 - w/2;  
+                    y = room_list[start_room_index].y + room_list[start_room_index].h + 1;
                 }
                 else
                 {
                     //Lower Border
-                    x = UnityEngine.Random.Range(room_list[start_room_index].x - w - 2, room_list[start_room_index].x + 2);                    
-                    y = room_list[start_room_index].y - h - 2;
-                }
-
-                //Make sure the new room is inside the map
-                if (x < 0) x = 0;
-                if (x > map.tiles.GetLength(0) - w) x = map.tiles.GetLength(0) - w;
-
-                if (y < 0) y = 0;
-                if (y > map.tiles.GetLength(1) - h) y = map.tiles.GetLength(1) - h;
+                    x = room_list[start_room_index].x + room_list[start_room_index].w / 2 - w/2;  
+                    y = room_list[start_room_index].y - h - 1;
+                }             
             }
             else
             {
-                //If no room has been created yet we can start anywhere
-                x = UnityEngine.Random.Range(0, map.tiles.GetLength(0) - w);
-                y = UnityEngine.Random.Range(0, map.tiles.GetLength(1) - h);
+                //If no room has been created we start in the center
+                x = map.tiles.GetLength(0) / 2;
+                y = map.tiles.GetLength(1) / 2;
             }
+
+            //Make sure the new room is inside the map
+                if (x < 0) continue;
+                if (x > map.tiles.GetLength(0) - w) continue;
+
+                if (y < 0) continue;
+                if (y > map.tiles.GetLength(1) - h) continue;
 
             room_found = true;
             foreach ((int x, int y, int w, int h) room in room_list)
@@ -132,6 +139,15 @@ public class BiomeForest : BiomeData
                 map.tiles[x, y].objects.Add(objects["wall"].Random());
             }
 
+        //Create Forest Structure first
+        for (int i = 0; i < number_of_rooms; ++i)
+        {
+            int w = 6;
+            int h = 6;
+         
+            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, w, h);
+        }  
+
         foreach (DungeonChangeData dcd in dungeon_change_data)
         {
             MapFeatureData feature = (MapFeatureData)Activator.CreateInstance(dcd.dungeon_change_type, map, dcd);
@@ -159,15 +175,7 @@ public class BiomeForest : BiomeData
                 feature.difficulty_level = difficulty_level;
                 map.features.Add(feature);
             }
-        }
-
-        for (int i = 0; i < number_of_rooms; ++i)
-        {
-            int w = UnityEngine.Random.Range(10, 30);
-            int h = UnityEngine.Random.Range(10, 30);
-         
-            (int x, int y, int w, int h)? position = AddRandomPositionRoom(map, room_list, w, h);
-        }      
+        }    
 
         foreach (var room in room_list)
         {
@@ -184,7 +192,7 @@ public class BiomeForest : BiomeData
   
     public void CreateRoom(MapData map, (int x, int y, int w, int h) position)
     {
-        int radius = Mathf.Max(position.w/2 + 4,position.h/2 + 4);
+        int radius = Mathf.Max(position.w/2 + 2,position.h/2 + 2);
 
         for (int x = position.x - 10; x < position.x + position.w + 10; ++x)
             for (int y = position.y - 10; y < position.y + position.h + 10; ++y)
@@ -196,7 +204,7 @@ public class BiomeForest : BiomeData
                 if (distance < radius)
                 {
                     map.tiles[x, y].objects.Clear();
-                    if (UnityEngine.Random.value < 0.9)
+                    if (UnityEngine.Random.value < 0.95)
                     {
                     }
                     else
