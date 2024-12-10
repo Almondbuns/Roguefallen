@@ -587,7 +587,7 @@ public class MapData
         return item;
     }
 
-    public bool StopPlayerMovement(int x, int y)
+    public bool StopPlayerMovement(int x, int y) 
     {
         //Check if map catches movement (for example: stores use movement to buy things)
 
