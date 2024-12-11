@@ -98,7 +98,7 @@ public class PlayerData : ActorData
         }*/
     }
 
-    public PlayerData(int starting_level) : base(20,20, null)
+    public PlayerData(int starting_level) : base(100,50, null)
     {
         prototype = new PlayerPrototype(starting_level);        
 

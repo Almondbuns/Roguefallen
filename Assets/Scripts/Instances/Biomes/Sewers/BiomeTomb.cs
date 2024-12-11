@@ -9,7 +9,6 @@ public class BiomeTomb : BiomeSewers
     public BiomeTomb()
     {
         name = "Tomb";
-        connectivity_probability = 0.5f;
         ambience_light = new Color(0.45f, 0.45f, 0.45f);
 
         has_water = false;

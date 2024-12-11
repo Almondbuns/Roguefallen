@@ -107,6 +107,7 @@ public class DungeonLevelData
     public int dungeon_level;
     public int difficulty_level;
     public int biome_index;
+    public int biome_variant;
     public (int x, int y) dimensions;
     public bool has_enemies = true;
     public bool has_items = true;
@@ -133,6 +134,7 @@ public class DungeonLevelData
         save.Write(dungeon_level);
         save.Write(difficulty_level);
         save.Write(biome_index);
+        save.Write(biome_variant);
         save.Write(dimensions.x);
         save.Write(dimensions.y);
         save.Write(has_enemies);
@@ -208,6 +210,7 @@ public class DungeonLevelData
         dungeon_level = save.ReadInt32();
         difficulty_level = save.ReadInt32();
         biome_index = save.ReadInt32();
+        biome_variant = save.ReadInt32();
         dimensions = (save.ReadInt32(), save.ReadInt32());
         has_enemies = save.ReadBoolean();
         has_items = save.ReadBoolean();
@@ -299,7 +302,7 @@ public class DungeonLevelData
     {
         int n_rooms = UnityEngine.Random.Range(number_of_rooms.min, number_of_rooms.max + 1);
         room_list = new();
-        map = GameObject.Find("GameData").GetComponent<GameData>().biomes[biome_index].CreateMapLevel(dungeon_level, dimensions.x, dimensions.y, n_rooms, map_features, dungeon_changes, room_list, difficulty_level);
+        map = GameObject.Find("GameData").GetComponent<GameData>().biomes[biome_index].CreateMapLevel(dungeon_level, dimensions.x, dimensions.y, n_rooms, map_features, dungeon_changes, room_list, difficulty_level, biome_variant);
 
         if (quest_items != null)
             DistributeQuestItems(quest_items);

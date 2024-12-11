@@ -49,7 +49,6 @@ public class MapObjectCollectionData
 public abstract class BiomeData
 {
     public string name;
-    public float connectivity_probability = 0.5f;
     public Color ambience_light = new Color(1,1,1);
 
     public Dictionary<string, MapObjectCollectionData> floors;
@@ -60,7 +59,6 @@ public abstract class BiomeData
     internal virtual void Save(BinaryWriter save)
     {
         save.Write(name);
-        save.Write(connectivity_probability);
         save.Write(ambience_light.r);
         save.Write(ambience_light.g);
         save.Write(ambience_light.b);
@@ -86,7 +84,6 @@ public abstract class BiomeData
     internal virtual void Load(BinaryReader save)
     {
         name = save.ReadString();
-        connectivity_probability = save.ReadSingle();
         ambience_light = new Color(save.ReadSingle(), save.ReadSingle(), save.ReadSingle(), save.ReadSingle());
 
         int size = save.ReadInt32();
@@ -119,7 +116,7 @@ public abstract class BiomeData
     }
 
     //public abstract MapData CreateMap();
-    public abstract MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list, int difficulty_level);
+    public abstract MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list, int difficulty_level, int biome_variant);
 
     /*protected void GuaranteeMapLevelConnectivity(MapData map)
     {

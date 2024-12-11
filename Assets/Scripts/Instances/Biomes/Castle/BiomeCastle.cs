@@ -9,7 +9,6 @@ public class BiomeCastle : BiomeData
     public BiomeCastle()
     {
         name = "Sewers";
-        connectivity_probability = 0.5f;
         ambience_light = new Color(0.45f, 0.45f, 0.45f);
 
         MapObjectCollectionData collection = new();
@@ -117,7 +116,7 @@ public class BiomeCastle : BiomeData
         return null;
     }
 
-    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list, int difficulty_level)
+    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list, int difficulty_level, int biome_variant)
     {
         MapData map = new MapData(max_x, max_y);
 

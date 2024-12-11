@@ -8,7 +8,6 @@ public class BiomeCave : BiomeData
     public BiomeCave()
     {
         name = "Cave";
-        connectivity_probability = 0.67f;
         ambience_light = new Color(0.25f,0.25f, 0.25f);
 
         MapObjectCollectionData collection = new();
@@ -81,7 +80,7 @@ public class BiomeCave : BiomeData
         return null;
     }
 
-    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list, int difficulty_level)
+    public override MapData CreateMapLevel(int level, int max_x, int max_y, int number_of_rooms, List<(Type type, int amount_min, int amount_max)> map_features, List<DungeonChangeData> dungeon_change_data, List<(int x, int y, int w, int h)> room_list, int difficulty_level, int biome_variant)
     {
         MapData map = new MapData(max_x, max_y);
 

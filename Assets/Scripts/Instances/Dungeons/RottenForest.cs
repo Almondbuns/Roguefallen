@@ -13,6 +13,7 @@ public class RottenForest : DungeonData
             DungeonLevelData level_data = new DungeonLevelData
             {
                 biome_index = 7,
+                biome_variant = level,
                 is_always_visible = true,
         
                 map_features =
@@ -59,34 +60,14 @@ public class RottenForest : DungeonData
                 }
             };
 
-            if (level >= 2)
-                level_data.map_features.Add((typeof(MFCavePoisonFlowerRoom), 0, 1));
-
-            if (UnityEngine.Random.value < 0.1f)
-                level_data.map_features.Add((typeof(MFCaveStoreConsumables), 1,1));
-
-            if (UnityEngine.Random.value < 0.2f)
-                level_data.map_features.Add((typeof(MFCaveStorageRoom), 1, 1));
-
-            if (UnityEngine.Random.value < 0.1f)
-                level_data.map_features.Add((typeof(MFCaveStoreUsables), 1,1));
-
-            if (UnityEngine.Random.value < 0.1f)
-                level_data.map_features.Add((typeof(MFCaveSpiderRoom), 0, 1));
-
-
-            if (level > 0 && level <= 6 && UnityEngine.Random.value < 0.1f)
-                level_data.map_features.Add((typeof(MFCaveMonsterLair), 1, 1));
-
-            //Add bosses
-            if (level == 4)
-                level_data.map_features.Add((typeof(MFCaveIrchBossRoom),1,1));
+        
+            level_data.map_features.Add((typeof(MFLivingForest),2,4));
         
            
-            level_data.dimensions = (200, 100);
+            level_data.dimensions = (140, 70);
             level_data.difficulty_level = level + 1;
-            level_data.number_of_rooms = (100, 100);
-            level_data.number_of_encounters = (10, 15);
+            level_data.number_of_rooms = (50, 80);
+            level_data.number_of_encounters = (0, 0);
             level_data.number_of_gold_items = (5, 10);
 
             level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHealthPotion), prob_amount = {(1.0f, 1)}});
@@ -131,12 +112,7 @@ public class RottenForest : DungeonData
 
             level_data.dynamic_objects = new()
             {
-                (typeof(Crate), 5, 10),
-                (typeof(Jar), 5, 10),
-                (typeof(BrokenCrate), 5, 10),
-                (typeof(Chest), 0, 1),
-                (typeof(BearTrap), 5, 10),
-                (typeof(SpiderWebTrap), 10, 20),
+                (typeof(Chest), 5, 10),
             };        
           
             if (level == 0)

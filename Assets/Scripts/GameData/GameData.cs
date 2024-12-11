@@ -127,7 +127,7 @@ public class GameData : MonoBehaviour
 
         dungeons = new List<DungeonData>();
 
-        int number_of_dungeons_per_type = 4;
+        int number_of_dungeons_per_type = 1;
         
         dungeons.Add(new DungeonData()        
         {
@@ -502,7 +502,7 @@ public class GameData : MonoBehaviour
         main_quest.GenerateQuest(1, QuestComplexity.Long);
         player_data.AddQuest(main_quest);
 
-        current_dungeon = dungeons[1];
+        current_dungeon = dungeons[3];
         current_dungeon.SetRegenerationNeeded();
         current_map_level = current_dungeon.GetMapLevelData(0);
         current_dungeon.RegenerateLevel(current_map_level);
