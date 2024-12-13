@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d486707413d78b09797dffc1cdb29828
+guid: 0606a655bb8beea4c81ec17d5658d156
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8841273912390909332
-    second: mystic_forest_living_tree_1_0
+      213: -6139086946922580816
+    second: mystic_forest_water_border_s_1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -55,7 +55,7 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 1
+  alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: 0
   textureShape: 1
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mystic_forest_living_tree_1_0
+      name: mystic_forest_water_border_s_1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c620302483c7d4580800000000000000
-      internalID: -8841273912390909332
+      spriteID: 0b43173b2f49dcaa0800000000000000
+      internalID: -6139086946922580816
       vertices: []
       indices: 
       edges: []

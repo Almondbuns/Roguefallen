@@ -61,12 +61,13 @@ public class RottenForest : DungeonData
             };
 
         
-            level_data.map_features.Add((typeof(MFLivingForest),2,4));
-        
-           
+            level_data.map_features.Add((typeof(MFLivingForest),2,3));
+            level_data.map_features.Add((typeof(MFPond), 1, 2));
+
+
             level_data.dimensions = (140, 70);
             level_data.difficulty_level = level + 1;
-            level_data.number_of_rooms = (50, 80);
+            level_data.number_of_rooms = (30, 60);
             level_data.number_of_encounters = (0, 0);
             level_data.number_of_gold_items = (5, 10);
 

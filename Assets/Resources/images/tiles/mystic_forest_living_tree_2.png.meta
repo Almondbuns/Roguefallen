@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: d486707413d78b09797dffc1cdb29828
+guid: 6aff28c61950fd34bb9673c404e75966
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8841273912390909332
-    second: mystic_forest_living_tree_1_0
+      213: -7266332168306290003
+    second: mystic_forest_living_tree_2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: mystic_forest_living_tree_1_0
+      name: mystic_forest_living_tree_2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c620302483c7d4580800000000000000
-      internalID: -8841273912390909332
+      spriteID: da21c10446dc82b90800000000000000
+      internalID: -7266332168306290003
       vertices: []
       indices: 
       edges: []

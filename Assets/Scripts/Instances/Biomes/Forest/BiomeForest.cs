@@ -12,10 +12,17 @@ public class BiomeForest : BiomeData
 
         MapObjectCollectionData collection = new();
         collection.Add(new MapObjectData("mystic_forest_floor_1"));
+        collection.Add(new MapObjectData("mystic_forest_floor_2"));
+        collection.Add(new MapObjectData("mystic_forest_floor_3"));
+        collection.Add(new MapObjectData("mystic_forest_floor_4"));
+        collection.Add(new MapObjectData("mystic_forest_floor_5"));
         floors["floor"] = collection;
 
         collection = new();
         collection.Add(new MapObjectData("mystic_forest_living_tree_1") { emits_light = true, light_color = new Color((float)(184 / 255.0), (float)(55 / 255.0), (float)(234 / 255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6 });
+        collection.Add(new MapObjectData("mystic_forest_living_tree_2") { emits_light = true, light_color = new Color((float)(184 / 255.0), (float)(55 / 255.0), (float)(234 / 255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6 });
+        collection.Add(new MapObjectData("mystic_forest_living_tree_3") { emits_light = true, light_color = new Color((float)(171 / 255.0), (float)(0 / 255.0), (float)(104 / 255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6 });
+        collection.Add(new MapObjectData("mystic_forest_living_tree_4") { emits_light = true, light_color = new Color((float)(171 / 255.0), (float)(0 / 255.0), (float)(104 / 255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6 });
         objects["living_tree"] = collection;
 
         collection = new();
@@ -25,7 +32,8 @@ public class BiomeForest : BiomeData
         collection = new();
         collection.Add(new MapObjectData("mystic_forest_mushroom_lamp_1"){ emits_light = true, light_color = new Color((float)(255/255.0),(float)(188/255.0),(float)(78/255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6});
         collection.Add(new MapObjectData("mystic_forest_living_tree_1"){ emits_light = true, light_color = new Color((float)(184/255.0),(float)(55/255.0),(float)(234/255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6 });
-        
+        collection.Add(new MapObjectData("mystic_forest_living_tree_3") { emits_light = true, light_color = new Color((float)(171 / 255.0), (float)(0 / 255.0), (float)(104 / 255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6 });
+
         collection.Add(new MapObjectData("mystic_forest_flower_1"){ emits_light = true, light_color = new Color((float)(255/255.0),(float)(188/255.0),(float)(78/255.0)), movement_blocked = false, sight_blocked = false, light_distance = 2 });
         collection.Add(new MapObjectData("mystic_forest_flower_2"){ emits_light = true, light_color = new Color((float)(255/255.0),(float)(255/255.0),(float)(255/255.0)), movement_blocked = false, sight_blocked = false, light_distance = 2  });
         objects["obstacle"] = collection;
