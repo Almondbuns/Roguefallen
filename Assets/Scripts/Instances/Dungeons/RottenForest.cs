@@ -19,7 +19,8 @@ public class RottenForest : DungeonData
                 map_features =
                 {                                        
                     (typeof(MFCaveTreasureRoom), 0, 1), 
-                    (typeof(MFCaveOilRoom), 0, 2),                                           
+                    (typeof(MFCaveOilRoom), 0, 2),
+                    (typeof(MFBeeTreasureRoom), 1, 2),
                 },                
 
                 encounters =

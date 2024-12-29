@@ -3,13 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+public class MFBeeTreasureRoom : MapFeatureData
+{
+    public MFBeeTreasureRoom(MapData map) : base(map)
+    {
+        dimensions = (6,6);
+
+        MapObjectCollectionData collection = new();
+        collection.Add(new MapObjectData("mystic_forest_living_tree_1") { emits_light = true, light_color = new Color((float)(184 / 255.0), (float)(55 / 255.0), (float)(234 / 255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6 });
+        collection.Add(new MapObjectData("mystic_forest_living_tree_2") { emits_light = true, light_color = new Color((float)(184 / 255.0), (float)(55 / 255.0), (float)(234 / 255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6 });
+        collection.Add(new MapObjectData("mystic_forest_living_tree_3") { emits_light = true, light_color = new Color((float)(171 / 255.0), (float)(0 / 255.0), (float)(104 / 255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6 });
+        collection.Add(new MapObjectData("mystic_forest_living_tree_4") { emits_light = true, light_color = new Color((float)(171 / 255.0), (float)(0 / 255.0), (float)(104 / 255.0)), movement_blocked = true, sight_blocked = false, light_distance = 6 });
+
+        objects["tree"] = collection;
+    }
+
+    public override void Generate()
+    {
+        for (int x = position.x; x < position.x + dimensions.x; ++x)
+        {
+            for (int y = position.y; y < position.y + dimensions.y; ++y)
+            {
+                map.tiles[x, y].objects.Clear();
+            }
+        }
+
+        map.tiles[position.x+1, position.y+3].objects.Add(objects["tree"].Random());
+        map.tiles[position.x+5, position.y+3].objects.Add(objects["tree"].Random());
+        map.Add(new MonsterData(position.x + 2, position.y + 3, new Beehive(difficulty_level)));
+        map.Add(new MonsterData(position.x + 4, position.y + 3, new Beehive(difficulty_level)));
+
+        DynamicObjectData s = new DynamicObjectData(0, 0, new Chest(difficulty_level));
+        s.MoveTo(position.x + 3, position.y + 3);
+        map.Add(s);
+    }
+}
 public class MFLivingForest : MapFeatureData
 {
     public MFLivingForest(MapData map) : base(map)
     {
-        distribute_general_actors = false;
-        distribute_general_items = false;
-
         dimensions = (UnityEngine.Random.Range(5,15), UnityEngine.Random.Range(5, 15));
 
         MapObjectCollectionData collection = new();
@@ -40,9 +72,6 @@ public class MFPond : MapFeatureData
 {
     public MFPond(MapData map) : base(map)
     {
-        distribute_general_actors = false;
-        distribute_general_items = false;
-
         dimensions = (UnityEngine.Random.Range(15, 25), UnityEngine.Random.Range(8, 15));
 
         MapObjectCollectionData collection = new();
