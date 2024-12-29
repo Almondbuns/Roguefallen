@@ -7,7 +7,7 @@ public class Beehive : ActorPrototype
     public Beehive(int level) : base(level)
     {
         name = "Beehive";
-        icon = "images/objects/bee_hive";
+        icon = "images/npc/bee_hive";
         prefab_index = 43;
 
         monster = new MonsterPrototype
