@@ -93,6 +93,6 @@ public class SkeletonArcherPile : ActorPrototype
         stats.probability_resistances.SetResistance(DamageType.CRUSH, DamageTypeResistances.VERY_WEAK);
         stats.probability_resistances.SetResistance(DamageType.DIVINE, DamageTypeResistances.VERY_WEAK);
 
-        talents.Add(new TalentSummon() {summon_type = typeof(SkeletonArcher)});
+        talents.Add(new TalentSummonWithDeath() {summon_type = typeof(SkeletonArcher)});
     }
 }
