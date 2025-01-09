@@ -184,3 +184,28 @@ public class Shopkeeper : ActorPrototype
         stats.dodge = 10;
     }
 }
+
+public class UnicornUlrich : ActorPrototype
+{
+    public UnicornUlrich(int level) : base(level)
+    {
+        name = "Ulrich, the last unicorn";
+        icon = "images/npc/ulrich";
+        prefab_index = 45;
+        monster = new MonsterPrototype
+        {
+            ai_prototype = new AIPrototype
+            {
+                personality = AIPersonality.Normal,
+            }
+        };
+
+        stats.health_max = 50;
+        stats.stamina_max = 20;
+        stats.mana_max = 20;
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Body", percentage = 100, armor = (1, 1, 1) });
+        stats.movement_time = 100;
+        stats.to_hit = 15;
+        stats.dodge = 10;
+    }
+}

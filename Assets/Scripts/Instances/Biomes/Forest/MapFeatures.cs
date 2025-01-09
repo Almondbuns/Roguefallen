@@ -36,6 +36,9 @@ public class MFBeeTreasureRoom : MapFeatureData
         DynamicObjectData s = new DynamicObjectData(0, 0, new Chest(difficulty_level));
         s.MoveTo(position.x + 3, position.y + 3);
         map.Add(s);
+
+        ActorData vendor = new MonsterData(position.x + 3, position.y + 4, new UnicornUlrich(10));
+        map.Add(vendor);
     }
 }
 public class MFLivingForest : MapFeatureData
