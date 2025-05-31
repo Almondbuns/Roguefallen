@@ -196,7 +196,7 @@ public class UnicornUlrich : ActorPrototype
         {
             ai_prototype = new AIPrototype
             {
-                personality = AIPersonality.Normal,
+                personality = AIPersonality.Passive,
             }
         };
 
