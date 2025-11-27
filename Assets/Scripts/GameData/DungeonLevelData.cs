@@ -548,6 +548,8 @@ public class DungeonLevelData
                 
                 counter += v.weight;
             }
+            if (encounter == null)
+                return;
 
             //search for position of encounter
             int number_tries = 0;

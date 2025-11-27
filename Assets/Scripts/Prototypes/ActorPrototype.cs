@@ -32,6 +32,7 @@ public class ActorPrototype
     public bool can_move = true;
     public bool blocks_tiles = true;
     public bool is_hidden = false;
+    public bool has_dialogue = false;
 
     public bool can_catch_disease = true;
     public bool can_catch_poison = true;
@@ -57,6 +58,8 @@ public class ActorPrototype
 
     public InventoryPrototype inventory;
 
+    public DialogueTree dialogue_tree;
+
     public ActorPrototype(int level)
     {
         stats = new ActorStats();
@@ -71,7 +74,12 @@ public class ActorPrototype
 
     public virtual bool OnPlayerMovementHit(ActorData actor_data)
     {
-        return true;
+        if (has_dialogue == false)
+            return true;
+        
+        if (GameObject.Find("UI").GetComponent<UI>().current_ui_states.Count > 0) return false;
+        GameObject.Find("UI").GetComponent<UI>().AddUIState(new UIStateNPCDialogueTree(actor_data));
+        return false;
     }
 
     public virtual void OnKill(ActorData actor_data)

@@ -15,7 +15,7 @@ public class QuestEndPanel : MonoBehaviour
         /*Texture2D texture = Resources.Load<Texture2D>(questgiver.prototype.icon);
         transform.Find("QuestGiverImage").GetComponent<Image>().sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));*/
 
-        transform.Find("QuestText").GetComponent<TMPro.TextMeshProUGUI>().text = quest_data.end_quest_dialog;
+        transform.Find("QuestText").GetComponent<TMPro.TextMeshProUGUI>().text = quest_data.end_quest_dialogue;
 
         transform.Find("DifficultyValue").GetComponent<TMPro.TextMeshProUGUI>().text = "Level " + quest_data.difficulty_level.ToString();
         transform.Find("ComplexityValue").GetComponent<TMPro.TextMeshProUGUI>().text = quest_data.complexity_level.ToString();

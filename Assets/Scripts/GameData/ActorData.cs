@@ -65,6 +65,7 @@ public class ActorMeterResistanceData
     }
 }
 
+
 public class ActorData
 {
     public static long id_counter = 0;

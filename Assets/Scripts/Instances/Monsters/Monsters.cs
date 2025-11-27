@@ -200,6 +200,8 @@ public class UnicornUlrich : ActorPrototype
             }
         };
 
+        has_dialogue = true;
+
         stats.health_max = 50;
         stats.stamina_max = 20;
         stats.mana_max = 20;
@@ -207,5 +209,21 @@ public class UnicornUlrich : ActorPrototype
         stats.movement_time = 100;
         stats.to_hit = 15;
         stats.dodge = 10;
+
+        dialogue_tree = new DialogueTree(
+            startNodeId: "ulrich_intro",
+            nodes: new[] {
+                new DialogueNode(
+                    id: "ulrich_intro",
+                    actor: "Ulrich, The Last Unicorn",
+                    text: "  Oh wonderful, a visitor. You followed the shiny mushrooms, didn’t you? Fine. Formalities first. I am Ulrich, yes, the so-called ‘last unicorn’. \n\n  This forest is cursed, moody, and generally unpleasant. A bit like me before breakfast. Nobody takes a stroll here anymore. So tell me: are you actually here to help or ... did you just get hopelessly lost?",
+                    choices: new List<DialogueChoice> {
+                        new DialogueChoice("Help? What seems to be the problem?", "end"),
+                        new DialogueChoice("Are you really the last unicorn?", "end"),
+                        new DialogueChoice("Uh, I guess I took a wrong turn. Bye.", "end"),
+                    }
+                )
+            }
+        );
     }
 }

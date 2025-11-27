@@ -67,8 +67,8 @@ public abstract class QuestData
     public List<QuestMissionData> missions;
 
     public string name;
-    public string start_quest_dialog;
-    public string end_quest_dialog;
+    public string start_quest_dialogue;
+    public string end_quest_dialogue;
 
     public QuestData()
     {
@@ -86,8 +86,8 @@ public abstract class QuestData
         save.Write(name);
         save.Write(difficulty_level);
         save.Write((int) complexity_level);
-        save.Write(start_quest_dialog);
-        save.Write(end_quest_dialog);
+        save.Write(start_quest_dialogue);
+        save.Write(end_quest_dialogue);
 
         reward.Save(save);
 
@@ -107,8 +107,8 @@ public abstract class QuestData
         name = save.ReadString();
         difficulty_level = save.ReadInt32();
         complexity_level = (QuestComplexity) save.ReadInt32();
-        start_quest_dialog = save.ReadString();
-        end_quest_dialog = save.ReadString();
+        start_quest_dialogue = save.ReadString();
+        end_quest_dialogue = save.ReadString();
 
         reward.Load(save);
 
@@ -234,7 +234,7 @@ public abstract class QuestData
         }
 
         GameLogger.Log("The Player completed the quest: " + name + "!");
-        UIStateQuestEndDialog quest_state = new UIStateQuestEndDialog(this);
+        UIStateQuestEndDialogue quest_state = new UIStateQuestEndDialogue(this);
         GameObject.Find("UI").GetComponent<UI>().AddUIState(quest_state);
        
         return true;

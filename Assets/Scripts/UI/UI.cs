@@ -15,6 +15,7 @@ public enum CameraMode
 public class UI : MonoBehaviour
 {
     public bool is_player_turn = true;
+    public GameObject boss_panel;
     public GameObject state_text_prefab;
     public GameObject item_info_prefab;
     public GameObject actor_panel_prefab;
@@ -32,11 +33,12 @@ public class UI : MonoBehaviour
     public GameObject talent_info_prefab;
     public GameObject death_screen_prefab;
     public GameObject boss_panel_prefab;
-    public GameObject boss_panel;
     public GameObject controls_panel_prefab;
     public GameObject concepts_panel_prefab;
     public GameObject quest_panel_prefab;
-    public GameObject dialog_panel_prefab;
+    public GameObject dialogue_panel_prefab;
+    public GameObject dialogue_tree_panel_prefab;
+    public GameObject dialogue_choice_prefab;
 
     public List<UIState> current_ui_states;
 

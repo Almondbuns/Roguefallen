@@ -229,7 +229,7 @@ public class MFTavern : MapFeatureData
         {
             if (move_destination_x == questgivers[i].position.x && move_destination_y == questgivers[i].position.y)
             {
-                UIStateQuestStartDialog quest_state = new UIStateQuestStartDialog(this, questgivers[i].quest, questgivers[i].questgiver);
+                UIStateQuestStartDialogue quest_state = new UIStateQuestStartDialogue(this, questgivers[i].quest, questgivers[i].questgiver);
                 GameObject.Find("UI").GetComponent<UI>().AddUIState(quest_state);
                 return false;
             }

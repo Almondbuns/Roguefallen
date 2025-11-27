@@ -34,9 +34,9 @@ public class QDFetchItem : QuestData
         mission2.location = game_data.dungeons[0].name;
         missions.Add(mission2);
 
-        start_quest_dialog = "I need someone to fetch something for me.<br> <br>I lost my <color=white> guinea pig </color> deep within <color=red>" + mission.location + "</color>.<br> <br>I am deeply afraid of <color=green>spiders</color>. So I cannot get it myself.<br> <br>Are you going to help me?";
+        start_quest_dialogue = "I need someone to fetch something for me.<br> <br>I lost my <color=white> guinea pig </color> deep within <color=red>" + mission.location + "</color>.<br> <br>I am deeply afraid of <color=green>spiders</color>. So I cannot get it myself.<br> <br>Are you going to help me?";
 
-        end_quest_dialog = "You did it! Thank the gods that my guinea pig is alright. You surely deserve your reward! Thank you for all your troubles.";
+        end_quest_dialogue = "You did it! Thank the gods that my guinea pig is alright. You surely deserve your reward! Thank you for all your troubles.";
     }
 }
 
@@ -73,9 +73,9 @@ public class QDKillMonster : QuestData
         missions.Add(mission2);
         
 
-        start_quest_dialog = "I need a sword for hire.<br> <br>The evil creature <color=white>The Lost Explorer</color> wanders around in <color=red>" + mission.location + "</color>.<br> <br>It took a lot of lifes and needs to be killed.<br> <br>Are you going to help us?";
+        start_quest_dialogue = "I need a sword for hire.<br> <br>The evil creature <color=white>The Lost Explorer</color> wanders around in <color=red>" + mission.location + "</color>.<br> <br>It took a lot of lifes and needs to be killed.<br> <br>Are you going to help us?";
 
-        end_quest_dialog = "You killed the creature. You surely deserve your reward! Thank you for all your troubles.";
+        end_quest_dialogue = "You killed the creature. You surely deserve your reward! Thank you for all your troubles.";
     }
 }
 
@@ -139,8 +139,8 @@ public class QDMain : QuestData
         mission_3.journal_description = "Come back to " + mission_3.location + ".";
         missions.Add(mission_3);
 
-        start_quest_dialog = "You will find the family symbol in <color=red>" + mission_2.location + "</color>. Good Luck!";
+        start_quest_dialogue = "You will find the family symbol in <color=red>" + mission_2.location + "</color>. Good Luck!";
 
-        end_quest_dialog = "You killed the creature. You surely deserve your reward! Thank you for all your troubles.";
+        end_quest_dialogue = "You killed the creature. You surely deserve your reward! Thank you for all your troubles.";
     }
 }
