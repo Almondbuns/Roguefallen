@@ -35,10 +35,12 @@ public class DialogueTree
     public Dictionary<string, DialogueNode> nodes;
 
     public string start_node_id;
+    public string revisited_start_node_id;
 
-    public DialogueTree(string startNodeId, IEnumerable<DialogueNode> nodes)
+    public DialogueTree(string startNodeId, string revisitedStartNodeId, IEnumerable<DialogueNode> nodes)
     {
         start_node_id = startNodeId;
+        revisited_start_node_id = revisitedStartNodeId;
         this.nodes = nodes.ToDictionary(n => n.id, n => n);
     }
 

@@ -593,7 +593,15 @@ public class UIStateNPCDialogueTree : UIState
             GameObject.Find("WindowCanvas").transform, false);
 
         dialogue_tree = actor_data.prototype.dialogue_tree;
-        current_node = dialogue_tree.start_node_id;
+        if (actor_data.has_started_conversation == false)
+        {
+            current_node = dialogue_tree.start_node_id;
+            actor_data.has_started_conversation = true;
+        }
+        else
+        {
+            current_node = dialogue_tree.revisited_start_node_id;
+        }
         Refresh();
     }
 
@@ -644,6 +652,9 @@ public class UIStateNPCDialogueTree : UIState
         npc_dialogue_tree_panel.transform.Find("NPCPanel").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = node.text;
         
         int counter = 0;
+        foreach(Transform t in npc_dialogue_tree_panel.transform.Find("PlayerPanel").Find("DialogueChoices").transform)
+            GameObject.Destroy(t.gameObject);
+
         foreach(var choice in node.choices)
         {
             GameObject npc_dialogue_choice = GameObject.Instantiate(GameObject.Find("UI").GetComponent<UI>().dialogue_choice_prefab,

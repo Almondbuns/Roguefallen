@@ -82,6 +82,7 @@ public class ActorData
 
     public bool is_dead = false;
     public bool is_currently_hidden = false;
+    public bool has_started_conversation = false;
 
     public int Health_current {get; set;}
 
@@ -157,6 +158,7 @@ public class ActorData
 
         save.Write(is_dead);
         save.Write(is_currently_hidden);
+        save.Write(has_started_conversation);
 
         save.Write(Health_current);
         save.Write(Stamina_current);
@@ -240,6 +242,7 @@ public class ActorData
 
         is_dead = save.ReadBoolean();
         is_currently_hidden = save.ReadBoolean();
+        has_started_conversation = save.ReadBoolean();
 
         Health_current = save.ReadInt32();
         //Debug.Log(health_current);
