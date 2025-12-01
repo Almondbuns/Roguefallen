@@ -27,6 +27,7 @@ public class RottenForest : DungeonData
                 {
                     (1, new EncounterData() { type_amounts = {(typeof(Beehive),1,1)}, level_min = 1, level_max = 1,}),
                     (1, new EncounterData() { type_amounts = {(typeof(MysticMushroom),1,1)}, level_min = 1, level_max = 1,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(Butterfly),2,4)}, level_min = 1, level_max = 1,}),
                 }
             };
 
@@ -38,7 +39,7 @@ public class RottenForest : DungeonData
             level_data.dimensions = (140, 70);
             level_data.difficulty_level = level + 1;
             level_data.number_of_rooms = (30, 60);
-            level_data.number_of_encounters = (10, 10);
+            level_data.number_of_encounters = (20, 20);
             level_data.number_of_gold_items = (5, 10);
 
             level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHealthPotion), prob_amount = {(1.0f, 1)}});
