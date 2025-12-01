@@ -26,6 +26,7 @@ public class RottenForest : DungeonData
                 encounters =
                 {
                     (1, new EncounterData() { type_amounts = {(typeof(Beehive),1,1)}, level_min = 1, level_max = 1,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(MysticMushroom),1,1)}, level_min = 1, level_max = 1,}),
                 }
             };
 
