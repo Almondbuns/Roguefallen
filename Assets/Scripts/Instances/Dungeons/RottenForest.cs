@@ -18,8 +18,8 @@ public class RottenForest : DungeonData
         
                 map_features =
                 {                                        
-                    (typeof(MFCaveTreasureRoom), 0, 1), 
-                    (typeof(MFCaveOilRoom), 0, 2),
+                    //(typeof(MFCaveTreasureRoom), 0, 1), 
+                    //(typeof(MFCaveOilRoom), 0, 2),
                     (typeof(MFBeeTreasureRoom), 1, 2),
                 },                
 
@@ -27,14 +27,15 @@ public class RottenForest : DungeonData
                 {
                     (1, new EncounterData() { type_amounts = {(typeof(Beehive),1,1)}, level_min = 1, level_max = 1,}),
                     (1, new EncounterData() { type_amounts = {(typeof(MysticMushroom),1,1)}, level_min = 1, level_max = 1,}),
-                    (1, new EncounterData() { type_amounts = {(typeof(Butterfly),2,4)}, level_min = 1, level_max = 1,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(Butterfly),2,2)}, level_min = 1, level_max = 1,}),
                     (1, new EncounterData() { type_amounts = {(typeof(Snail),1,1)}, level_min = 1, level_max = 1,}),
+                    (1, new EncounterData() { type_amounts = {(typeof(Thornling),1,1)}, level_min = 1, level_max = 1,}),
                 }
             };
 
         
             level_data.map_features.Add((typeof(MFLivingForest),2,3));
-            level_data.map_features.Add((typeof(MFPond), 1, 2));
+            level_data.map_features.Add((typeof(MFPond), 5, 5));
 
 
             level_data.dimensions = (140, 70);
