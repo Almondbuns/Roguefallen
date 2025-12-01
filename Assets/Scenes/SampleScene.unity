@@ -636,6 +636,7 @@ MonoBehaviour:
   - {fileID: 1113453169229531473, guid: 648865a8f3bf7b14ca4170e3da46ad7d, type: 3}
   - {fileID: 1113453169229531473, guid: f94ae12e083ad994392e27dcc649d4ae, type: 3}
   - {fileID: 1113453169229531473, guid: 5c283d10699789943b25e0b8dd901a50, type: 3}
+  - {fileID: 1113453169229531473, guid: bc32acaf4e97b974b961a9251373c3a1, type: 3}
 --- !u!4 &28637563
 Transform:
   m_ObjectHideFlags: 0
@@ -1120,6 +1121,7 @@ GameObject:
   - component: {fileID: 413756367}
   - component: {fileID: 413756366}
   - component: {fileID: 413756370}
+  - component: {fileID: 413756371}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -1279,6 +1281,28 @@ MonoBehaviour:
     type: 3}
   camera_mode: 0
   standard_camera_zoom_multiplier: 1
+--- !u!95 &413756371
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 413756365}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6409a22585e7e14478de5a08ef0d1fef, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &445466812
 GameObject:
   m_ObjectHideFlags: 0
