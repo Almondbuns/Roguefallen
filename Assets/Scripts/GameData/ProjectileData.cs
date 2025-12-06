@@ -9,6 +9,7 @@ public class ProjectileData : ActorData
     public List<(int x, int y)> path;
     public int path_index = 0;
     public bool is_shot_by_player = false;
+    public long src_actor_id = -1;
 
     internal override void Save(BinaryWriter save)
     {
@@ -23,6 +24,7 @@ public class ProjectileData : ActorData
 
         save.Write(path_index);
         save.Write(is_shot_by_player);
+        save.Write(src_actor_id);
     }
 
     internal override void Load(BinaryReader save)
@@ -38,6 +40,7 @@ public class ProjectileData : ActorData
 
         path_index = save.ReadInt32();
         is_shot_by_player = save.ReadBoolean();
+        src_actor_id = save.ReadInt64();
     }
 
     public ProjectileData(int x, int y, ActorPrototype prototype = null) : base(x,y,prototype)
@@ -72,7 +75,7 @@ public class ProjectileData : ActorData
         
         //If currently on a occupied tile or last tile in path explode (but not on first tile)
         if (path_index > 0 &&
-            (path_index >= path.Count - 1 || map_data.IsAccessableTile(path[path_index].x, path[path_index].y, false, this) == false))
+            (path_index >= path.Count - 1 || map_data.IsAccessableTile(path[path_index].x, path[path_index].y, false, this, src_actor_id) == false))
         {
             current_action = new ExplodeAction(this, prototype.projectile.damage_radius, GetDamage(), prototype.projectile.explosion_on_impact);
             return;

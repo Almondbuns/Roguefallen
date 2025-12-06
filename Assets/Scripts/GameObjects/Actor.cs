@@ -561,7 +561,7 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void Kill()
     {
         if (actor_data is ProjectileData)
-            Destroy(gameObject, 1);
+            Destroy(gameObject, 0.1f);
         else if (actor_data is DynamicObjectData)
             Destroy(gameObject, 0);
         else

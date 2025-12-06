@@ -19,34 +19,34 @@ public class Thornling: ActorPrototype
             }
         };
 
-        stats.health_max = 5;
-        stats.stamina_max = 5;
+        stats.health_max = 10;
+        stats.stamina_max = 10;
         stats.mana_max = 0;
         stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 1, 0)});
         stats.movement_time = 100;
         stats.to_hit = 5;
-        stats.dodge = 15;
-        stats.kill_experience = 20;
+        stats.dodge = 5;
+        stats.kill_experience = 10;
 
         talents.Add(
             new TalentStandardMeleeAttack
             {
-                name = "Bite",
-                description = "Elemental bite attack that deals fire damage",
+                name = "Pierce",
+                description = "Standard Piercing Attack",
 
                     damage = 
                 {
-                    (DamageType.FIRE, 1,1,0),
+                    (DamageType.PIERCE, 2,4,0),
                 },
 
                 cost_stamina = 0,
-                recover_time = 50,
+                recover_time = 100,
                 cooldown = 100,
 
-                icon = "images/talents/fire",
+                icon = "images/talents/vampire_bite",
 
-                prepare_message = "The <name> opens its mouth.",
-                action_message = "The <name> bites.",
+                prepare_message = "",
+                action_message = "The <name> rams its thorns into you.",
             }
         );
     }

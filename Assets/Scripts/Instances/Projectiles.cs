@@ -70,6 +70,31 @@ public class ProjectileThrowingKnife: ActorPrototype
     }
 }
 
+public class ProjectileMagicBall : ActorPrototype
+{
+    public ProjectileMagicBall(int level) : base(level)
+    {
+        name = "Magic Projectile";
+        icon = "images/objects/projectile_magic_ball";
+
+        if (level <= 100)
+        {
+            projectile = new ProjectilePrototype
+            {
+                damage = new List<(DamageType type, int amount, int penetration)> { (DamageType.MAGIC, 2, 0) },
+                damage_radius = 0,
+            };
+        }
+
+        stats.health_max = 5;
+
+        stats.body_armor.Add(new ActorArmorStats { body_part = "Projectile", percentage = 100, armor = (0, 0, 4) });
+
+        stats.movement_time = 25;
+        stats.to_hit = 5;
+    }
+}
+
 public class ProjectileArrow: ActorPrototype
 {
     public ProjectileArrow(int level) : base(level)

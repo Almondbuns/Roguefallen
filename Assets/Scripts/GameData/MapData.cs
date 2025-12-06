@@ -471,7 +471,7 @@ public class MapData
         return false;
     }
 
-    public bool IsAccessableTile(int x, int y, bool ignore_player = false, ActorData ignore_actor = null)
+    public bool IsAccessableTile(int x, int y, bool ignore_player = false, ActorData ignore_actor = null, long ignore_actor_id = -1)
     {
         if (x < 0 || x >= tiles.GetLength(0) || y < 0 || y >= tiles.GetLength(1))
             return false;
@@ -491,8 +491,10 @@ public class MapData
             
             if (actor_data is not PlayerData)
             {
-                if (ignore_actor == null || actor_data != ignore_actor)
-                    return false;
+                if (ignore_actor != null && actor_data == ignore_actor)
+                    return true;
+                if (ignore_actor_id == actor_data.id)
+                    return true;
             }
         }
      
