@@ -49,11 +49,13 @@ public class MonsterData : ActorData
         base.OnKill();
 
         PlayerData player = GameObject.Find("GameData").GetComponent<GameData>().player_data;
-
         if (prototype.stats.kill_experience > 0)
         {
             GameLogger.Log("<color=#3333FF>" + player.prototype.name + " gains " + prototype.stats.kill_experience + " experience.</color>");
             player.GainExperience(prototype.stats.kill_experience);
         }
+
+        MapData map = GameObject.Find("GameData").GetComponent<GameData>().current_map;
+        map.OnMonsterKill(this);
     }
 }

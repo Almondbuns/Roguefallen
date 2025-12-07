@@ -15,7 +15,7 @@ public class Butterfly : ActorPrototype
         {
             ai_prototype = new AIPrototype
             {
-                personality = AIPersonality.HitAndRun,
+                personality = AIPersonality.RandomMovement,
             }
         };
 
@@ -23,24 +23,24 @@ public class Butterfly : ActorPrototype
         stats.stamina_max = 5;
         stats.mana_max = 0;
         stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 1, 0)});
-        stats.movement_time = 20;
+        stats.movement_time = 75;
         stats.to_hit = 5;
         stats.dodge = 15;
-        stats.kill_experience = 20;
+        stats.kill_experience = 5;
 
         talents.Add(
             new TalentStandardMeleeAttack
             {
                 name = "Bite",
-                description = "Elemental bite attack that deals fire damage",
+                description = "Elemental bite attack",
 
                     damage = 
                 {
-                    (DamageType.FIRE, 1,1,0),
+                    (DamageType.LIGHTNING, 1,1,0),
                 },
 
                 cost_stamina = 0,
-                recover_time = 50,
+                recover_time = 100,
                 cooldown = 100,
 
                 icon = "images/talents/fire",

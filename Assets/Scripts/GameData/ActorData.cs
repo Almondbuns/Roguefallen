@@ -477,7 +477,7 @@ public class ActorData
         if (GetCurrentAdditiveEffectAmount<EffectExhaustion>() >= 1)
             value += 100;
 
-        value = (int) Mathf.Max(0,(value * (100 - GetCurrentAdditiveEffectAmount<EffectRemoveMovementTimeRelative>()) / 100f));
+        value = (int) Mathf.Max(10,(value * (100 - GetCurrentAdditiveEffectAmount<EffectRemoveMovementTimeRelative>()) / 100f));
 
         return value;
     }

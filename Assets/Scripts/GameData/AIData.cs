@@ -29,6 +29,7 @@ public enum AIPersonality
     HitAndRun,
     Distance,
     Passive,
+    RandomMovement,
 }
 
 public class DumbAI : AIData
@@ -135,6 +136,13 @@ public class DumbAI : AIData
         }
 
         //Move to target
+        if (personality == AIPersonality.RandomMovement)
+        {
+            int random_x = UnityEngine.Random.Range(-1, 2);
+            int random_y = UnityEngine.Random.Range(-1, 2);
+            return new MoveAction(actor_data, actor_data.X + random_x, actor_data.Y + random_y, actor_data.GetMovementTime());
+        }
+
         if (current_target.HasValue)
         {
             if (actor_data.X == current_target.Value.x && actor_data.Y == current_target.Value.y)
@@ -157,38 +165,41 @@ public class DumbAI : AIData
             target_x = game_data.player_data.X;
             target_y = game_data.player_data.Y;
         }
-      
+
         //Do melee attacks if player is next to actor instead of moving
-        if (game_data.player_data.X >= actor_data.X - 1 && game_data.player_data.Y >= actor_data.Y - 1
-            && game_data.player_data.X <= actor_data.X + (actor_data.prototype.tile_width - 1) + 1
-            && game_data.player_data.Y <= actor_data.Y + (actor_data.prototype.tile_height - 1) + 1)
+        if (actor_data.prototype.is_friendly == false)
         {
-            if (usable_talents.Count > 0)
+            if (game_data.player_data.X >= actor_data.X - 1 && game_data.player_data.Y >= actor_data.Y - 1
+                && game_data.player_data.X <= actor_data.X + (actor_data.prototype.tile_width - 1) + 1
+                && game_data.player_data.Y <= actor_data.Y + (actor_data.prototype.tile_height - 1) + 1)
             {
-                TalentData random_talent = usable_talents[UnityEngine.Random.Range(0, usable_talents.Count)];
-                bool success = actor_data.ActivateTalent(random_talent, input);
-                if (success == true)
+                if (usable_talents.Count > 0)
                 {
-                    if (actor_data.is_currently_hidden == true)
-                        actor_data.SetHidden(false);
-                }
-                if (personality == AIPersonality.HitAndRun)
-                {
-                    //Run
-                    bool done = false;
-                    int tries = 0;
-                    while (done == false && tries < 1000)
+                    TalentData random_talent = usable_talents[UnityEngine.Random.Range(0, usable_talents.Count)];
+                    bool success = actor_data.ActivateTalent(random_talent, input);
+                    if (success == true)
                     {
-                        int random_x = UnityEngine.Random.Range(-16, 17);
-                        int random_y = UnityEngine.Random.Range(-16, 17);
-
-                        if (game_data.current_map.CanBeMovedInByActor(actor_data.X + random_x, actor_data.Y + random_y, actor_data))
-                            current_target = (actor_data.X + random_x, actor_data.Y + random_y); 
-                        ++tries;
+                        if (actor_data.is_currently_hidden == true)
+                            actor_data.SetHidden(false);
                     }
-                }
+                    if (personality == AIPersonality.HitAndRun)
+                    {
+                        //Run
+                        bool done = false;
+                        int tries = 0;
+                        while (done == false && tries < 1000)
+                        {
+                            int random_x = UnityEngine.Random.Range(-16, 17);
+                            int random_y = UnityEngine.Random.Range(-16, 17);
 
-                return null;
+                            if (game_data.current_map.CanBeMovedInByActor(actor_data.X + random_x, actor_data.Y + random_y, actor_data))
+                                current_target = (actor_data.X + random_x, actor_data.Y + random_y);
+                            ++tries;
+                        }
+                    }
+
+                    return null;
+                }
             }
         }
 

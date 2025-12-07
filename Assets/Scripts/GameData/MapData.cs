@@ -424,7 +424,7 @@ public class MapData
         PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
 
         int player_sight = 16;
-        int player_light = 6;
+        int player_light = 16;
 
         for (int x = player_data.X - player_sight; x <= player_data.X + player_sight; ++x)
         {
@@ -636,6 +636,14 @@ public class MapData
         foreach(ActorData actor in list)
         {
             actor.TryToGainEffect(effect);
+        }
+    }
+
+    public void OnMonsterKill(ActorData killed_actor)
+    {
+        foreach(ActorData actor in actors)
+        {
+            actor.prototype.OnMonsterKill(actor, killed_actor); 
         }
     }
 }

@@ -14,7 +14,7 @@ public class RottenForest : DungeonData
             {
                 biome_index = 7,
                 biome_variant = level,
-                is_always_visible = true,
+                is_always_visible = false,
         
                 map_features =
                 {                                        
@@ -41,8 +41,8 @@ public class RottenForest : DungeonData
             level_data.dimensions = (140, 70);
             level_data.difficulty_level = level + 1;
             level_data.number_of_rooms = (30, 60);
-            level_data.number_of_encounters = (20, 20);
-            level_data.number_of_gold_items = (5, 10);
+            level_data.number_of_encounters = (30, 40);
+            level_data.number_of_gold_items = (10, 20);
 
             level_data.items.Add(new ItemPlacementData(){type = typeof(ItemHealthPotion), prob_amount = {(1.0f, 1)}});
             level_data.items.Add(new ItemPlacementData(){type = typeof(ItemAlmondBun), prob_amount = {(1.0f, 1)}});

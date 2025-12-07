@@ -97,6 +97,10 @@ public class ActorPrototype
     public virtual void OnDamage(ActorData this_actor, DamageType damage_type, int damage_amount)
     {
     }
+
+    public virtual void OnMonsterKill(ActorData this_actor, ActorData killed_actor)
+    {
+    }
 }
 
 public class PlayerPrototype : ActorPrototype

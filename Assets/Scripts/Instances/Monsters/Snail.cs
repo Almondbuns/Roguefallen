@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.MaterialProperty;
 
 public class Snail : ActorPrototype
 {
@@ -19,36 +21,49 @@ public class Snail : ActorPrototype
             }
         };
 
-        stats.health_max = 5;
+        stats.health_max = 10;
         stats.stamina_max = 5;
         stats.mana_max = 0;
-        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (0, 1, 0)});
+        stats.body_armor.Add(new ActorArmorStats { body_part = "body", percentage = 100, armor = (2, 2, 0)});
         stats.movement_time = 300;
         stats.to_hit = 5;
-        stats.dodge = 15;
-        stats.kill_experience = 20;
+        stats.dodge = 0;
+        stats.kill_experience = 10;
 
         talents.Add(
             new TalentStandardMeleeAttack
             {
                 name = "Bite",
-                description = "Elemental bite attack that deals fire damage",
+                description = "Bite attack",
 
                     damage = 
                 {
-                    (DamageType.FIRE, 1,1,0),
+                    (DamageType.PIERCE, 2,3,0),
                 },
 
                 cost_stamina = 0,
                 recover_time = 50,
-                cooldown = 100,
+                cooldown = 50,
 
-                icon = "images/talents/fire",
+                icon = "images/talents/vampire_bite",
 
                 prepare_message = "The <name> opens its mouth.",
                 action_message = "The <name> bites.",
             }
         );
+    }
+
+    public override void OnMonsterKill(ActorData this_actor, ActorData killed_actor)
+    {
+        if (killed_actor == null || this_actor == null || this_actor == killed_actor)
+            return;
+
+        int snail_detection_range = 8;
+        if (Math.Abs(this_actor.X - killed_actor.X) <= snail_detection_range && Math.Abs(this_actor.Y - killed_actor.Y) <= snail_detection_range)
+        {
+            GameLogger.Log("The " + name + " sees its friend die and rages.");
+            this_actor.AddEffect(new EffectAddMovementTime { amount = -275, duration = 1000 });
+        }
     }
 }
 
