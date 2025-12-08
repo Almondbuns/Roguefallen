@@ -638,6 +638,11 @@ MonoBehaviour:
   - {fileID: 1113453169229531473, guid: 5c283d10699789943b25e0b8dd901a50, type: 3}
   - {fileID: 1113453169229531473, guid: bc32acaf4e97b974b961a9251373c3a1, type: 3}
   - {fileID: 1113453169229531473, guid: 57e04e8649cd8fa47aa35e5308b21be3, type: 3}
+  visual_effect_prefabs:
+  - {fileID: 1796216946933414587, guid: 65a791fc87f16c5d383a70d651930f7f, type: 3}
+  - {fileID: 1796216946933414587, guid: d7bad3974722f4645b77bfb2c00cdd18, type: 3}
+  - {fileID: 1796216946933414587, guid: edf4a26435428af0fb57ca71804b9308, type: 3}
+  - {fileID: 1113453169229531473, guid: 1de566bd86b9754448779d4d1a9d1478, type: 3}
 --- !u!4 &28637563
 Transform:
   m_ObjectHideFlags: 0

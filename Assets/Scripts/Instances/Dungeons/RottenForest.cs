@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class RottenForest : DungeonData
 {
+    public List<List<string>> whispers;
+
     public RottenForest()
     {
         name = "The Rotten Forest";
@@ -132,10 +136,74 @@ public class RottenForest : DungeonData
 
             dungeon_levels.Add(level_data);
         }
+
+        whispers = new List<List<string>>()
+        {
+            new List<string>()
+            {
+                "'What a lovely day.'",
+                "'Your footsteps are gentle.'",
+                "'Welcome traveler.'",
+                "'We wish you well.'",
+                "'Follow your heart.'",
+                "'Life is so exciting.'",
+                "'Why not try something new?'",
+                "'We will support you.'",
+                "'You are a kind person.'",
+                "'Everything will be alright.'",
+            },
+            new List<string>()
+            {
+                "'Are you sure you want to do this?'",              
+            },
+            new List<string>()
+            {
+                "'Are you sure you want to do this?'",
+            },
+            new List<string>()
+            {
+                "'Are you sure you want to do this?'",
+            },
+            new List<string>()
+            {
+                "'You are a complete failure.'",
+            },
+        };
+
     }
 
     public override void Tick()
     {
+        ++tick_counter;
+
+        if (tick_counter >= 5000)
+        {
+            MapData map_data = GameObject.Find("GameData").GetComponent<GameData>().current_map;
+            PlayerData player_data = GameObject.Find("GameData").GetComponent<GameData>().player_data;
+            DungeonLevelData level = GameObject.Find("GameData").GetComponent<GameData>().current_map_level;
+            int level_index = level.dungeon_level;
+
+            tick_counter = 0;
+                        
+            //Only activate if there is at least one tree near player
+            for (int i = -5; i <= 5; ++ i)
+            {
+                for (int j = -5; j <= 5; ++j)
+                {
+                    int current_x = Math.Min(map_data.tiles.GetLength(0) - 1, Math.Max(0, player_data.X + i));
+                    int current_y = Math.Min(map_data.tiles.GetLength(1) - 1, Math.Max(0, player_data.Y + j));
+                    if (map_data.tiles[current_x, current_y].objects.Count > 0 && map_data.tiles[current_x, current_y].objects[0].name.Contains("tree"))
+                    {
+                        string text = whispers[level_index][UnityEngine.Random.Range(0, whispers[level_index].Count)];
+                        VisualEffectText effect = new VisualEffectText();
+                        effect.SetText(text, new Color(255 / 255.0f, 215 / 255.0f, 0 / 255.0f));
+                        effect.ActivateOnTile(current_x, current_y);
+                        GameLogger.Log("You hear something whisper: " + text);
+                        return;
+                    }
+                }
+            }
+        }
     }
 
 }

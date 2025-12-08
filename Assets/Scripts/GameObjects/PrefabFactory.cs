@@ -5,6 +5,7 @@ using UnityEngine;
 public class PrefabFactory : MonoBehaviour
 {
     public GameObject[] prefabs;
+    public GameObject[] visual_effect_prefabs;
 
     // Start is called before the first frame update
     void Start()

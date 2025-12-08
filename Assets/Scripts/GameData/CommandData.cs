@@ -1256,7 +1256,11 @@ public class ExplodeCommand : CommandData
                 map_data.DistributeDamage(actor, attacked_tile);
 
                 if (explosion_on_impact == true)
-                    GameObject.Find("Map").GetComponent<Map>().AddVisualEffectToTile(VisualEffect.Fire, (i, j));
+                {
+                    VisualEffect effect = new VisualEffectFire();
+                    effect.ActivateOnTile(i, j);
+                }
+                    
             }
         }
         actor.OnKill();

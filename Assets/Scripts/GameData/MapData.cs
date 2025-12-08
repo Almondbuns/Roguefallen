@@ -531,7 +531,9 @@ public class MapData
 
     public void DistributeDamage(ActorData src_actor, AttackedTileData tile, bool ignore_self = false)
     {
-        GameObject.Find("Map").GetComponent<Map>().AddVisualEffectToTile(VisualEffect.Hit, (tile.x, tile.y));
+        VisualEffect effect = new VisualEffectHit();
+        effect.ActivateOnTile(tile.x, tile.y);
+      
         //Use copy because actors may spawn new actors on attack which changes the list while traversing => error
         List<ActorData> actors_copy = new List<ActorData>(actors);
 

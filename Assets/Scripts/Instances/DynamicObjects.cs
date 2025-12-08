@@ -37,8 +37,7 @@ public class Chest : ActorPrototype
             else if (random_float > 0.50f)
                 item_level = stats.level + 1;
                 
-            ItemData item = ItemData.GetRandomItem(-1,-1, stats.level);
-            Debug.Log("Creating item with level " + stats.level);
+            ItemData item = ItemData.GetRandomItem(-1,-1, stats.level);            
 
             int r = UnityEngine.Random.Range(1, 101);
             if (r <= 20)

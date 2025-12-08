@@ -3,14 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum VisualEffect
-{
-    None,
-    Hit,
-    Fire,
-    Teleport,
-}
-
 public class Map : MonoBehaviour
 {
     public GameData game_data;
@@ -20,22 +12,12 @@ public class Map : MonoBehaviour
     public Texture2D light_texture;
     public Texture2D visibility_texture;
 
-    public GameObject actor_prefab;
-    public GameObject octopus_tentacle_prefab;
-    public GameObject octopus_prefab;
-    public GameObject barkeeper_prefab;
-    public GameObject questgiver1_prefab;
+    public GameObject actor_prefab;    
     public GameObject projectile_prefab;
     public GameObject dynamic_object_prefab;
     public GameObject player_prefab;
     public GameObject item_prefab;
     public GameObject tile_selector_prefab;
-
-    public GameObject lost_explorer_prefab;
-
-    public GameObject visual_effect_hit_prefab;
-    public GameObject visual_effect_fire_prefab;
-    public GameObject visual_effect_teleport_prefab;
 
     public List<Actor> actors;
     public List<Item> items;
@@ -354,34 +336,6 @@ public class Map : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void AddVisualEffectToTile(VisualEffect effect, (int x, int y) tile)
-    {
-        if (tile.x < 0 || tile.y < 0 || tile.x >= map_data.tiles.GetLength(0) || tile.y >= map_data.tiles.GetLength(1)) return;
-
-        if (map_data.tiles[tile.x, tile.y].visibility != Visibility.Active) return;
-        
-        if (effect == VisualEffect.Hit)
-        {
-            GameObject visual_effect = GameObject.Instantiate(visual_effect_hit_prefab, transform);
-            visual_effect.transform.localPosition = new Vector3(tile.x + 0.5f, tile.y + 0.5f, -1);
-            Destroy(visual_effect, 5);
-        }
-        
-        if (effect == VisualEffect.Fire)
-        {
-            GameObject visual_effect = GameObject.Instantiate(visual_effect_fire_prefab, transform);
-            visual_effect.transform.localPosition = new Vector3(tile.x + 0.5f, tile.y + 0.5f, -1);
-            Destroy(visual_effect, 5);
-        }
-
-        if (effect == VisualEffect.Teleport)
-        {
-            GameObject visual_effect = GameObject.Instantiate(visual_effect_teleport_prefab, transform);
-            visual_effect.transform.localPosition = new Vector3(tile.x + 0.5f, tile.y + 0.5f, -1);
-            Destroy(visual_effect, 5);
-        }
-    }
-
     internal void Refresh()
     {
       
@@ -393,17 +347,7 @@ public class Map : MonoBehaviour
         if (actor_data.prototype.prefab_index != -1)
             actor = GameObject.Instantiate(GameObject.Find("PrefabFactory").GetComponent<PrefabFactory>().prefabs[actor_data.prototype.prefab_index], transform);
         else if (actor_data is PlayerData)
-            actor = GameObject.Instantiate(player_prefab, transform);
-        else if (actor_data.prototype is OctopusTentacle)
-            actor = GameObject.Instantiate(octopus_tentacle_prefab, transform);
-        else if (actor_data.prototype is Octopus)
-            actor = GameObject.Instantiate(octopus_prefab, transform);
-        else if (actor_data.prototype is Barkeeper)
-            actor = GameObject.Instantiate(barkeeper_prefab, transform);
-        else if (actor_data.prototype is Questgiver1)
-            actor = GameObject.Instantiate(questgiver1_prefab, transform);
-        else if (actor_data.prototype is LostExplorer)
-            actor = GameObject.Instantiate(lost_explorer_prefab, transform);
+            actor = GameObject.Instantiate(player_prefab, transform);        
         else if (actor_data is ProjectileData)
             actor = GameObject.Instantiate(projectile_prefab, transform);
         else if (actor_data is DynamicObjectData)

@@ -439,7 +439,8 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             else if (current_visual_action.type == VisualActionType.TELEPORT)
             {             
                 transform.position = new Vector3(current_visual_action.target_tile.x + shift_sprite_position_x, current_visual_action.target_tile.y + shift_sprite_position_y, 0);
-                GameObject.Find("Map").GetComponent<Map>().AddVisualEffectToTile(VisualEffect.Teleport, current_visual_action.target_tile);
+                VisualEffect effect = new VisualEffectTeleport();
+                effect.ActivateOnTile(current_visual_action.target_tile.x, current_visual_action.target_tile.y);                
                 current_visual_action = null;              
             }
             else if (current_visual_action.type == VisualActionType.KILL)
@@ -524,7 +525,8 @@ public class Actor : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             if (v.type == VisualActionType.TELEPORT)
             {
                 transform.position = new Vector3(v.target_tile.x + shift_sprite_position_x, v.target_tile.y + shift_sprite_position_y, 0);
-                GameObject.Find("Map").GetComponent<Map>().AddVisualEffectToTile(VisualEffect.Teleport, current_visual_action.target_tile);
+                VisualEffect effect = new VisualEffectTeleport();
+                effect.ActivateOnTile(current_visual_action.target_tile.x, current_visual_action.target_tile.y);                
             }
             else if (v.type == VisualActionType.SHOW)
             {

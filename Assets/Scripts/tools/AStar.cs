@@ -12,8 +12,6 @@ class AStarNode
 
     public int cost_current;
     public int cost_guessed;
-
-    public int cost_unique;
 }
 
 public class Path
