@@ -22,9 +22,8 @@ public class RottenForest : DungeonData
         
                 map_features =
                 {                                        
-                    //(typeof(MFCaveTreasureRoom), 0, 1), 
-                    //(typeof(MFCaveOilRoom), 0, 2),
                     (typeof(MFBeeTreasureRoom), 1, 2),
+                    (typeof(MFMysticWellRoom), 4, 5),
                 },                
 
                 encounters =
@@ -37,9 +36,15 @@ public class RottenForest : DungeonData
                 }
             };
 
-        
+            //Plot Rooms
+
+            //Signature Rooms
             level_data.map_features.Add((typeof(MFLivingForest),6,8));
             //level_data.map_features.Add((typeof(MFPond), 5, 5));
+
+            //Gameplay Rooms
+
+
 
 
             level_data.dimensions = (140, 70);

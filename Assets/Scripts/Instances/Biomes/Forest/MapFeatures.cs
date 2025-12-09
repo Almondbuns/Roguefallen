@@ -41,6 +41,30 @@ public class MFBeeTreasureRoom : MapFeatureData
         map.Add(vendor);
     }
 }
+
+public class MFMysticWellRoom : MapFeatureData
+{
+    public MFMysticWellRoom(MapData map) : base(map)
+    {
+        dimensions = (6, 6);
+    }
+
+    public override void Generate()
+    {
+        for (int x = position.x; x < position.x + dimensions.x; ++x)
+        {
+            for (int y = position.y; y < position.y + dimensions.y; ++y)
+            {
+                map.tiles[x, y].objects.Clear();
+            }
+        }
+        
+        ActorData vendor = new MonsterData(position.x + 3, position.y + 4, new TheMysticWell(10));
+        map.Add(vendor);
+    }
+}
+
+
 public class MFLivingForest : MapFeatureData
 {
     public MFLivingForest(MapData map) : base(map)
