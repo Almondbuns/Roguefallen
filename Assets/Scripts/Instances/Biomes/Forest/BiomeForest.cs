@@ -57,8 +57,8 @@ public class BiomeForest : BiomeData
             {
                 int start_room_index = UnityEngine.Random.Range(0, room_list.Count);
                 //Prefer newly created rooms (should lead to more deep construction)
-                if (truely_random_distribution == false && UnityEngine.Random.value <= 0.75)
-                    start_room_index = UnityEngine.Random.Range(9 * (room_list.Count / 10), room_list.Count);
+                //if (truely_random_distribution == false && UnityEngine.Random.value <= 0.75)
+                //    start_room_index = UnityEngine.Random.Range(9 * (room_list.Count / 10), room_list.Count);
                 
 
                 // The new room has to be near enough to be connected

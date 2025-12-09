@@ -18,7 +18,7 @@ public class RottenForest : DungeonData
             {
                 biome_index = 7,
                 biome_variant = level,
-                is_always_visible = false,
+                is_always_visible = true,
         
                 map_features =
                 {                                        
@@ -38,8 +38,8 @@ public class RottenForest : DungeonData
             };
 
         
-            level_data.map_features.Add((typeof(MFLivingForest),2,3));
-            level_data.map_features.Add((typeof(MFPond), 5, 5));
+            level_data.map_features.Add((typeof(MFLivingForest),6,8));
+            //level_data.map_features.Add((typeof(MFPond), 5, 5));
 
 
             level_data.dimensions = (140, 70);
