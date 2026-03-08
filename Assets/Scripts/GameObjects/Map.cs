@@ -369,9 +369,7 @@ public class Map : MonoBehaviour
         {
             for (int target_x = x * 32; target_x < x * 32 + source.width; target_x++) //Goes through each pixel
             {
-                Color color_source = source.GetPixel(target_x - x * 32, target_y - y * 32);
-                Color color_target = atlas_texture.GetPixel(target_x, target_y);                
-      
+                Color color_source = source.GetPixel(target_x - x * 32, target_y - y * 32);                      
                 atlas_texture.SetPixel(target_x, target_y, color_source);               
             }
         }
