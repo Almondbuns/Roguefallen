@@ -7,10 +7,26 @@ public class DialogueChoice
     public string text;
     public string next_id;
 
-    public DialogueChoice(string text, string nextId)
+    public GameConditionPrototype condition;
+    public GameEffectPrototype effect;
+
+    public DialogueChoice(string text, string nextId, GameConditionPrototype condition = null, GameEffectPrototype effect = null)
     {
         this.text = text;
         next_id = nextId;
+        this.condition = condition;
+        this.effect = effect;
+    }
+
+    public bool IsAvailable()
+    {
+        if (condition == null) return true;
+        return condition.Evaluate();
+    }
+    public void ApplyEffect()
+    {
+        if (effect == null) return;
+        effect.ApplyEffect();
     }
 }
 
@@ -49,11 +65,3 @@ public class DialogueTree
         return nodes.TryGetValue(id, out var node) ? node : null;
     }
 }
-
-
-public class ActorDialogueRunner
-{
-    private readonly DialogueTree _tree;
-   
-}
-

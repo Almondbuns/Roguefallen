@@ -16,6 +16,7 @@ public class GameData : MonoBehaviour
     
     public List<DungeonData> dungeons;
     public List<BiomeData> biomes;
+    public Dictionary<string, NPCData> npcs;
     public PlayerData player_data;
 
     //References
@@ -42,6 +43,13 @@ public class GameData : MonoBehaviour
         {
             save.Write(v.GetType().Name);
             v.Save(save);
+        }
+
+        save.Write(npcs.Count);
+        foreach(var v in npcs)
+        {
+            save.Write(v.Key);
+            v.Value.Save(save);
         }
 
         player_data.Save(save);
@@ -88,6 +96,16 @@ public class GameData : MonoBehaviour
             biomes.Add(v);
         }
 
+        size = save.ReadInt32();
+        npcs = new(size);
+        for (int i = 0; i < size; ++i)
+        {
+            string id = save.ReadString();
+            NPCData v = new(id);
+            v.Load(save);
+            npcs.Add(id, v);
+        }
+
         player_data.Load(save);
 
         int dungeon_index = save.ReadInt32();
@@ -126,6 +144,7 @@ public class GameData : MonoBehaviour
         player_data = new PlayerData(starting_level);
 
         dungeons = new List<DungeonData>();
+        npcs = new();
 
         int number_of_dungeons_per_type = 1;
         

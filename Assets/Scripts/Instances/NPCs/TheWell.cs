@@ -33,35 +33,59 @@ public class TheMysticWell : ActorPrototype
         can_move = false;
 
         dialogue_tree = new DialogueTree(
-            startNodeId: "ulrich_intro",
-            revisitedStartNodeId: "ulrich_revisited",
+            startNodeId: "well_intro",
+            revisitedStartNodeId: "well_revisited",
             nodes: new[] {
                 new DialogueNode(
                     id: "well_intro",
                     actor: "The Well",
-                    text: "  *Sighs* Wonderful, a visitor. You followed the shiny mushrooms, didn’t you? Fine. Formalities first. I am Ulrich, yes, the so-called ‘last unicorn’. \n\n  This forest is cursed, moody, and generally unpleasant. A bit like me before breakfast. Nobody takes a stroll here anymore. So tell me: are you actually here to help or ... did you just get hopelessly lost?",
+                    text: "  'Hello? Was that a footstep? I think it was a footstep. It sounded like a footstep. I wonder what feet must feel like.'",
                     choices: new List<DialogueChoice> {
-                        new DialogueChoice("Help? What seems to be the problem?", "end"),
-                        new DialogueChoice("Are you really the last unicorn?", "last_unicorn"),
-                        new DialogueChoice("Uh, I guess I took a wrong turn. Bye.", "end"),
+                        new DialogueChoice("... hello?", "well_topics"),
+                        new DialogueChoice("[Ignore it]", "end"),
                     }
                 ),
                 new DialogueNode(
-                    id: "ulrich_revisited",
+                    id: "well_revisited",
                     actor: "The Well",
-                    text: "'Ah well, ...'",
+                    text: "  'Ah, you have returned. Did you pick some flowers? I think they would be lovely on my little wall.'",
                     choices: new List<DialogueChoice> {
-                        new DialogueChoice("Seriously?", "end"),
-                        new DialogueChoice("Who or what exactly are you?", "last_unicorn"),
-                        new DialogueChoice("Well put. Bye.", "end"),
+                        new DialogueChoice("I have some more questions.", "well_topics"),
+                        new DialogueChoice("[Ignore it]", "end"),
                     }
                 ),
                 new DialogueNode(
-                    id: "last_unicorn",
+                    id: "exit",
                     actor: "The Well",
-                    text: "  Oh stars, must we? Fine. No, I’m not the last of my kind. The name comes from … an incident. Or several.\n\n  Let’s just say I was not gifted in the art of running, and every race in my youth ended with me trailing behind everyone else. They started calling me ‘the last unicorn’ and it stuck. Unfortunately.\n\n  So yes, that’s the grand, humiliating truth. Can we please move on?",
+                    text: "  '... Sigh ... I guess it was nice while it lasted. If you find out what you are ... please come back and tell me.'",
                     choices: new List<DialogueChoice> {
-                        new DialogueChoice("Sorry I asked. Jeez.", "ulrich_revisited"),
+                        new DialogueChoice("Sure...", "end"),
+                    }
+                ),
+                 new DialogueNode(
+                    id: "well_topics",
+                    actor: "The Well",
+                    text: "  'You seem to be puzzled. It is a good state of mind.'",
+                    choices: new List<DialogueChoice> {
+                        new DialogueChoice("Who is down there?", "down_there", null, new NPCSetFlagEffect("The Well","test")),
+                        new DialogueChoice("Are you stuck in the well?", "stuck_inside", new NPCFlagCheck("The Well","test")),
+                        new DialogueChoice("Sorry, I have to go.", "exit"),
+                    }
+                ),
+                new DialogueNode(
+                    id: "down_there",
+                    actor: "The Well",
+                    text: "  'Down there? ... I am not sure. You mean: inside of me? I don't think somebody is inside of me. It feels pretty empty.'",
+                    choices: new List<DialogueChoice> {
+                        new DialogueChoice("I see.", "well_topics"),
+                    }
+                ),
+                new DialogueNode(
+                    id: "stuck_inside",
+                    actor: "The Well",
+                    text: "  'Stuck? I don't think so. I am the well ... or the well is me. I don't really remember much. I just know that it is better this way.'",
+                    choices: new List<DialogueChoice> {
+                        new DialogueChoice("I see.", "well_topics"),
                     }
                 ),
             }

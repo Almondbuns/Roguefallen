@@ -620,6 +620,7 @@ public class UIStateNPCDialogueTree : UIState
             throw new ArgumentOutOfRangeException(nameof(choiceIndex));
 
         var choice = node.choices[choiceIndex];
+        choice.ApplyEffect();
 
         if (string.IsNullOrEmpty(choice.next_id) || choice.next_id.Equals("end"))
         {
@@ -652,18 +653,25 @@ public class UIStateNPCDialogueTree : UIState
         npc_dialogue_tree_panel.transform.Find("NPCPanel").Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = node.text;
         
         int counter = 0;
+        int ui_counter = 0;
         foreach(Transform t in npc_dialogue_tree_panel.transform.Find("PlayerPanel").Find("DialogueChoices").transform)
             GameObject.Destroy(t.gameObject);
 
         foreach(var choice in node.choices)
         {
+            if (choice.IsAvailable() == false)
+            {
+                ++counter;
+                continue;
+            }
             GameObject npc_dialogue_choice = GameObject.Instantiate(GameObject.Find("UI").GetComponent<UI>().dialogue_choice_prefab,
             npc_dialogue_tree_panel.transform.Find("PlayerPanel").Find("DialogueChoices").transform, false);
             npc_dialogue_choice.transform.Find("Text").GetComponent<TMPro.TextMeshProUGUI>().text = choice.text;
             int closure_counter = counter;
             npc_dialogue_choice.GetComponent<Button>().onClick.AddListener(() => Choose(closure_counter));
-            npc_dialogue_choice.GetComponent<RectTransform>().localPosition = new Vector3(-425, node.choices.Count * 50 - 20 - counter * 100);
+            npc_dialogue_choice.GetComponent<RectTransform>().localPosition = new Vector3(-425, node.choices.Count * 50 - 20 - ui_counter * 100);
             ++counter;
+            ++ui_counter;
         }
     }
 
